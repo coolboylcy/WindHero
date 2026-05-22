@@ -17,6 +17,7 @@ export function Hero() {
       <NearWaves />
       <ShimmerLayer />
       <Spotlight />
+      <TextBackdrop />
 
       {/* —— 文字层 —— */}
       <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-28 pt-28 lg:px-10 lg:pb-32">
@@ -239,20 +240,60 @@ function NearWaves() {
   );
 }
 
-/** 前景大三角帆——视觉主角，振幅明显。 */
+/** 前景大三角帆——船体压在地平线（56%）上，整体上方延伸到天空。
+    地平线在 hero section 顶部 56%，所以容器 bottom 设为 44%（视口高换算），
+    再下沉 ~32px 让船体 rect 与水面线对齐。 */
 function ForegroundSail() {
   return (
     <div
       aria-hidden
       className="pointer-events-none absolute -z-[2] hidden sm:block"
-      style={{ right: "10%", top: "44%" }}
+      style={{
+        right: "12%",
+        bottom: "calc(44% - 36px)",
+      }}
     >
       <div className="animate-sail-drift">
-        <div className="origin-bottom" style={{ transform: "scale(1.6)" }}>
+        <div
+          className="relative origin-bottom"
+          style={{ transform: "scale(1.6)" }}
+        >
           <Sail color="#fbfbf8" withMast />
+          {/* 船下方的水花 —— 让船真的"踩在水上" */}
+          <Wake />
         </div>
       </div>
     </div>
+  );
+}
+
+/** 船底的水花 / 船迹——两条向外散开的细弧线，半透明白。 */
+function Wake() {
+  return (
+    <svg
+      width="170"
+      height="40"
+      viewBox="0 0 170 40"
+      className="absolute left-1/2 top-[136px] -translate-x-1/2"
+      style={{ pointerEvents: "none" }}
+    >
+      <path
+        d="M14 14 Q 85 32 156 14"
+        fill="none"
+        stroke="rgba(251,251,248,0.55)"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M28 22 Q 85 38 142 22"
+        fill="none"
+        stroke="rgba(251,251,248,0.32)"
+        strokeWidth="0.9"
+        strokeLinecap="round"
+      />
+      {/* 船头一抹反光 */}
+      <ellipse cx="85" cy="10" rx="14" ry="2" fill="rgba(251,251,248,0.55)" />
+    </svg>
   );
 }
 
@@ -286,7 +327,7 @@ function ShimmerLayer() {
   );
 }
 
-/** 左下角"舞台聚光灯"暗化——让文字层从画面中干净地浮出来。 */
+/** 左下角"舞台聚光灯"暗化——通用环境压暗。 */
 function Spotlight() {
   return (
     <div
@@ -294,12 +335,29 @@ function Spotlight() {
       className="pointer-events-none absolute inset-0 -z-[1]"
       style={{
         background: [
-          // 左下角强暗化（文字所在）
-          "radial-gradient(ellipse 70% 60% at 18% 92%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 35%, transparent 70%)",
           // 整体底部稳定暗化
-          "linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 18%, transparent 60%, rgba(0,0,0,0.35) 100%)",
+          "linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 18%, transparent 55%, rgba(0,0,0,0.35) 100%)",
           // 顶部一道极淡暗化（让 header 浮在 hero 上时不刺眼）
-          "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 14%)",
+          "linear-gradient(180deg, rgba(0,0,0,0.28) 0%, transparent 14%)",
+        ].join(", "),
+      }}
+    />
+  );
+}
+
+/** 文字层的底色面板——从画面左缘向右大幅淡出的深色渐变，
+    给文字一个明确可读的底，但避免"贴一块卡片"的死板感。 */
+function TextBackdrop() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-[1]"
+      style={{
+        background: [
+          // 左→右的大型水平渐变（主要的"文字底色"）
+          "linear-gradient(95deg, rgba(3,12,24,0.82) 0%, rgba(3,12,24,0.68) 28%, rgba(3,12,24,0.4) 50%, rgba(3,12,24,0.12) 70%, transparent 88%)",
+          // 文字所在的左下角，额外加一层更深的椭圆压暗
+          "radial-gradient(ellipse 60% 55% at 14% 78%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 45%, transparent 75%)",
         ].join(", "),
       }}
     />
