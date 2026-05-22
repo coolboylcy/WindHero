@@ -113,6 +113,11 @@ body {
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @keyframes drift {
   0%,
   100% {
@@ -123,10 +128,116 @@ body {
   }
 }
 
+/* Hero 上：三角帆的复合漂移——上下浪涌 + 左右轻摆 + 微旋转 */
+@keyframes sail-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-1.2deg);
+  }
+  25% {
+    transform: translate(-6px, -4px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(-2px, -8px) rotate(0.8deg);
+  }
+  75% {
+    transform: translate(4px, -3px) rotate(1.6deg);
+  }
+}
+
+/* 远景小帆——更慢、更轻 */
+@keyframes sail-distant {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* 太阳的柔和呼吸——透明度 + 极轻微缩放 */
+@keyframes sun-breathe {
+  0%,
+  100% {
+    opacity: 0.96;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.025);
+  }
+}
+
+/* 太阳外层光晕的呼吸（错相） */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+
+/* 海面波纹横向漂移（用在 SVG path 上） */
+@keyframes wave-shift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-160px); }
+}
+
+/* 海面光斑闪烁 */
+@keyframes shimmer {
+  0%,
+  100% { opacity: 0.18; }
+  50% { opacity: 0.4; }
+}
+
 .animate-fade-up {
   animation: fade-up 0.9s var(--ease-sail) both;
 }
 
+.animate-fade-in {
+  animation: fade-in 1.6s var(--ease-sail) both;
+}
+
 .animate-drift {
   animation: drift 11s var(--ease-sail) infinite;
+}
+
+.animate-sail-drift {
+  animation: sail-drift 8s var(--ease-sail) infinite;
+  transform-origin: 50% 100%;
+}
+
+.animate-sail-distant {
+  animation: sail-distant 14s var(--ease-sail) infinite;
+}
+
+.animate-sun-breathe {
+  animation: sun-breathe 6s var(--ease-sail) infinite;
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 6s var(--ease-sail) infinite;
+}
+
+.animate-wave-shift {
+  animation: wave-shift 18s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-drift,
+  .animate-sail-drift,
+  .animate-sail-distant,
+  .animate-sun-breathe,
+  .animate-glow-breathe,
+  .animate-wave-shift,
+  .animate-shimmer {
+    animation: none;
+  }
 }
