@@ -2,36 +2,53 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 /**
- * Full-bleed hero —— 深海军蓝海面 + 呼吸的白太阳 + 漂移的三角帆 + 远景小帆视差。
- * 整层用纯 CSS keyframes，无 client JS；支持 prefers-reduced-motion。
+ * 全屏 Hero：深海军蓝海面 + 呼吸的太阳 + 漂移的三角帆 + 近景大波浪 +
+ * 左下角"舞台暗化"保证文字读起来稳。纯 CSS 动画。
  */
 export function Hero() {
   return (
-    <section className="relative isolate h-[100svh] min-h-[640px] overflow-hidden bg-ink text-paper">
+    <section className="relative isolate h-[100svh] min-h-[680px] overflow-hidden bg-ink text-paper">
       <Sky />
       <SunWithGlow />
+      <SunGlade />
       <DistantSails />
       <Horizon />
       <ForegroundSail />
+      <NearWaves />
       <ShimmerLayer />
-      <Vignette />
+      <Spotlight />
 
-      {/* —— 文字层 —— 左下，电影海报式 */}
+      {/* —— 文字层 —— */}
       <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-28 pt-28 lg:px-10 lg:pb-32">
         <div className="max-w-2xl animate-fade-up">
-          <p className="eyebrow !text-paper/65">
+          <p
+            className="eyebrow"
+            style={{ color: "rgba(251,251,248,0.78)" }}
+          >
             现代航海学院 · 自 2026 起
           </p>
 
-          <h1 className="display mt-7 text-balance text-[clamp(2.8rem,7vw,6rem)] leading-[1.04] text-paper">
+          <h1
+            className="display mt-7 text-balance text-[clamp(2.8rem,7vw,6rem)] leading-[1.04]"
+            style={{
+              color: "#ffffff",
+              textShadow: "0 2px 24px rgba(0,0,0,0.45)",
+            }}
+          >
             驾驭风的方向。
           </h1>
 
-          <p className="mt-5 font-mono text-[0.74rem] tracking-[0.34em] text-paper/55">
+          <p className="mt-5 font-mono text-[0.74rem] tracking-[0.34em] text-paper/70">
             MASTER&nbsp;&nbsp;THE&nbsp;&nbsp;WIND
           </p>
 
-          <p className="mt-9 max-w-xl text-balance text-[1.05rem] leading-[1.85] text-paper/80 md:text-[1.12rem]">
+          <p
+            className="mt-9 max-w-xl text-balance text-[1.06rem] leading-[1.85] md:text-[1.14rem]"
+            style={{
+              color: "rgba(251,251,248,0.94)",
+              textShadow: "0 1px 12px rgba(0,0,0,0.45)",
+            }}
+          >
             一所教你读懂海的学院——风、天气、航路、船长的判断力。
             为那些想用自己的方向穿过世界的人而建。
           </p>
@@ -39,14 +56,14 @@ export function Hero() {
           <div className="mt-12 flex flex-wrap items-center gap-3">
             <Link
               href="/courses"
-              className="group inline-flex h-12 items-center gap-2 bg-paper px-7 text-[0.88rem] text-ink transition-colors hover:bg-sea-soft"
+              className="group inline-flex h-12 items-center gap-2 bg-paper px-7 text-[0.88rem] text-ink shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-colors hover:bg-sea-soft"
             >
               开始训练
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/manifesto"
-              className="group inline-flex h-12 items-center gap-2 border border-paper/40 px-6 text-[0.88rem] text-paper transition-colors hover:border-paper hover:bg-paper/5"
+              className="group inline-flex h-12 items-center gap-2 border border-paper/50 bg-paper/0 px-6 text-[0.88rem] text-paper backdrop-blur-sm transition-colors hover:border-paper hover:bg-paper/10"
             >
               阅读宣言
               <span className="h-px w-6 bg-current transition-all group-hover:w-10" />
@@ -56,7 +73,7 @@ export function Hero() {
       </div>
 
       {/* —— 底部坐标 strip —— */}
-      <div className="absolute inset-x-0 bottom-6 z-10 mx-auto flex max-w-7xl items-center justify-between px-6 text-[0.7rem] text-paper/55 lg:px-10">
+      <div className="absolute inset-x-0 bottom-6 z-10 mx-auto flex max-w-7xl items-center justify-between px-6 text-[0.7rem] text-paper/65 lg:px-10">
         <span className="font-mono tracking-[0.2em]">22°16′N</span>
         <span className="font-mono tracking-[0.32em]">
           航向 037° · 真北
@@ -67,54 +84,70 @@ export function Hero() {
   );
 }
 
-/** 天空与海的渐变。地平线在 58% 处。 */
+/** 天空与海。地平线 56% 处。底色压得比之前更深。 */
 function Sky() {
   return (
     <div aria-hidden className="absolute inset-0 -z-10">
-      {/* 天：墨夜蓝 → 海军 → 暖白晨光 */}
       <div
-        className="absolute inset-x-0 top-0 h-[58%]"
+        className="absolute inset-x-0 top-0 h-[56%]"
         style={{
           background:
-            "linear-gradient(180deg, #061629 0%, #0a2241 35%, #163d63 75%, #d8c8b0 100%)",
+            "linear-gradient(180deg, #030d1d 0%, #08213e 30%, #143b62 70%, #c9b89a 100%)",
         }}
       />
-      {/* 海：从地平线起逐渐变深 */}
       <div
-        className="absolute inset-x-0 bottom-0 top-[58%]"
+        className="absolute inset-x-0 bottom-0 top-[56%]"
         style={{
           background:
-            "linear-gradient(180deg, #1a4e7a 0%, #0e3252 50%, #061d33 100%)",
+            "linear-gradient(180deg, #1a4c78 0%, #0b2c4a 45%, #03121f 100%)",
         }}
       />
     </div>
   );
 }
 
-/** 太阳（白盘 + 光晕 + 海面倒影）。 */
+/** 太阳——偏右上，给左侧文字让位置。 */
 function SunWithGlow() {
   return (
     <div
       aria-hidden
-      className="absolute inset-x-0 top-[40%] -z-[5] flex justify-center"
-      style={{ transform: "translateY(-50%)" }}
+      className="pointer-events-none absolute -z-[5]"
+      style={{ right: "26%", top: "32%" }}
     >
       <div className="relative">
-        {/* 外层光晕 */}
-        <div className="absolute left-1/2 top-1/2 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,237,210,0.55)_0%,rgba(255,237,210,0.18)_45%,transparent_70%)] animate-glow-breathe" />
-        {/* 太阳盘 */}
-        <div className="relative h-[88px] w-[88px] rounded-full bg-[#f8efdc] shadow-[0_0_60px_20px_rgba(248,239,220,0.45)] animate-sun-breathe" />
+        <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,237,210,0.7)_0%,rgba(255,237,210,0.22)_45%,transparent_72%)] animate-glow-breathe" />
+        <div className="relative h-[96px] w-[96px] rounded-full bg-[#fbeed3] shadow-[0_0_80px_30px_rgba(251,238,211,0.55)] animate-sun-breathe" />
       </div>
     </div>
   );
 }
 
-/** 远景小帆，三只，不同距离 + 不同动画相位。 */
+/** 太阳在海面拉出的反光柱——从地平线向下，会摆动。 */
+function SunGlade() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute -z-[4]"
+      style={{ right: "24%", top: "56%", width: "140px", height: "32vh" }}
+    >
+      <div
+        className="h-full w-full animate-sun-glade"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(251,238,211,0.65) 0%, rgba(251,238,211,0.25) 35%, transparent 92%)",
+          filter: "blur(2px)",
+        }}
+      />
+    </div>
+  );
+}
+
+/** 远景三只小帆，不同距离 + 不同动画相位。 */
 function DistantSails() {
   const sails = [
-    { left: "16%", top: "53%", scale: 0.42, delay: "-2s", opacity: 0.55 },
-    { left: "72%", top: "55%", scale: 0.34, delay: "-7s", opacity: 0.45 },
-    { left: "86%", top: "51%", scale: 0.28, delay: "-11s", opacity: 0.35 },
+    { left: "12%", top: "51%", scale: 0.46, delay: "-1s", opacity: 0.62 },
+    { left: "38%", top: "53%", scale: 0.36, delay: "-5s", opacity: 0.5 },
+    { left: "82%", top: "52%", scale: 0.3, delay: "-7s", opacity: 0.42 },
   ];
   return (
     <div aria-hidden className="absolute inset-0 -z-[4]">
@@ -130,60 +163,92 @@ function DistantSails() {
             animationDelay: s.delay,
           }}
         >
-          <Sail color="rgba(251,251,248,0.92)" />
+          <Sail color="rgba(251,251,248,0.95)" />
         </div>
       ))}
     </div>
   );
 }
 
-/** 水面：横向漂移的波纹 + 一条主地平线。 */
+/** 中距海面——细波纹两层 + 主地平线。 */
 function Horizon() {
   return (
-    <div aria-hidden className="absolute inset-x-0 top-[58%] -z-[3]">
-      {/* 主地平线 —— 一根极细的暖白线 */}
-      <div className="h-px w-full bg-[#e8d9b8]/40" />
-      {/* 阳光在海面拉出的一道亮带（柱形高光） */}
-      <div className="pointer-events-none mx-auto h-32 w-[180px] -translate-y-1 bg-[linear-gradient(180deg,rgba(248,239,220,0.55)_0%,transparent_85%)] blur-[2px] animate-shimmer" />
-      {/* 远处水面的波纹（两层不同速度） */}
+    <div aria-hidden className="absolute inset-x-0 top-[56%] -z-[3]">
+      <div className="h-px w-full bg-[#e8d9b8]/45" />
       <svg
-        className="absolute inset-x-0 top-3 h-10 w-[200%] animate-wave-shift opacity-50"
-        viewBox="0 0 1600 40"
+        className="absolute inset-x-0 top-3 h-12 w-[200%] animate-wave-shift opacity-65"
+        viewBox="0 0 1600 50"
         preserveAspectRatio="none"
       >
         <path
-          d="M0 20 Q 80 14 160 20 T 320 20 T 480 20 T 640 20 T 800 20 T 960 20 T 1120 20 T 1280 20 T 1440 20 T 1600 20"
+          d="M0 25 Q 50 14 100 25 T 200 25 T 300 25 T 400 25 T 500 25 T 600 25 T 700 25 T 800 25 T 900 25 T 1000 25 T 1100 25 T 1200 25 T 1300 25 T 1400 25 T 1500 25 T 1600 25"
           fill="none"
-          stroke="rgba(232,217,184,0.35)"
-          strokeWidth="0.9"
+          stroke="rgba(232,217,184,0.55)"
+          strokeWidth="1.1"
         />
       </svg>
       <svg
-        className="absolute inset-x-0 top-10 h-10 w-[200%] animate-wave-shift opacity-35"
-        viewBox="0 0 1600 40"
+        className="absolute inset-x-0 top-10 h-12 w-[200%] animate-wave-shift opacity-45"
+        viewBox="0 0 1600 50"
         preserveAspectRatio="none"
-        style={{ animationDuration: "26s", animationDirection: "reverse" }}
+        style={{ animationDuration: "14s", animationDirection: "reverse" }}
       >
         <path
-          d="M0 20 Q 100 26 200 20 T 400 20 T 600 20 T 800 20 T 1000 20 T 1200 20 T 1400 20 T 1600 20"
+          d="M0 25 Q 70 32 140 25 T 280 25 T 420 25 T 560 25 T 700 25 T 840 25 T 980 25 T 1120 25 T 1260 25 T 1400 25 T 1540 25 T 1600 25"
           fill="none"
-          stroke="rgba(232,217,184,0.28)"
-          strokeWidth="0.7"
+          stroke="rgba(232,217,184,0.4)"
+          strokeWidth="0.85"
         />
       </svg>
     </div>
   );
 }
 
-/** 前景三角帆 —— 视觉主角，慢慢漂移。 */
+/** 近景大波浪——贴着画面底部，明显的滚动 + 上下浪涌。 */
+function NearWaves() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-x-0 bottom-0 -z-[2]"
+      style={{ height: "22vh" }}
+    >
+      {/* 远一点的层 */}
+      <svg
+        className="absolute inset-x-0 bottom-[10vh] h-24 w-[220%] animate-wave-rise"
+        viewBox="0 0 2200 80"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0 40 Q 110 20 220 40 T 440 40 T 660 40 T 880 40 T 1100 40 T 1320 40 T 1540 40 T 1760 40 T 1980 40 T 2200 40 L 2200 80 L 0 80 Z"
+          fill="rgba(8,32,58,0.55)"
+        />
+      </svg>
+      {/* 主前景大波浪 */}
+      <svg
+        className="absolute inset-x-0 bottom-0 h-[14vh] w-[220%] animate-wave-rise"
+        viewBox="0 0 2200 120"
+        preserveAspectRatio="none"
+        style={{ animationDuration: "5.5s", animationDelay: "-1s" }}
+      >
+        <path
+          d="M0 60 Q 110 30 220 60 T 440 60 T 660 60 T 880 60 T 1100 60 T 1320 60 T 1540 60 T 1760 60 T 1980 60 T 2200 60 L 2200 120 L 0 120 Z"
+          fill="rgba(3,15,28,0.85)"
+        />
+      </svg>
+    </div>
+  );
+}
+
+/** 前景大三角帆——视觉主角，振幅明显。 */
 function ForegroundSail() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute left-[58%] top-[56%] -z-[2] hidden sm:block"
+      className="pointer-events-none absolute -z-[2] hidden sm:block"
+      style={{ right: "10%", top: "44%" }}
     >
       <div className="animate-sail-drift">
-        <div className="origin-bottom" style={{ transform: "scale(1.4)" }}>
+        <div className="origin-bottom" style={{ transform: "scale(1.6)" }}>
           <Sail color="#fbfbf8" withMast />
         </div>
       </div>
@@ -191,40 +256,57 @@ function ForegroundSail() {
   );
 }
 
-/** 顶部 / 底部 的极浅暗角，让文字层在大底图上读起来更稳。 */
-function Vignette() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 -z-[1]"
-      style={{
-        background:
-          "radial-gradient(ellipse at 30% 80%, rgba(0,0,0,0.45) 0%, transparent 60%), linear-gradient(180deg, rgba(0,0,0,0.18) 0%, transparent 22%, transparent 70%, rgba(0,0,0,0.25) 100%)",
-      }}
-    />
-  );
-}
-
-/** 海面反光颗粒——极简两三个小光斑。 */
+/** 海面反光颗粒——更密、更亮、更明显的闪烁。 */
 function ShimmerLayer() {
   return (
     <div aria-hidden className="absolute inset-0 -z-[3]">
       {[
-        { left: "44%", top: "62%", delay: "-0.5s" },
-        { left: "52%", top: "67%", delay: "-1.8s" },
-        { left: "48%", top: "73%", delay: "-3s" },
+        { left: "42%", top: "60%", delay: "-0.1s", size: 4 },
+        { left: "52%", top: "63%", delay: "-0.6s", size: 3 },
+        { left: "48%", top: "67%", delay: "-1.2s", size: 5 },
+        { left: "56%", top: "70%", delay: "-1.8s", size: 3 },
+        { left: "46%", top: "73%", delay: "-2.2s", size: 4 },
+        { left: "62%", top: "65%", delay: "-1.5s", size: 3 },
+        { left: "36%", top: "68%", delay: "-2.5s", size: 4 },
       ].map((p, i) => (
         <span
           key={i}
-          className="absolute h-1 w-1 rounded-full bg-[#f8efdc] animate-shimmer"
-          style={{ left: p.left, top: p.top, animationDelay: p.delay }}
+          className="absolute rounded-full bg-[#fbeed3] animate-shimmer"
+          style={{
+            left: p.left,
+            top: p.top,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            animationDelay: p.delay,
+            boxShadow: "0 0 8px rgba(251,238,211,0.7)",
+          }}
         />
       ))}
     </div>
   );
 }
 
-/** 抽象三角帆——一片帆 + 一根桅杆。 */
+/** 左下角"舞台聚光灯"暗化——让文字层从画面中干净地浮出来。 */
+function Spotlight() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 -z-[1]"
+      style={{
+        background: [
+          // 左下角强暗化（文字所在）
+          "radial-gradient(ellipse 70% 60% at 18% 92%, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 35%, transparent 70%)",
+          // 整体底部稳定暗化
+          "linear-gradient(180deg, rgba(0,0,0,0.12) 0%, transparent 18%, transparent 60%, rgba(0,0,0,0.35) 100%)",
+          // 顶部一道极淡暗化（让 header 浮在 hero 上时不刺眼）
+          "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 14%)",
+        ].join(", "),
+      }}
+    />
+  );
+}
+
+/** 抽象三角帆 + 船身一段。 */
 function Sail({
   color,
   withMast = false,
@@ -243,7 +325,7 @@ function Sail({
       <path
         d="M60 12 L92 134 L28 134 Z"
         fill={color}
-        style={{ filter: "drop-shadow(0 6px 14px rgba(0,0,0,0.18))" }}
+        style={{ filter: "drop-shadow(0 6px 18px rgba(0,0,0,0.32))" }}
       />
       {withMast ? (
         <line
@@ -256,14 +338,13 @@ function Sail({
           opacity="0.55"
         />
       ) : null}
-      {/* 船体一小段，作为帆下的暗示 */}
       <rect
-        x="40"
+        x="38"
         y="134"
-        width="40"
-        height="3.5"
+        width="44"
+        height="4"
         fill={color}
-        opacity="0.85"
+        opacity="0.92"
       />
     </svg>
   );
