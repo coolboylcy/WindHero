@@ -100,12 +100,12 @@ body {
   );
 }
 
-/* —— 微动画 —— */
+/* —— 仅保留一个极简的进入微动效 —— */
 
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -113,173 +113,12 @@ body {
   }
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes drift {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-/* 帆顶在风里左右摆——transform-origin 固定在底部桅杆基座，
-   所以船体不动，只有帆顶在画弧。极小 translate，主要靠 rotate。 */
-@keyframes sail-drift {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(-3.5deg);
-  }
-  50% {
-    transform: translate(0, -1px) rotate(3.5deg);
-  }
-}
-
-/* 船体——极轻微浮动，模拟浪上的"上下浮起" */
-@keyframes hull-bob {
-  0%,
-  100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-/* 远景小帆——慢但有可见的位移 */
-@keyframes sail-distant {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(-1deg);
-  }
-  50% {
-    transform: translate(14px, -6px) rotate(2deg);
-  }
-}
-
-/* 太阳的呼吸——加大幅度，让它真的"呼吸" */
-@keyframes sun-breathe {
-  0%,
-  100% {
-    opacity: 0.92;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.07);
-  }
-}
-
-/* 太阳外层光晕的呼吸（错相 + 更大幅度） */
-@keyframes glow-breathe {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.95;
-    transform: scale(1.28);
-  }
-}
-
-/* 海面波纹横向漂移——更短的位移距离（一个完整波长）让节奏更紧 */
-@keyframes wave-shift {
-  from { transform: translateX(0); }
-  to { transform: translateX(-200px); }
-}
-
-/* 近景大波浪——上下起伏明显 */
-@keyframes wave-rise {
-  0%,
-  100% { transform: translate(0, 0); }
-  50% { transform: translate(-100px, -8px); }
-}
-
-/* 太阳在海面拉出的反光柱——左右轻摆 + 高度变化 */
-@keyframes sun-glade {
-  0%,
-  100% {
-    opacity: 0.7;
-    transform: translateX(0) scaleY(1);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(8px) scaleY(1.12);
-  }
-}
-
-/* 海面光斑闪烁——更明显的对比 */
-@keyframes shimmer {
-  0%,
-  100% { opacity: 0.15; transform: scale(0.9); }
-  50% { opacity: 0.85; transform: scale(1.2); }
-}
-
 .animate-fade-up {
   animation: fade-up 0.9s var(--ease-sail) both;
 }
 
-.animate-fade-in {
-  animation: fade-in 1.6s var(--ease-sail) both;
-}
-
-.animate-drift {
-  animation: drift 11s var(--ease-sail) infinite;
-}
-
-.animate-sail-drift {
-  animation: sail-drift 4.5s var(--ease-sail) infinite;
-  transform-origin: 50% 100%;
-}
-
-.animate-hull-bob {
-  animation: hull-bob 4.5s var(--ease-sail) infinite;
-}
-
-.animate-sail-distant {
-  animation: sail-distant 9s var(--ease-sail) infinite;
-}
-
-.animate-sun-breathe {
-  animation: sun-breathe 3.6s var(--ease-sail) infinite;
-}
-
-.animate-glow-breathe {
-  animation: glow-breathe 3.6s var(--ease-sail) infinite;
-}
-
-.animate-wave-shift {
-  animation: wave-shift 10s linear infinite;
-}
-
-.animate-wave-rise {
-  animation: wave-rise 7s var(--ease-sail) infinite;
-}
-
-.animate-sun-glade {
-  animation: sun-glade 4.2s var(--ease-sail) infinite;
-  transform-origin: 50% 0%;
-}
-
-.animate-shimmer {
-  animation: shimmer 2.4s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-up,
-  .animate-fade-in,
-  .animate-drift,
-  .animate-sail-drift,
-  .animate-hull-bob,
-  .animate-sail-distant,
-  .animate-sun-breathe,
-  .animate-glow-breathe,
-  .animate-wave-shift,
-  .animate-wave-rise,
-  .animate-sun-glade,
-  .animate-shimmer {
+  .animate-fade-up {
     animation: none;
   }
 }
