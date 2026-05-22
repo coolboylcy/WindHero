@@ -4,13 +4,13 @@ import { ArrowRight } from "lucide-react";
 export function Hero() {
   return (
     <section className="relative isolate overflow-hidden border-b border-line/60">
-      <SunBleachedBackground />
+      <BackgroundWash />
 
       <div className="relative mx-auto grid min-h-[88vh] max-w-7xl grid-cols-1 items-end gap-16 px-6 pb-24 pt-32 lg:grid-cols-[1.35fr_0.65fr] lg:items-center lg:gap-24 lg:px-10">
         <div className="animate-fade-up">
           <p className="eyebrow">现代航海学院 · 自 2026 起</p>
 
-          <h1 className="display mt-7 text-balance text-[clamp(2.6rem,6.4vw,5rem)] text-ink">
+          <h1 className="display mt-7 text-balance text-[clamp(2.6rem,6.4vw,5.2rem)] text-ink">
             驾驭风的方向。
           </h1>
 
@@ -44,7 +44,7 @@ export function Hero() {
         </div>
 
         <aside className="hidden lg:block">
-          <HorizonCard />
+          <SeaCard />
         </aside>
       </div>
 
@@ -59,56 +59,64 @@ export function Hero() {
   );
 }
 
-/** 极简的"远处地平线"——一条贴着画面下沿的雾蓝色带，配上一层晨光的暖色径向。 */
-function SunBleachedBackground() {
+/** 纯净的浅冷底，远处一道极淡的海蓝。无暖调、无径向晕。 */
+function BackgroundWash() {
   return (
     <div aria-hidden className="absolute inset-0 -z-10">
       <div className="absolute inset-0 bg-paper" />
-      <div className="absolute inset-x-0 top-0 h-[55%] bg-[radial-gradient(ellipse_at_top,rgba(199,126,94,0.10),transparent_60%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-[#cfd9df] via-[#dfe2da]/60 to-transparent" />
-      <div className="absolute inset-x-0 bottom-[42%] h-px bg-line/70" />
+      <div className="absolute inset-x-0 bottom-0 h-[36%] bg-gradient-to-t from-sea-soft/60 via-sea-soft/20 to-transparent" />
+      <div className="absolute inset-x-0 bottom-[36%] h-px bg-line/70" />
     </div>
   );
 }
 
-/** "地平线卡片"——一帧静止的画面，代替之前的旋转罗盘。 */
-function HorizonCard() {
+/** 替代之前的"地平线卡片"——一块纯净的深海军蓝面板，
+    上面一条细线、一颗白色太阳、一支白色三角帆。
+    像 Aman / Loro Piana 那种"高级、安静、有自信"的视觉。 */
+function SeaCard() {
   return (
     <figure className="relative mx-auto max-w-[420px] animate-drift">
-      <div className="relative aspect-[4/5] overflow-hidden bg-paper-soft">
-        {/* sky */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#e9e2d2] via-[#dee1d8] to-[#bcccd2]" />
-        {/* sun */}
-        <div className="absolute left-1/2 top-[36%] h-24 w-24 -translate-x-1/2 rounded-full bg-[#e8c69b]/70 blur-[2px]" />
-        <div className="absolute left-1/2 top-[36%] h-24 w-24 -translate-x-1/2 rounded-full border border-[#c98e5e]/40" />
-        {/* horizon line */}
-        <div className="absolute left-0 right-0 top-[58%] h-px bg-ink/20" />
-        {/* sea */}
-        <div className="absolute inset-x-0 bottom-0 top-[58%] bg-gradient-to-b from-[#7a98a7] via-[#5b7e92] to-[#3e6376]" />
-        {/* sail — a single triangle */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+        {/* 远处的海面渐变：海军蓝 → 海蓝 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1f38] via-[#143a5e] to-[#1d5687]" />
+
+        {/* 一颗白色的太阳 */}
+        <div className="absolute left-1/2 top-[28%] h-14 w-14 -translate-x-1/2 rounded-full bg-paper/95" />
+
+        {/* 地平线 —— 一根白色细线 */}
+        <div className="absolute left-[10%] right-[10%] top-[44%] h-px bg-paper/60" />
+
+        {/* 白色三角帆 */}
         <svg
           viewBox="0 0 100 100"
-          className="absolute left-[58%] top-[52%] h-14 w-14 -translate-x-1/2 -translate-y-1/2 text-paper"
+          className="absolute left-1/2 top-[58%] h-20 w-20 -translate-x-1/2 -translate-y-1/2 text-paper"
         >
           <path
-            d="M50 18 L62 78 L38 78 Z"
+            d="M50 14 L66 80 L34 80 Z"
             fill="currentColor"
-            opacity="0.92"
+            opacity="0.96"
           />
           <line
             x1="50"
-            y1="14"
+            y1="10"
             x2="50"
-            y2="82"
+            y2="84"
             stroke="currentColor"
             strokeWidth="0.6"
-            opacity="0.55"
+            opacity="0.45"
           />
         </svg>
+
+        {/* 右下角极细的角标 */}
+        <p className="absolute bottom-5 left-5 font-mono text-[0.6rem] tracking-[0.24em] text-paper/70">
+          WINDHERO
+        </p>
+        <p className="absolute bottom-5 right-5 font-mono text-[0.6rem] tracking-[0.18em] text-paper/55">
+          06°W · 8 kn
+        </p>
       </div>
-      <figcaption className="mt-4 flex items-baseline justify-between text-[0.68rem] tracking-[0.22em] text-mist">
-        <span>清晨 · 五点四十六分</span>
-        <span className="font-mono">06°W / 8 kn</span>
+      <figcaption className="mt-4 text-[0.7rem] tracking-[0.18em] text-mist">
+        清晨 · 五点四十六分
       </figcaption>
     </figure>
   );

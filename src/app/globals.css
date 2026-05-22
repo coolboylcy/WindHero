@@ -1,39 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light, sun-bleached Mediterranean palette. */
-  --color-paper: #f3efe6;          /* 主背景：被太阳晒过的石灰墙 */
-  --color-paper-soft: #ebe5d6;     /* 次级面板 */
-  --color-paper-warm: #e3dcc9;     /* 卡片悬浮 / 微差 */
-  --color-line: #d6cdb8;           /* 极细分隔线 */
+  /* —— 高级地中海色板 ——
+     纯净的白、深邃的海军蓝、清亮的爱琴海蓝。无米黄，无橄榄，无做旧。
+     对标 The Row / Loro Piana / Aman 的色感。 */
+  --color-paper: #fbfbf8;          /* 主背景：极冷白，像漂白的亚麻 */
+  --color-paper-soft: #f1f1ec;     /* 次级面板 / hover 微差 */
+  --color-line: #d9d9d2;           /* 极细分隔线 */
 
-  --color-ink: #16243a;            /* 主文字：午夜墨蓝 */
-  --color-ink-soft: #3b4e6a;       /* 次文字 */
-  --color-mist: #8997a8;           /* 弱文字 / 元信息 */
+  --color-ink: #0e2540;            /* 主文字：深海军蓝 */
+  --color-ink-soft: #3a4f6e;       /* 次文字 */
+  --color-mist: #8090a4;           /* 弱文字 / 元信息 */
 
-  --color-sea: #5c8ba8;            /* 强调色：爱琴海蓝 */
-  --color-sea-deep: #3a6889;       /* 强调悬浮 */
-  --color-olive: #8b8c68;          /* 次强调：橄榄 */
-  --color-terracotta: #c77e5e;     /* 极少用：晒色赤陶 */
+  --color-sea: #2d7db6;            /* 强调色：清亮爱琴海蓝 */
+  --color-sea-deep: #0e5285;       /* 强调悬浮 / 链接 */
+  --color-sea-soft: #c5d8e6;       /* 极浅海蓝（远景、卡片背景） */
 
-  /* Fonts — 现代衬线 + 现代无衬线，去掉黄铜古典味 */
+  --color-coral: #d04a3b;          /* 极少用的高光红，仅在关键 CTA / 引言 */
+
+  /* Fonts —— 现代出版物风衬线，去掉古典装饰 */
   --font-sans: var(--font-inter-tight), "PingFang SC", "Hiragino Sans GB",
     "Source Han Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui,
     -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-fraunces), "Source Han Serif SC",
+  --font-serif: var(--font-source-serif), "Source Han Serif SC",
     "Noto Serif CJK SC", "Songti SC", ui-serif, Georgia, serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo,
     monospace;
 
-  --tracking-display: -0.005em;
-  --tracking-eyebrow: 0.18em;
+  --tracking-display: -0.012em;
+  --tracking-eyebrow: 0.16em;
 
   --ease-sail: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 :root {
-  --background: #f3efe6;
-  --foreground: #16243a;
+  --background: #fbfbf8;
+  --foreground: #0e2540;
   color-scheme: light;
 }
 
@@ -53,7 +55,7 @@ body {
 }
 
 ::selection {
-  background: rgba(92, 139, 168, 0.22);
+  background: rgba(45, 125, 182, 0.22);
   color: var(--color-ink);
 }
 
@@ -68,15 +70,18 @@ body {
   color: var(--color-mist);
 }
 
-/* Display — Fraunces 现代衬线，做地中海/编辑设计感。
-   故意只用 light/regular，避开"黄铜 Heavy"那种厚重感。 */
+/* Display — Source Serif 4，现代出版物质感的衬线。
+   Weight 400/500 给画面以分量，不再"轻飘飘"。 */
 .display {
   font-family: var(--font-serif);
-  font-weight: 350;
+  font-weight: 400;
   letter-spacing: var(--tracking-display);
   line-height: 1.08;
-  font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 30, "WONK" 0;
+}
+
+.display-medium {
+  font-family: var(--font-serif);
+  font-weight: 500;
 }
 
 /* 长文中文段落的呼吸节奏 */

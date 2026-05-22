@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Source_Serif_4, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -11,11 +11,11 @@ const interTight = Inter_Tight({
   weight: ["300", "400", "500", "600"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
   display: "swap",
-  axes: ["SOFT", "opsz"],
+  axes: ["opsz"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${interTight.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${interTight.variable} ${sourceSerif.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="bg-paper text-ink min-h-full flex flex-col">
         <SiteHeader />

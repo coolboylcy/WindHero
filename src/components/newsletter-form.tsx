@@ -77,7 +77,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
         className={
           "mt-2 min-h-[1.1rem] text-xs " +
           (status === "error"
-            ? "text-terracotta"
+            ? "text-coral"
             : status === "ok"
               ? "text-sea-deep"
               : "text-mist")
