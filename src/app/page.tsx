@@ -12,16 +12,15 @@ export default function HomePage() {
       <Section className="border-b border-white/5">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <SectionHeading
-            eyebrow="Why WindHero"
+            eyebrow="我们为什么存在"
             title={
               <>
-                We don&apos;t teach you to{" "}
-                <em className="not-italic text-gold">play</em> with boats.
+                我们不教你<em className="not-italic text-gold">玩</em>船。
                 <br />
-                We teach you to read the sea.
+                我们教你读懂海。
               </>
             }
-            lead="Most sailing schools hand you a certificate and a hangover. WindHero is built for people who want the skill, the judgement, and the calm — the kind of seamanship that holds together at 02:00 on the fourth night out."
+            lead="多数帆船学校给你一张证书和一晚的酒。WindHero 为那种想要真功夫的人而建——能力、判断力、和那份在第四夜凌晨两点依然能稳住的镇定。"
           />
 
           <div className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2">
@@ -32,7 +31,7 @@ export default function HomePage() {
               >
                 <p.icon className="h-7 w-7 text-gold/90" strokeWidth={1.2} />
                 <h3 className="display text-2xl text-sail">{p.title}</h3>
-                <p className="text-sm leading-relaxed text-mist/70">{p.body}</p>
+                <p className="text-sm leading-[1.85] text-mist/70">{p.body}</p>
               </article>
             ))}
           </div>
@@ -42,22 +41,19 @@ export default function HomePage() {
       <Section className="border-b border-white/5">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="Curriculum"
+            eyebrow="课程体系"
             title={
               <>
-                A curriculum charted by{" "}
-                <span className="text-gold">
-                  people who&apos;ve done the miles.
-                </span>
+                由真正<span className="text-gold">跑过这些海的人</span>编写的课程。
               </>
             }
-            lead="From the first reach to a 1,000 nm offshore passage, every course is taught by working captains and meteorologists — not influencers."
+            lead="从第一次抢风到一千海里的远洋航段——每一门课都由在役船长与气象人主讲，不是网红、不是代课。"
           />
           <Link
             href="/courses"
-            className="group inline-flex h-11 items-center gap-2 border border-white/15 px-5 text-[0.74rem] uppercase tracking-[0.26em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
+            className="group inline-flex h-11 items-center gap-2 border border-white/15 px-5 text-[0.78rem] tracking-[0.32em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
           >
-            All Courses
+            全部课程
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -70,17 +66,17 @@ export default function HomePage() {
               className="group relative flex flex-col justify-between gap-10 border border-white/10 bg-gradient-to-b from-deep/40 to-transparent p-8 transition-colors hover:border-gold/40 hover:bg-deep/50"
             >
               <div>
-                <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-[0.24em] text-mist/55">
+                <div className="flex items-center justify-between text-[0.72rem] tracking-[0.26em] text-mist/55">
                   <span className="font-mono text-gold/80">{c.code}</span>
                   <span>{c.level}</span>
                 </div>
                 <h3 className="display mt-6 text-3xl text-sail">{c.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-mist/70">
+                <p className="mt-3 text-sm leading-[1.85] text-mist/70">
                   {c.summary}
                 </p>
               </div>
               <div className="flex items-center justify-between text-xs text-mist/60">
-                <span className="font-mono uppercase tracking-[0.2em]">
+                <span className="font-mono tracking-[0.18em]">
                   {c.duration}
                 </span>
                 <ArrowRight className="h-4 w-4 text-gold transition-transform group-hover:translate-x-1" />
@@ -93,20 +89,19 @@ export default function HomePage() {
       <Section className="border-b border-white/5">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.3fr] lg:gap-24">
           <div>
-            <Eyebrow>Open voyages</Eyebrow>
+            <Eyebrow>开放航段</Eyebrow>
             <h2 className="display mt-5 text-balance text-4xl text-sail md:text-5xl">
-              Real passages. Real captains. Real water.
+              真实的航段、真实的船长、真实的海水。
             </h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-mist/70">
-              Pick a leg, fly to the marina, and step onboard. Voyages are
-              limited to small crews so the learning stays high and the watch
-              system stays sane.
+            <p className="mt-5 max-w-md text-base leading-[1.85] text-mist/70">
+              挑一段航段，飞到港口，登船起航。每段航程都限定小船员人数，保证学习密度，
+              也保证值班体系不至于把人拖垮。
             </p>
             <Link
               href="/voyages"
-              className="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.24em] text-gold hover:text-gold-soft"
+              className="mt-8 inline-flex items-center gap-2 text-sm tracking-[0.28em] text-gold hover:text-gold-soft"
             >
-              See all routes
+              查看全部航线
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -121,20 +116,20 @@ export default function HomePage() {
                   <div>
                     <div className="flex flex-wrap items-baseline gap-3">
                       <h3 className="display text-2xl text-sail">{v.name}</h3>
-                      <span className="font-mono text-xs uppercase tracking-[0.2em] text-mist/50">
+                      <span className="text-xs tracking-[0.24em] text-mist/50">
                         {v.region}
                       </span>
                     </div>
-                    <p className="mt-2 max-w-xl text-sm text-mist/65">
+                    <p className="mt-2 max-w-xl text-sm leading-[1.85] text-mist/65">
                       {v.brief}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="font-mono text-sm text-gold">{v.distance}</p>
-                    <p className="mt-1 text-[0.7rem] uppercase tracking-[0.22em] text-mist/50">
+                    <p className="mt-1 text-[0.72rem] tracking-[0.26em] text-mist/50">
                       {v.season}
                     </p>
-                    <p className="mt-1 text-[0.7rem] uppercase tracking-[0.22em] text-mist/40">
+                    <p className="mt-1 text-[0.72rem] tracking-[0.26em] text-mist/40">
                       {v.difficulty}
                     </p>
                   </div>
@@ -148,14 +143,13 @@ export default function HomePage() {
       <Section className="relative border-b border-white/5">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(200,169,106,0.08),transparent_60%)]" />
         <blockquote className="mx-auto max-w-4xl text-center">
-          <p className="eyebrow justify-center">From the manifesto</p>
-          <p className="display mt-8 text-balance text-4xl leading-[1.08] text-sail md:text-6xl">
-            “In a world that keeps trying to choose for you, the sea returns the
-            decision to your hands.{" "}
-            <span className="text-gold">Take it.</span>”
+          <p className="eyebrow justify-center">— 来自宣言</p>
+          <p className="display mt-8 text-balance text-4xl leading-[1.15] text-sail md:text-6xl">
+            「在一个不停替你做决定的时代，海会把决定权还给你的双手。
+            <span className="text-gold">接住它。</span>」
           </p>
-          <footer className="mt-10 text-xs uppercase tracking-[0.32em] text-mist/55">
-            — WindHero, Article I
+          <footer className="mt-10 text-xs tracking-[0.34em] text-mist/55">
+            — WindHero 宣言 · 第一条
           </footer>
         </blockquote>
       </Section>
@@ -163,15 +157,15 @@ export default function HomePage() {
       <Section>
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="Journal"
-            title="Field notes from the crew."
-            lead="Essays, logs, and small lessons from sailors learning to live deliberately."
+            eyebrow="航海日志"
+            title="来自船员的现场笔记。"
+            lead="散文、值班日志、小经验——一群正在学习如何更清醒地生活的水手写的。"
           />
           <Link
             href="/journal"
-            className="group inline-flex h-11 items-center gap-2 border border-white/15 px-5 text-[0.74rem] uppercase tracking-[0.26em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
+            className="group inline-flex h-11 items-center gap-2 border border-white/15 px-5 text-[0.78rem] tracking-[0.32em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
           >
-            Read the journal
+            阅读全部
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -183,15 +177,15 @@ export default function HomePage() {
               className="group flex h-full flex-col justify-between gap-10 border border-white/10 bg-ink p-7 transition-colors hover:border-gold/40 hover:bg-deep/40"
             >
               <div>
-                <p className="font-mono text-[0.7rem] uppercase tracking-[0.24em] text-gold/80">
+                <p className="font-mono text-[0.72rem] tracking-[0.28em] text-gold/80">
                   {j.kicker}
                 </p>
                 <h3 className="display mt-4 text-2xl text-sail">{j.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-mist/70">
+                <p className="mt-3 text-sm leading-[1.85] text-mist/70">
                   {j.excerpt}
                 </p>
               </div>
-              <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-[0.22em] text-mist/50">
+              <div className="flex items-center justify-between text-[0.72rem] tracking-[0.26em] text-mist/50">
                 <span>{j.author}</span>
                 <span>
                   {j.date} · {j.readTime}
@@ -208,22 +202,22 @@ export default function HomePage() {
 const pillars = [
   {
     icon: Wind,
-    title: "Read the wind.",
-    body: "Pressure systems, sea breeze, gust fronts. We teach you to walk on deck and call the next 30 minutes before your plotter does.",
+    title: "读懂风。",
+    body: "气压系统、海陆风、阵风锋。教你走上甲板的那一瞬间，就能预判接下来三十分钟——比你的电子海图更早。",
   },
   {
     icon: Compass,
-    title: "Plot a course.",
-    body: "Real charts, real tide gates, real bail-out plans. A passage is a decision tree, and you learn to walk it before you cast off.",
+    title: "规划航线。",
+    body: "真实的海图、真实的潮汐窗口、真实的退路港。一段航程是一棵决策树，你要在解缆之前先走一遍。",
   },
   {
     icon: Waves,
-    title: "Hold the watch.",
-    body: "Heavy weather, night watches, MOB drills. Calm, repeatable seamanship — the discipline that keeps your crew home.",
+    title: "守住值班。",
+    body: "恶劣天气、夜班值守、MOB 演练——冷静、可重复的海员素养，是把船员带回家的那种功夫。",
   },
   {
     icon: Anchor,
-    title: "Captain the room.",
-    body: "Leadership, briefings, the courage to abort. The captain's mind transfers to every other part of your life.",
+    title: "掌舵全局。",
+    body: "领导力、简报与放弃的勇气。船长的思维会跟你下船，带进你生活的每一个房间。",
   },
 ];

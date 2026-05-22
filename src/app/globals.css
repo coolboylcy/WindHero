@@ -11,12 +11,15 @@
   --color-gold-soft: #d8c08a;
   --color-rust: #9c5a3c;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-cormorant), ui-serif, Georgia, "Times New Roman",
-    serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo,
-    monospace;
+  --font-sans: var(--font-inter), "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC",
+    ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-serif: var(--font-cormorant), "Source Han Serif SC",
+    "Noto Serif CJK SC", "Songti SC", "STSong", ui-serif, Georgia,
+    "Times New Roman", serif;
+  --font-mono: var(--font-jetbrains), "PingFang SC", ui-monospace,
+    SFMono-Regular, Menlo, monospace;
 
   --tracking-display: 0.01em;
   --tracking-eyebrow: 0.32em;
@@ -46,7 +49,14 @@ body {
   font-feature-settings: "ss01", "cv11", "kern";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: 0.005em;
+  letter-spacing: 0.01em;
+  text-rendering: optimizeLegibility;
+}
+
+/* Slightly looser line-height for mixed Chinese/English long-form. */
+.prose-zh {
+  line-height: 1.85;
+  letter-spacing: 0.02em;
 }
 
 ::selection {

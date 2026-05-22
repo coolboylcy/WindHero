@@ -28,16 +28,16 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
 
       if (!res.ok || !data.ok) {
         setStatus("error");
-        setMessage(data.error ?? "Something went wrong. Try again shortly.");
+        setMessage(data.error ?? "出了点问题，请稍后再试。");
         return;
       }
 
       setStatus("ok");
-      setMessage("You're on the manifest. Watch your inbox.");
+      setMessage("你已经登上船员名册，请留意邮箱。");
       setEmail("");
     } catch {
       setStatus("error");
-      setMessage("Network unavailable. Try again shortly.");
+      setMessage("网络不通，请稍后再试。");
     }
   }
 
@@ -51,15 +51,15 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
           inputMode="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="captain@oceanmail.com"
+          placeholder="captain@example.com"
           className="h-12 flex-1 bg-transparent px-4 text-sm text-sail placeholder:text-mist/40 focus:outline-none"
-          aria-label="Email address"
+          aria-label="邮箱地址"
           disabled={status === "loading"}
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="group inline-flex h-12 items-center gap-2 border-l border-white/10 px-4 text-[0.74rem] uppercase tracking-[0.26em] text-gold transition-colors hover:bg-gold hover:text-ink disabled:opacity-60"
+          className="group inline-flex h-12 items-center gap-2 border-l border-white/10 px-4 text-[0.78rem] tracking-[0.32em] text-gold transition-colors hover:bg-gold hover:text-ink disabled:opacity-60"
         >
           {status === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -67,7 +67,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
             <Check className="h-4 w-4" />
           ) : (
             <>
-              Board
+              登船
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </>
           )}
@@ -84,7 +84,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
         }
         aria-live="polite"
       >
-        {message ?? "We respect your inbox. Unsubscribe with one click."}
+        {message ?? "我们尊重你的邮箱，一键即可退订。"}
       </p>
     </form>
   );

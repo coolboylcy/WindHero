@@ -5,31 +5,31 @@ import { Section, SectionHeading, Eyebrow } from "@/components/section";
 import { NewsletterForm } from "@/components/newsletter-form";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "关于",
   description:
-    "Who runs WindHero, where we sail, and how to reach the office.",
+    "谁在主理 WindHero，我们在哪里航海，以及怎么找到岸上的办公室。",
 };
 
 const crew = [
   {
-    name: "Wei Lin",
-    role: "Founder & Captain Instructor",
-    bio: "South China Sea pilot, 60,000+ blue-water miles, ex-meteorologist. Believes a curriculum should be testable in real weather.",
+    name: "林 维",
+    role: "创始人 · 主讲船长",
+    bio: "南海引航员，远洋航程超过 60,000 海里，前气象官。相信一门课程必须在真实天气里能被验证。",
   },
   {
     name: "Marisol Ortega",
-    role: "Head of Curriculum",
-    bio: "Yachtmaster Ocean. Led safety training for two ARC fleets and a Sydney-Hobart team.",
+    role: "课程总监",
+    bio: "Yachtmaster Ocean。曾为两支 ARC 跨大西洋船队和一支悉尼-霍巴特船队做安全训练。",
   },
   {
-    name: "Toshi Aragaki",
-    role: "Pilotage & Celestial",
-    bio: "Okinawa-based pilot and traditional navigator. Teaches the half of navigation the screens forgot.",
+    name: "新垣 俊志",
+    role: "引航与天文导航",
+    bio: "驻冲绳，引航员兼传统航海者。教会你电子海图遗忘的那一半导航功夫。",
   },
   {
     name: "Henrik Sund",
-    role: "Weather & Routing",
-    bio: "Former North Atlantic ferry routing officer. Reads a GRIB the way a doctor reads an MRI.",
+    role: "天气与航路",
+    bio: "前北大西洋邮轮的航路气象官。读 GRIB 的方式，像医生读核磁共振。",
   },
 ];
 
@@ -38,28 +38,28 @@ export default function AboutPage() {
     <>
       <Section className="border-b border-white/5 pt-32">
         <SectionHeading
-          eyebrow="About"
+          eyebrow="关于"
           title={
             <>
-              We started this school because the one{" "}
-              <span className="text-gold">we wanted didn&apos;t exist.</span>
+              我们办这所学校，
+              <br />
+              是因为我们自己<span className="text-gold">想上的那一所并不存在。</span>
             </>
           }
-          lead="WindHero is a small, deliberately international school built by working captains, meteorologists, and ocean instructors. We teach the parts of sailing that take years to learn alone, and the parts of life that sailing accidentally teaches."
+          lead="WindHero 是一所刻意保持小规模、刻意国际化的学校，由在役船长、气象人和远洋教练共同搭建。我们教那些一个人摸索要花很多年才能学会的部分；也教那些海会顺手让你学会的——关于生活的部分。"
         />
       </Section>
 
       <Section className="border-b border-white/5">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <Eyebrow>The crew</Eyebrow>
+            <Eyebrow>船员名单</Eyebrow>
             <h2 className="display mt-4 text-3xl text-sail md:text-4xl">
-              People who&apos;ve done the miles.
+              都是真正跑过这些海的人。
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-mist/70">
-              Our instructors share watches with you on real legs. There are
-              no celebrity ambassadors. There is no marketing department on
-              the back deck.
+            <p className="mt-4 max-w-md text-sm leading-[1.85] text-mist/70">
+              导师会和你一起在真实航段上值班。没有明星代言人，
+              后甲板上也没有市场部。
             </p>
           </div>
 
@@ -67,10 +67,10 @@ export default function AboutPage() {
             {crew.map((p) => (
               <article key={p.name} className="bg-ink p-7">
                 <p className="display text-2xl text-sail">{p.name}</p>
-                <p className="mt-1 text-[0.7rem] uppercase tracking-[0.24em] text-gold/80">
+                <p className="mt-1 text-[0.72rem] tracking-[0.28em] text-gold/80">
                   {p.role}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-mist/70">
+                <p className="mt-4 text-sm leading-[1.85] text-mist/70">
                   {p.bio}
                 </p>
               </article>
@@ -82,27 +82,27 @@ export default function AboutPage() {
       <Section id="contact" className="border-b border-white/5">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
-            <Eyebrow>Office on land</Eyebrow>
+            <Eyebrow>岸上办公室</Eyebrow>
             <h2 className="display mt-4 text-3xl text-sail md:text-4xl">
-              Reach the dock.
+              联系我们。
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-mist/70">
-              For private cohorts, partnerships, or to join a voyage, write to
-              us. We read every message; we reply within two working days.
+            <p className="mt-4 max-w-md text-sm leading-[1.85] text-mist/70">
+              想做内部船员班、合作、或登上某段远洋——请写信给我们。
+              每一封都会被读到，工作日内两日回复。
             </p>
 
             <dl className="mt-10 space-y-6 border-t border-white/10 pt-8">
               <div>
-                <dt className="eyebrow !text-mist/50">Office</dt>
+                <dt className="eyebrow !text-mist/50">办公室</dt>
                 <dd className="display mt-2 text-xl text-sail">
-                  Aberdeen Marina, Hong Kong
+                  香港仔游艇会，香港
                 </dd>
-                <dd className="font-mono text-xs uppercase tracking-[0.22em] text-mist/55">
+                <dd className="font-mono text-xs tracking-[0.24em] text-mist/55">
                   22°14′N · 114°09′E
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow !text-mist/50">Email</dt>
+                <dt className="eyebrow !text-mist/50">邮箱</dt>
                 <dd className="mt-2">
                   <Link
                     href="mailto:hello@windhero.app"
@@ -114,7 +114,7 @@ export default function AboutPage() {
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow !text-mist/50">Open repository</dt>
+                <dt className="eyebrow !text-mist/50">开源仓库</dt>
                 <dd className="mt-2">
                   <Link
                     href="https://github.com/coolboylcy/WindHero"
@@ -131,13 +131,12 @@ export default function AboutPage() {
           </div>
 
           <aside className="border border-white/10 bg-gradient-to-b from-deep/40 to-transparent p-8 md:p-10">
-            <p className="eyebrow">Stay aboard</p>
+            <p className="eyebrow">订阅船长信</p>
             <h3 className="display mt-4 text-3xl text-sail">
-              The dispatch is the easiest way in.
+              这是最方便走进 WindHero 的路。
             </h3>
-            <p className="mt-3 text-sm leading-relaxed text-mist/70">
-              One letter a month. New voyages, a weather pattern worth reading,
-              and a captain&apos;s log from a recent passage.
+            <p className="mt-3 text-sm leading-[1.85] text-mist/70">
+              每月一封——新的航段、值得读的一段天气、以及一篇最近航程留下的船长日志。
             </p>
             <div className="mt-6">
               <NewsletterForm source="about" />

@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     body = await req.json();
   } catch {
     return NextResponse.json(
-      { ok: false, error: "Invalid JSON body." },
+      { ok: false, error: "请求格式不正确。" },
       { status: 400 }
     );
   }
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 
   if (!email || typeof email !== "string" || !emailRe.test(email)) {
     return NextResponse.json(
-      { ok: false, error: "A valid email is required." },
+      { ok: false, error: "请填写有效的邮箱地址。" },
       { status: 400 }
     );
   }
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
   if (error) {
     console.error("[subscribe] supabase error", error);
     return NextResponse.json(
-      { ok: false, error: "Could not record your address. Try again shortly." },
+      { ok: false, error: "暂时没能记下你的邮箱，请稍后再试。" },
       { status: 500 }
     );
   }

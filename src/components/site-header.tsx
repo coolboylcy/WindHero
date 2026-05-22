@@ -7,11 +7,11 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems: { href: string; label: string }[] = [
-  { href: "/courses", label: "Courses" },
-  { href: "/voyages", label: "Voyages" },
-  { href: "/journal", label: "Journal" },
-  { href: "/manifesto", label: "Manifesto" },
-  { href: "/about", label: "About" },
+  { href: "/courses", label: "课程" },
+  { href: "/voyages", label: "航线" },
+  { href: "/journal", label: "航海日志" },
+  { href: "/manifesto", label: "宣言" },
+  { href: "/about", label: "关于" },
 ];
 
 export function SiteHeader() {
@@ -24,7 +24,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="group flex items-center gap-2.5"
-          aria-label="WindHero home"
+          aria-label="WindHero 首页"
           onClick={() => setOpen(false)}
         >
           <CompassMark className="h-7 w-7 text-gold transition-transform duration-700 ease-out group-hover:rotate-45" />
@@ -43,7 +43,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative text-[0.82rem] uppercase tracking-[0.22em] text-mist/70 transition-colors hover:text-sail",
+                  "relative text-[0.82rem] tracking-[0.3em] text-mist/70 transition-colors hover:text-sail",
                   active && "text-sail"
                 )}
               >
@@ -62,15 +62,15 @@ export function SiteHeader() {
         <div className="hidden md:block">
           <Link
             href="/courses"
-            className="inline-flex h-10 items-center gap-2 border border-gold/60 px-5 text-[0.74rem] uppercase tracking-[0.26em] text-gold transition-colors hover:bg-gold hover:text-ink"
+            className="inline-flex h-10 items-center gap-2 border border-gold/60 px-5 text-[0.74rem] tracking-[0.32em] text-gold transition-colors hover:bg-gold hover:text-ink"
           >
-            Enroll
+            报名
           </Link>
         </div>
 
         <button
           type="button"
-          aria-label="Toggle navigation"
+          aria-label="切换导航菜单"
           onClick={() => setOpen((v) => !v)}
           className="grid h-10 w-10 place-items-center border border-white/10 text-sail md:hidden"
         >
@@ -86,7 +86,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-sm uppercase tracking-[0.22em] text-mist/80"
+                className="py-3 text-sm tracking-[0.3em] text-mist/80"
               >
                 {item.label}
               </Link>
@@ -94,9 +94,9 @@ export function SiteHeader() {
             <Link
               href="/courses"
               onClick={() => setOpen(false)}
-              className="mt-3 inline-flex h-11 items-center justify-center border border-gold/60 text-[0.74rem] uppercase tracking-[0.26em] text-gold"
+              className="mt-3 inline-flex h-11 items-center justify-center border border-gold/60 text-[0.74rem] tracking-[0.34em] text-gold"
             >
-              Enroll
+              报名
             </Link>
           </nav>
         </div>

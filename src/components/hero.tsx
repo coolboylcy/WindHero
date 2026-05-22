@@ -11,46 +11,49 @@ export function Hero() {
         <div className="animate-fade-up">
           <p className="eyebrow flex items-center gap-3">
             <span className="h-px w-8 bg-gold/70" />
-            A modern sailing academy
+            一所现代航海学院
           </p>
 
           <h1 className="display mt-6 text-balance text-[clamp(2.75rem,7vw,5.6rem)] text-sail">
-            Master the{" "}
+            驾驭{" "}
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-gold via-gold-soft to-gold bg-clip-text text-transparent">
-                Wind.
+                风的方向。
               </span>
               <span className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
             </span>
           </h1>
 
-          <p className="mt-8 max-w-xl text-balance text-lg leading-relaxed text-mist/75 md:text-xl">
-            WindHero is where sailors learn to read the sea — wind, weather,
-            routing, and the captain&apos;s mind. Not a hobby club. A school for
-            people who want to move through the world on their own course.
+          <p className="mt-5 font-mono text-[0.78rem] tracking-[0.32em] text-mist/55">
+            — Master the Wind.
+          </p>
+
+          <p className="mt-8 max-w-xl text-balance text-lg leading-[1.85] text-mist/75 md:text-xl">
+            WindHero 是一所教你读懂海的学院——风、天气、航路、船长的判断力。
+            不是俱乐部，也不是网红打卡。我们为那些想用自己的方向穿过世界的人而建。
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
               href="/courses"
-              className="group inline-flex h-12 items-center gap-2 bg-sail px-6 text-[0.78rem] uppercase tracking-[0.26em] text-ink transition-colors hover:bg-gold"
+              className="group inline-flex h-12 items-center gap-2 bg-sail px-6 text-[0.82rem] tracking-[0.32em] text-ink transition-colors hover:bg-gold"
             >
-              Begin Training
+              开始训练
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
               href="/manifesto"
-              className="group inline-flex h-12 items-center gap-2 border border-white/15 px-6 text-[0.78rem] uppercase tracking-[0.26em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
+              className="group inline-flex h-12 items-center gap-2 border border-white/15 px-6 text-[0.82rem] tracking-[0.32em] text-sail transition-colors hover:border-gold/60 hover:text-gold"
             >
-              Read the Manifesto
+              阅读宣言
             </Link>
           </div>
 
           <dl className="mt-16 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
             {[
-              { k: "Cohorts", v: "12 / yr" },
-              { k: "Voyages", v: "4 oceans" },
-              { k: "Crew", v: "1,400+" },
+              { k: "年开课", v: "12 期" },
+              { k: "海域", v: "四大洋" },
+              { k: "船员", v: "1,400+" },
             ].map((item) => (
               <div key={item.k}>
                 <dt className="eyebrow !text-mist/50">{item.k}</dt>
@@ -68,7 +71,7 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-8 mx-auto flex max-w-7xl items-center justify-between px-6 text-xs text-mist/40 lg:px-10">
         <span className="font-mono tracking-[0.2em]">N 22° 16.42&apos;</span>
         <span className="font-mono tracking-[0.2em]">
-          Heading 037° · True
+          航向 037° · 真北
         </span>
         <span className="font-mono tracking-[0.2em]">E 114° 09.87&apos;</span>
       </div>
@@ -123,15 +126,15 @@ function CompassDial() {
             strokeWidth={0.6}
           />
           <p className="absolute bottom-6 text-center text-[0.65rem] uppercase tracking-[0.34em] text-mist/70">
-            WindHero · Est. ⌖
+            WindHero · 逐风人
           </p>
         </div>
       </div>
 
-      {(["N", "E", "S", "W"] as const).map((dir, i) => (
+      {(["北", "东", "南", "西"] as const).map((dir, i) => (
         <span
           key={dir}
-          className="absolute font-mono text-[0.7rem] tracking-[0.2em] text-mist/60"
+          className="absolute text-[0.78rem] tracking-[0.2em] text-mist/60"
           style={{
             top: i === 0 ? "-4px" : i === 2 ? "auto" : "50%",
             bottom: i === 2 ? "-4px" : "auto",

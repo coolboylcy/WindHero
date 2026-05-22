@@ -4,27 +4,27 @@ import { NewsletterForm } from "@/components/newsletter-form";
 const footerNav: { title: string; items: { href: string; label: string }[] }[] =
   [
     {
-      title: "Academy",
+      title: "学院",
       items: [
-        { href: "/courses", label: "Courses" },
-        { href: "/courses#captain", label: "Captain Track" },
-        { href: "/courses#weather", label: "Weather & Wind" },
+        { href: "/courses", label: "课程总览" },
+        { href: "/courses#captains-mind", label: "船长之路" },
+        { href: "/courses#weather-and-routing", label: "天气与航路" },
       ],
     },
     {
-      title: "Atlas",
+      title: "航海图",
       items: [
-        { href: "/voyages", label: "Voyages" },
-        { href: "/voyages#routes", label: "Open Routes" },
-        { href: "/voyages#marinas", label: "Marinas" },
+        { href: "/voyages", label: "航线" },
+        { href: "/voyages#routes", label: "开放航段" },
+        { href: "/voyages#marinas", label: "港口" },
       ],
     },
     {
-      title: "Story",
+      title: "故事",
       items: [
-        { href: "/journal", label: "Journal" },
-        { href: "/manifesto", label: "Manifesto" },
-        { href: "/about", label: "About" },
+        { href: "/journal", label: "航海日志" },
+        { href: "/manifesto", label: "宣言" },
+        { href: "/about", label: "关于" },
       ],
     },
   ];
@@ -34,13 +34,13 @@ export function SiteFooter() {
     <footer className="relative mt-24 border-t border-white/5 bg-ink">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10">
         <div className="max-w-md">
-          <p className="eyebrow">— Master the Wind</p>
+          <p className="eyebrow">— Master the Wind 驾驭风的方向</p>
           <h3 className="display mt-4 text-3xl text-sail">
-            Sail the dispatch.
+            读一封船长信。
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-mist/70">
-            One letter a month: a new voyage, a weather pattern worth reading,
-            and a captain&apos;s log from the WindHero crew. No spam, no port noise.
+            每月一封：一条新的航线、一段值得读的天气、一篇 WindHero
+            船员的航海日志。不打扰，不喧哗，不卖东西。
           </p>
           <div className="mt-6">
             <NewsletterForm />
@@ -68,9 +68,9 @@ export function SiteFooter() {
 
       <div className="border-t border-white/5">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 py-6 text-xs text-mist/60 sm:flex-row sm:items-center lg:px-10">
-          <p>© {new Date().getFullYear()} WindHero. Charted from the open sea.</p>
+          <p>© {new Date().getFullYear()} WindHero 逐风人 · 自外海起航</p>
           <p className="font-mono tracking-[0.18em]">
-            22°16′N · 114°09′E · OFFSHORE
+            22°16′N · 114°09′E · 外海
           </p>
         </div>
       </div>

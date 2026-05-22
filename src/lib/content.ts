@@ -2,7 +2,7 @@ export type Course = {
   slug: string;
   code: string;
   title: string;
-  level: "Foundations" | "Intermediate" | "Captain Track";
+  level: "入门" | "进阶" | "船长之路";
   duration: string;
   summary: string;
   modules: string[];
@@ -12,91 +12,91 @@ export const courses: Course[] = [
   {
     slug: "reading-the-wind",
     code: "WH-101",
-    title: "Reading the Wind",
-    level: "Foundations",
-    duration: "4 weeks · self-paced",
+    title: "读懂风",
+    level: "入门",
+    duration: "4 周 · 自学",
     summary:
-      "Where wind comes from, how it bends around coastlines, and how a sailor turns invisible pressure into forward motion.",
+      "风从何而来，如何在海岸线之间转向，水手又如何把看不见的气压变成向前的速度。",
     modules: [
-      "Global circulation & local sea breeze",
-      "Apparent vs. true wind, the polar diagram",
-      "Trim, twist, and the slot effect",
-      "Field log — 5 wind days, journaled",
+      "全球环流与局地海陆风",
+      "真风与视风、极坐标性能图",
+      "风帆平衡、扭转与缝隙效应",
+      "实地日志：记录五个真实风日",
     ],
   },
   {
     slug: "weather-and-routing",
     code: "WH-204",
-    title: "Weather & Routing",
-    level: "Intermediate",
-    duration: "6 weeks · live + self-paced",
+    title: "天气与航路",
+    level: "进阶",
+    duration: "6 周 · 直播 + 自学",
     summary:
-      "Read GRIBs like a captain. Plan a passage that respects the front, the swell, and the tide gate you cannot miss.",
+      "像船长一样读懂 GRIB；规划一段能避开锋面、绕过涌浪、踩准潮汐窗口的真实航段。",
     modules: [
-      "Pressure systems and frontal anatomy",
-      "GRIB, ECMWF, GFS — what to trust, when",
-      "Routing across a 500 nm window",
-      "Bail-out ports and a sober plan B",
+      "气压系统与锋面解剖",
+      "GRIB、ECMWF、GFS：何时信、信几分",
+      "500 海里窗口期的航线规划",
+      "退路港与一个清醒的 B 计划",
     ],
   },
   {
     slug: "seamanship-and-safety",
     code: "WH-212",
-    title: "Seamanship & Safety",
-    level: "Intermediate",
-    duration: "5 weeks · live",
+    title: "海员素养与安全",
+    level: "进阶",
+    duration: "5 周 · 直播",
     summary:
-      "Heavy weather tactics, MOB drills, fire and flooding response, and the discipline of a watch system that actually holds.",
+      "恶劣天气下的应对、人员落水演练、火与漏水的处置，以及一个真正能跑起来的值班体系。",
     modules: [
-      "Storm sail plan & heaving-to",
-      "MOB recovery under sail and power",
-      "Engine, electrical, and rig triage",
-      "Watch systems on long passages",
+      "风暴帆配置与停船策略 (heaving-to)",
+      "帆下与机动下的 MOB 救援",
+      "发动机、电路与索具的临时维修",
+      "长航程上可持续的值班排班",
     ],
   },
   {
     slug: "celestial-and-pilotage",
     code: "WH-228",
-    title: "Pilotage & Celestial",
-    level: "Intermediate",
-    duration: "6 weeks · self-paced",
+    title: "近岸引航与天文导航",
+    level: "进阶",
+    duration: "6 周 · 自学",
     summary:
-      "Plot a fix without GPS. Approach an unfamiliar harbour at dawn. The quiet, ancient half of modern navigation.",
+      "不依赖 GPS 也能定位。破晓时分进入陌生港口——现代航海里那一半安静而古老的技艺。",
     modules: [
-      "Coastal piloting, transits, danger bearings",
-      "Sun sights, noon latitude, time and Greenwich",
-      "Chart, plotter, paper — used in concert",
-      "Approach plans for 6 real harbours",
+      "近岸引航：转向角、跨线方位、危险方位",
+      "太阳观测、正午纬度、时间与格林威治",
+      "纸海图、电子海图、地图三者合用",
+      "六个真实港口的进港方案",
     ],
   },
   {
     slug: "captains-mind",
     code: "WH-301",
-    title: "The Captain's Mind",
-    level: "Captain Track",
-    duration: "8 weeks · cohort",
+    title: "船长的思维",
+    level: "船长之路",
+    duration: "8 周 · 集体班",
     summary:
-      "Decision-making under uncertainty. Crew leadership. Knowing when to turn back. The skill that separates a sailor from a captain.",
+      "不确定性下的决策、船员领导、知道何时返航——把一名水手与一名船长区分开来的能力。",
     modules: [
-      "Risk frames at sea: red, amber, green",
-      "Crew briefings, watch handovers, after-action",
-      "Pre-mortems and the courage to abort",
-      "Capstone — solo passage plan, defended",
+      "海上的风险分级：红、黄、绿",
+      "船员简报、值班交接、事后复盘",
+      "前向尸检 (pre-mortem) 与放弃的勇气",
+      "毕业项目：独立规划一段航段并答辩",
     ],
   },
   {
     slug: "offshore-passage",
     code: "WH-401",
-    title: "Offshore Passage Lab",
-    level: "Captain Track",
-    duration: "10 days · onboard",
+    title: "远洋航段实战课",
+    level: "船长之路",
+    duration: "10 天 · 船上",
     summary:
-      "Onboard, blue water, real watches, real weather. Cross an ocean leg with mentors who have done the miles.",
+      "在真实远洋上、真实值班里、真实天气下，与跑过这段海的导师一起穿过一段海洋。",
     modules: [
-      "Pre-departure inspection & provisioning",
-      "Live weather routing, daily roll call",
-      "Night watches and standing orders",
-      "Landfall pilotage in unfamiliar waters",
+      "出航前检查与物资规划",
+      "实时天气路由与每日点名",
+      "夜班值守与船长常驻指令",
+      "在陌生水域的进港引航",
     ],
   },
 ];
@@ -107,50 +107,50 @@ export type Voyage = {
   region: string;
   distance: string;
   season: string;
-  difficulty: "Coastal" | "Open Water" | "Offshore";
+  difficulty: "近岸" | "近海" | "远洋";
   brief: string;
 };
 
 export const voyages: Voyage[] = [
   {
     slug: "hong-kong-to-okinawa",
-    name: "Hong Kong → Okinawa",
-    region: "Northwest Pacific",
-    distance: "780 nm",
-    season: "April – May",
-    difficulty: "Offshore",
+    name: "香港 → 冲绳",
+    region: "西北太平洋",
+    distance: "780 海里",
+    season: "4 月 – 5 月",
+    difficulty: "远洋",
     brief:
-      "Spring transition winds, Kuroshio current shoulder, landfall in the Ryukyu arc.",
+      "春季季风转换、黑潮边缘、登陆琉球群岛弧——一段经典的春日远洋。",
   },
   {
     slug: "phuket-to-langkawi",
-    name: "Phuket → Langkawi",
-    region: "Andaman Sea",
-    distance: "165 nm",
-    season: "November – March",
-    difficulty: "Coastal",
+    name: "普吉岛 → 兰卡威",
+    region: "安达曼海",
+    distance: "165 海里",
+    season: "11 月 – 次年 3 月",
+    difficulty: "近岸",
     brief:
-      "Northeast monsoon, limestone karst islands, shallow approaches and steady trades.",
+      "东北季风、石灰岩岛群、浅水进港——稳定的信风线下，最适合入门远航。",
   },
   {
     slug: "palma-to-corsica",
-    name: "Palma → Corsica",
-    region: "Western Mediterranean",
-    distance: "320 nm",
-    season: "May – September",
-    difficulty: "Open Water",
+    name: "帕尔马 → 科西嘉",
+    region: "西地中海",
+    distance: "320 海里",
+    season: "5 月 – 9 月",
+    difficulty: "近海",
     brief:
-      "Mistral windows, Bonifacio Strait timing, classic summer Med routing.",
+      "密斯特拉风窗口、博尼法乔海峡时机、经典的地中海夏季航段。",
   },
   {
     slug: "auckland-to-fiji",
-    name: "Auckland → Fiji",
-    region: "South Pacific",
-    distance: "1,150 nm",
-    season: "May – June",
-    difficulty: "Offshore",
+    name: "奥克兰 → 斐济",
+    region: "南太平洋",
+    distance: "1,150 海里",
+    season: "5 月 – 6 月",
+    difficulty: "远洋",
     brief:
-      "The classic Pacific milk run, weather windows between high pressure cells.",
+      "南太平洋上的「牛奶航线」——在高压脊之间寻找适合启航的天气窗口。",
   },
 ];
 
@@ -167,32 +167,32 @@ export type Journal = {
 export const journal: Journal[] = [
   {
     slug: "what-the-wind-actually-is",
-    title: "What the wind actually is",
-    kicker: "Field notes",
+    title: "风，其实是什么？",
+    kicker: "现场笔记",
     excerpt:
-      "We say we sail with the wind. Most of the time we sail with the difference between two winds — and only one of them is real.",
-    author: "Wei Lin",
-    readTime: "7 min",
-    date: "Apr 12",
+      "我们说自己借风而行。多数时候，我们借的是两阵风的差——而其中只有一阵是真的。",
+    author: "林 维",
+    readTime: "7 分钟",
+    date: "4 月 12 日",
   },
   {
     slug: "the-fourth-night",
-    title: "The fourth night",
-    kicker: "Captain's log",
+    title: "第四夜",
+    kicker: "船长日志",
     excerpt:
-      "Day one is adrenaline. Day two is competence. Day four is the night you learn whether you and your crew can actually do this.",
+      "第一天是肾上腺素。第二天是熟练。到了第四夜，你才会知道——你和你的船员，到底能不能扛下这件事。",
     author: "Marisol Ortega",
-    readTime: "11 min",
-    date: "Mar 28",
+    readTime: "11 分钟",
+    date: "3 月 28 日",
   },
   {
     slug: "why-we-still-teach-celestial",
-    title: "Why we still teach celestial",
-    kicker: "Curriculum",
+    title: "我们为什么还教天文导航",
+    kicker: "课程笔记",
     excerpt:
-      "The sextant doesn't run out of battery, but that's not why. The sextant teaches you that the world is older than your plotter.",
-    author: "Toshi Aragaki",
-    readTime: "5 min",
-    date: "Mar 06",
+      "六分仪不会没电，但这不是我们教它的原因。六分仪教你的是——这个世界比你的电子海图古老得多。",
+    author: "新垣 俊志",
+    readTime: "5 分钟",
+    date: "3 月 6 日",
   },
 ];

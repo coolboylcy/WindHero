@@ -1,65 +1,67 @@
-# WindHero
+# WindHero 逐风人
 
-> **Master the Wind.**
-> A modern sailing academy and exploration community — built as a Next.js + Supabase site, deployed on Vercel.
+> **驾驭风的方向。** Master the Wind.
+> 一所现代航海学院与探索社区的官方站——基于 Next.js + Supabase，部署在 Vercel。
 
-WindHero is not a traditional sailing club. It is a school for people who want to learn the wind, plot real passages, and develop the captain's mind. This repository is the public site and content surface — courses, voyages, journal, and manifesto — plus the lightweight Supabase backend behind the newsletter (more surfaces will land later).
+WindHero 不是传统的帆船俱乐部。它是为那些想要真正学会读风、规划真实航段、并建立"船长的判断力"的人而建的学校。本仓库是它对外的内容站——课程、航线、航海日志、宣言——以及订阅邮件背后那套轻量的 Supabase 后端（更多功能后续逐步上线）。
 
----
-
-## Stack
-
-| Layer        | Choice                                                                 |
-| ------------ | ---------------------------------------------------------------------- |
-| Framework    | **Next.js 16** (App Router, RSC, Turbopack)                            |
-| Language     | TypeScript (strict)                                                    |
-| Styling      | Tailwind CSS v4 (custom WindHero theme tokens in `globals.css`)        |
-| UI primitives| Hand-rolled, Lucide icons                                              |
-| Backend      | **Supabase** (`@supabase/ssr` + `@supabase/supabase-js`) — newsletter only for now |
-| Hosting      | **Vercel** (Fluid Compute, Node.js 24)                                 |
-| Fonts        | Inter (sans), Cormorant Garamond (display serif), JetBrains Mono       |
-
-There is **no user-account / login** in this iteration, per spec. The single backend surface today is `POST /api/subscribe` that upserts an email into a Supabase `subscribers` table.
+线上：**https://windhero.vercel.app**
 
 ---
 
-## Local development
+## 技术栈
+
+| 层 | 选型 |
+| --- | --- |
+| 框架 | **Next.js 16**（App Router、RSC、Turbopack） |
+| 语言 | TypeScript（strict） |
+| 样式 | Tailwind CSS v4（WindHero 设计 token 写在 `globals.css`） |
+| 组件 | 全部手写，图标用 Lucide |
+| 后端 | **Supabase**（`@supabase/ssr` + `@supabase/supabase-js`）——目前仅用于邮件订阅 |
+| 部署 | **Vercel**（Fluid Compute、Node.js 24） |
+| 字体 | 拉丁字体走 Inter / Cormorant Garamond / JetBrains Mono；中文走系统字体栈（苹方 / 思源 / 微软雅黑），不额外下载，加载快 |
+
+本期**不做账号体系**——按规划暂不上注册登录。唯一的后端入口是 `POST /api/subscribe`，把邮箱 upsert 进 Supabase 的 `subscribers` 表。
+
+---
+
+## 本地开发
 
 ```bash
 pnpm install
-cp .env.example .env.local        # optional — Supabase keys (see below)
+cp .env.example .env.local        # 可选——配 Supabase keys 后才有真后端
 pnpm dev                          # http://localhost:3000
 ```
 
-Useful scripts:
+常用脚本：
 
-| Command            | Purpose                                  |
-| ------------------ | ---------------------------------------- |
-| `pnpm dev`         | Run the dev server (Turbopack)           |
-| `pnpm build`       | Production build                         |
-| `pnpm start`       | Run the production build locally         |
-| `pnpm lint`        | ESLint                                   |
-| `pnpm typecheck`   | TypeScript strict typecheck              |
+| 命令 | 作用 |
+| --- | --- |
+| `pnpm dev` | 启动开发服务器（Turbopack） |
+| `pnpm build` | 生产构建 |
+| `pnpm start` | 本地跑生产构建 |
+| `pnpm lint` | ESLint |
+| `pnpm typecheck` | TypeScript 严格类型检查 |
 
-Supabase is **optional locally**. If `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` are missing, `/api/subscribe` succeeds with `{ ok: true, pending: true }` and logs the email server-side, so the UI still works without a backend.
+Supabase 在本地**完全是可选的**。如果没填 `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`，`/api/subscribe` 会返回 `{ ok: true, pending: true }` 并把邮箱打到服务端日志，前端 UI 依然能正常体验。
 
 ---
 
-## Project structure
+## 项目结构
 
 ```
 src/
   app/
-    layout.tsx               root layout (fonts, header, footer)
-    page.tsx                 home
-    courses/page.tsx         curriculum
-    voyages/page.tsx         atlas of routes & marinas
-    journal/page.tsx         long-form entries
-    manifesto/page.tsx       brand manifesto
-    about/page.tsx           crew + contact
-    api/subscribe/route.ts   newsletter endpoint
-    icon.svg                 favicon
-    globals.css              Tailwind v4 theme + animations
+    layout.tsx               根布局（字体、Header、Footer、metadata）
+    page.tsx                 首页
+    courses/page.tsx         课程
+    voyages/page.tsx         航线 + 港口
+    journal/page.tsx         航海日志（长文）
+    manifesto/page.tsx       宣言
+    about/page.tsx           关于 + 联系
+    api/subscribe/route.ts   订阅 API
+    icon.svg                 站点图标
+    globals.css              Tailwind v4 主题 + 动画
   components/
     site-header.tsx
     site-footer.tsx
@@ -67,92 +69,88 @@ src/
     section.tsx
     newsletter-form.tsx
   lib/
-    content.ts               courses / voyages / journal data
-    utils.ts                 cn() helper
+    content.ts               课程 / 航线 / 日志数据
+    utils.ts                 cn() 辅助
     supabase/
-      client.ts              browser client
-      server.ts              server + service-role clients
+      client.ts              浏览器客户端
+      server.ts              服务端 + service-role 客户端
 supabase/
-  schema.sql                 subscribers table + RLS policies
-.env.example                 env var template
+  schema.sql                 subscribers 表 + RLS 策略
+  migrations/                CLI push 用的迁移
+.env.example                 环境变量模板
 ```
 
 ---
 
-## Supabase setup (when you're ready)
+## Supabase 设置（要让订阅真正落库时）
 
-1. Create a new project at <https://supabase.com>.
-2. Open **SQL editor** and run [`supabase/schema.sql`](supabase/schema.sql). This creates `public.subscribers` and the RLS policies so anonymous browsers can insert (but not read) addresses.
-3. In **Project settings → API**, copy these into `.env.local`:
+1. 去 https://supabase.com 新建项目。
+2. 打开 **SQL Editor**，执行 [`supabase/schema.sql`](supabase/schema.sql)。这会创建 `public.subscribers` 表，并配好 RLS——让匿名浏览器只能写不能读。
+3. 在 **Project Settings → API** 把这三个值填进 `.env.local`：
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `SUPABASE_SERVICE_ROLE_KEY` *(server only — used by `/api/subscribe` to upsert past RLS)*
-4. Restart `pnpm dev`. Subscribing from the footer should now write a row.
+   - `SUPABASE_SERVICE_ROLE_KEY` *（仅服务端 —— `/api/subscribe` 用它绕过 RLS 做 upsert）*
+4. 重启 `pnpm dev`，再去 Footer 订阅一次，应该能看到表里有一行新数据。
 
-When the time comes for accounts, `lib/supabase/client.ts` and `lib/supabase/server.ts` are already wired with `@supabase/ssr`, so adding auth means dropping in middleware + a couple of routes — no rewiring.
+未来要做账号体系时，[`lib/supabase/client.ts`](src/lib/supabase/client.ts) 和 [`lib/supabase/server.ts`](src/lib/supabase/server.ts) 已经按 `@supabase/ssr` 标准接好——加几行中间件和路由就行，无需重写底层。
 
 ---
 
-## Deploy to Vercel
+## 部署到 Vercel
 
-The repository is ready to deploy as-is.
+仓库已经处在可一键部署状态。
 
-### One-time
+### 首次
 
-1. Push to GitHub — already configured at <https://github.com/coolboylcy/WindHero>.
-   ```bash
-   git init && git add . && git commit -m "WindHero: initial site"
-   git remote add origin git@github.com:coolboylcy/WindHero.git
-   git push -u origin main
-   ```
-2. Go to <https://vercel.com/new>, **Import** the `coolboylcy/WindHero` repo. Vercel auto-detects Next.js — leave the defaults.
-3. **Environment variables** (Project Settings → Environment Variables):
+1. 推到 GitHub：仓库地址 https://github.com/coolboylcy/WindHero。
+2. 打开 https://vercel.com/new，**Import** `coolboylcy/WindHero`。Vercel 会自动识别 Next.js——保持默认即可。
+3. 在 **Project Settings → Environment Variables** 配齐：
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
-   - `NEXT_PUBLIC_SITE_URL` (e.g. `https://windhero.app`)
-4. **Deploy.** Production gets a `*.vercel.app` URL immediately; point your custom domain (e.g. `windhero.app`) at it under **Domains**.
+   - `NEXT_PUBLIC_SITE_URL`（例如 `https://windhero.vercel.app` 或你的自定义域名）
+4. **Deploy**，立刻拿到 `*.vercel.app` 域名。要绑自定义域名（比如 `windhero.app`），去 **Domains** 添加。
 
-### Via CLI
+### 用 CLI
 
 ```bash
-pnpm i -g vercel@latest      # 54.3+ recommended
-vercel link                  # link this folder to a Vercel project
-vercel env pull .env.local   # pull production envs to local
-vercel deploy                # preview deploy
-vercel deploy --prod         # production deploy
+pnpm i -g vercel@latest         # 推荐升级到 54.3+
+vercel link                     # 把当前目录绑到 Vercel 项目
+vercel env pull .env.local      # 把生产环境变量拉到本地
+vercel deploy                   # 预览部署
+vercel deploy --prod            # 生产部署
 ```
 
 ---
 
-## Brand direction (kept in code)
+## 品牌色板（写在代码里）
 
-These tokens live in [`src/app/globals.css`](src/app/globals.css) under `@theme {…}` so every page picks them up automatically:
+下列 token 都写在 [`src/app/globals.css`](src/app/globals.css) 的 `@theme { … }` 里，所有页面自动继承：
 
-| Token       | Hex        | Meaning                                    |
-| ----------- | ---------- | ------------------------------------------ |
-| `--color-ink`   | `#05131f` | Deep-night ocean — page background        |
-| `--color-deep`  | `#0a1f33` | Mid-ocean — section backgrounds           |
-| `--color-ocean` | `#102a43` | Lighter water                              |
-| `--color-mist`  | `#cfd9e2` | Cool grey — secondary text                |
-| `--color-sail`  | `#f5f2ea` | Sail white — primary text on dark         |
-| `--color-gold`  | `#c8a96a` | Brass / brass-instrument accent           |
-| `--color-rust`  | `#9c5a3c` | Error / warning, rope-weathered           |
+| Token | 色值 | 含义 |
+| --- | --- | --- |
+| `--color-ink` | `#05131f` | 深夜海面——页面底色 |
+| `--color-deep` | `#0a1f33` | 中层海水——区块底色 |
+| `--color-ocean` | `#102a43` | 较浅海水 |
+| `--color-mist` | `#cfd9e2` | 冷灰——次级文字 |
+| `--color-sail` | `#f5f2ea` | 白帆色——深色背景上的主文字 |
+| `--color-gold` | `#c8a96a` | 黄铜金——点缀色 |
+| `--color-rust` | `#9c5a3c` | 锈红——错误/警告 |
 
-Typography pairs **Cormorant Garamond** (display, used via the `.display` utility) with **Inter** (UI) and **JetBrains Mono** (data, coordinates, hull numbers).
-
----
-
-## Roadmap (intentionally short)
-
-- [ ] Voyage detail pages with day-by-day passage briefs
-- [ ] Course detail pages (curriculum, instructor, syllabus PDF)
-- [ ] MDX journal entries (replace the inline `longform` map in `journal/page.tsx`)
-- [ ] Captain login + cohort dashboards (Supabase Auth)
-- [ ] OG image generation (`opengraph-image.tsx`) per route
+字体上：**Cormorant Garamond** 做拉丁衬线显示字体（页面上叫 `.display`），**Inter** 做 UI 无衬线，**JetBrains Mono** 处理坐标、编号、技术数据。中文部分走系统字体栈（苹方 / 思源 / 微软雅黑），不额外下载——既快又有专业感。
 
 ---
 
-## License
+## 后续路线（刻意保持短）
 
-All content © WindHero. Source code MIT.
+- [ ] 每条航段的逐日航路简报详情页
+- [ ] 每门课程的详情页（大纲、导师、可下载 PDF）
+- [ ] 把 `journal/page.tsx` 里的 `longform` map 改为 MDX 文件
+- [ ] 船长账号 + 班级 Dashboard（Supabase Auth）
+- [ ] 每个路由生成专属 OG Image（`opengraph-image.tsx`）
+
+---
+
+## 许可
+
+内容版权 © WindHero。源代码 MIT。
