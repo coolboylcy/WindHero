@@ -29,12 +29,13 @@ const longform: Record<string, string[]> = {
 export default function JournalPage() {
   return (
     <>
-      <Section className="border-b border-white/5 pt-32">
+      <Section className="border-b border-line/60 pt-36">
         <SectionHeading
           eyebrow="航海日志"
           title={
             <>
-              一所<span className="text-gold">在海上上课</span>的学校 <br />
+              一所在海上上课的学校
+              <br />
               留下的现场笔记。
             </>
           }
@@ -43,39 +44,39 @@ export default function JournalPage() {
       </Section>
 
       <Section>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-2xl">
           {journal.map((entry, i) => (
             <article
               key={entry.slug}
               id={entry.slug}
-              className="scroll-mt-28 border-t border-white/10 py-16 first:border-t-0 first:pt-4"
+              className="scroll-mt-28 border-t border-line/70 py-16 first:border-t-0 first:pt-4"
             >
               <header>
-                <div className="flex items-center justify-between text-[0.72rem] tracking-[0.26em] text-mist/55">
-                  <span className="font-mono text-gold/80">{entry.kicker}</span>
+                <div className="flex items-center justify-between text-[0.72rem] text-mist">
+                  <span className="text-sea-deep">{entry.kicker}</span>
                   <span>
                     {entry.date} · {entry.readTime}
                   </span>
                 </div>
-                <h2 className="display mt-5 text-4xl text-sail md:text-5xl">
+                <h2 className="display mt-5 text-[2.2rem] text-ink md:text-[2.7rem]">
                   {entry.title}
                 </h2>
-                <p className="mt-4 text-sm tracking-[0.24em] text-mist/55">
+                <p className="mt-4 text-sm text-mist">
                   作者 · {entry.author}
                 </p>
                 <div className="hairline mt-8" />
               </header>
 
-              <div className="prose-zh mt-8 space-y-5 text-[1.04rem] text-mist/85">
-                <p className="text-mist/90">{entry.excerpt}</p>
+              <div className="prose-zh mt-8 space-y-5 text-[1.05rem] text-ink-soft">
+                <p className="text-ink">{entry.excerpt}</p>
                 {(longform[entry.slug] ?? []).map((p) => (
                   <p key={p.slice(0, 24)}>{p}</p>
                 ))}
               </div>
 
               {i < journal.length - 1 ? (
-                <p className="mt-12 font-mono text-[0.72rem] tracking-[0.3em] text-mist/40">
-                  — 全文完 · {String(i + 1).padStart(2, "0")} —
+                <p className="mt-12 text-center font-mono text-[0.72rem] tracking-[0.2em] text-mist">
+                  —— 全文完 ——
                 </p>
               ) : null}
             </article>

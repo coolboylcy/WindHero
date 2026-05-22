@@ -23,12 +23,7 @@ export function Eyebrow({
   children: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <p className={cn("eyebrow flex items-center gap-3", className)}>
-      <span className="h-px w-8 bg-gold/70" />
-      {children}
-    </p>
-  );
+  return <p className={cn("eyebrow", className)}>{children}</p>;
 }
 
 export function SectionHeading({
@@ -46,19 +41,15 @@ export function SectionHeading({
     <header
       className={cn(
         "max-w-3xl",
-        align === "center" && "mx-auto text-center [&_.eyebrow]:justify-center"
+        align === "center" && "mx-auto text-center"
       )}
     >
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2
-        className={cn(
-          "display mt-5 text-balance text-4xl text-sail md:text-5xl lg:text-[3.6rem]"
-        )}
-      >
+      <h2 className="display mt-4 text-balance text-4xl text-ink md:text-5xl lg:text-[3.4rem]">
         {title}
       </h2>
       {lead ? (
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-mist/70 md:text-lg">
+        <p className="mt-5 max-w-2xl text-[1rem] leading-[1.9] text-ink-soft md:text-[1.05rem]">
           {lead}
         </p>
       ) : null}

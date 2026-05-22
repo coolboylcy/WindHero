@@ -19,17 +19,20 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/5 bg-ink/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-line/60 bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="group flex items-center gap-2.5"
+          className="group flex items-baseline gap-2.5"
           aria-label="WindHero 首页"
           onClick={() => setOpen(false)}
         >
-          <CompassMark className="h-7 w-7 text-gold transition-transform duration-700 ease-out group-hover:rotate-45" />
-          <span className="display text-[1.35rem] leading-none">
-            Wind<span className="text-gold">Hero</span>
+          <Wordmark className="h-3 w-3 text-sea" />
+          <span className="display text-[1.35rem] leading-none text-ink">
+            Wind<span className="text-sea">hero</span>
+          </span>
+          <span className="hidden text-[0.68rem] tracking-[0.22em] text-mist sm:inline">
+            逐风人
           </span>
         </Link>
 
@@ -43,14 +46,14 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative text-[0.82rem] tracking-[0.3em] text-mist/70 transition-colors hover:text-sail",
-                  active && "text-sail"
+                  "relative text-[0.86rem] text-ink-soft transition-colors hover:text-ink",
+                  active && "text-ink"
                 )}
               >
                 {item.label}
                 <span
                   className={cn(
-                    "absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-gold transition-transform duration-500 ease-out",
+                    "absolute -bottom-1.5 left-0 right-0 mx-auto h-px w-4 origin-center scale-x-0 bg-sea transition-transform duration-500 ease-out",
                     active && "scale-x-100"
                   )}
                 />
@@ -62,7 +65,7 @@ export function SiteHeader() {
         <div className="hidden md:block">
           <Link
             href="/courses"
-            className="inline-flex h-10 items-center gap-2 border border-gold/60 px-5 text-[0.74rem] tracking-[0.32em] text-gold transition-colors hover:bg-gold hover:text-ink"
+            className="inline-flex h-9 items-center gap-2 border border-ink/80 px-4 text-[0.82rem] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             报名
           </Link>
@@ -72,21 +75,21 @@ export function SiteHeader() {
           type="button"
           aria-label="切换导航菜单"
           onClick={() => setOpen((v) => !v)}
-          className="grid h-10 w-10 place-items-center border border-white/10 text-sail md:hidden"
+          className="grid h-9 w-9 place-items-center border border-line text-ink md:hidden"
         >
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
         </button>
       </div>
 
       {open ? (
-        <div className="border-t border-white/5 bg-ink/95 md:hidden">
+        <div className="border-t border-line bg-paper md:hidden">
           <nav className="flex flex-col px-6 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-sm tracking-[0.3em] text-mist/80"
+                className="py-3 text-sm text-ink-soft"
               >
                 {item.label}
               </Link>
@@ -94,7 +97,7 @@ export function SiteHeader() {
             <Link
               href="/courses"
               onClick={() => setOpen(false)}
-              className="mt-3 inline-flex h-11 items-center justify-center border border-gold/60 text-[0.74rem] tracking-[0.34em] text-gold"
+              className="mt-3 inline-flex h-10 items-center justify-center border border-ink text-[0.82rem] text-ink"
             >
               报名
             </Link>
@@ -105,24 +108,12 @@ export function SiteHeader() {
   );
 }
 
-function CompassMark({ className }: { className?: string }) {
+/** Very small geometric mark — a filled square dot. No compass, no flourish. */
+function Wordmark({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
+    <span
       aria-hidden
-      className={className}
-      stroke="currentColor"
-      strokeWidth={1.2}
-    >
-      <circle cx="16" cy="16" r="13" opacity={0.55} />
-      <circle cx="16" cy="16" r="9" opacity={0.4} />
-      <path d="M16 3v6M16 23v6M3 16h6M23 16h6" opacity={0.7} />
-      <path
-        d="M16 7l2.6 8.2L16 25l-2.6-9.8z"
-        fill="currentColor"
-        stroke="none"
-      />
-    </svg>
+      className={cn("inline-block rounded-full bg-current", className)}
+    />
   );
 }

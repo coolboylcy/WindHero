@@ -31,18 +31,18 @@ const footerNav: { title: string; items: { href: string; label: string }[] }[] =
 
 export function SiteFooter() {
   return (
-    <footer className="relative mt-24 border-t border-white/5 bg-ink">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10">
+    <footer className="relative mt-28 border-t border-line/70 bg-paper-soft/40">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:px-10">
         <div className="max-w-md">
-          <p className="eyebrow">— Master the Wind 驾驭风的方向</p>
-          <h3 className="display mt-4 text-3xl text-sail">
-            读一封船长信。
+          <p className="eyebrow">船长信</p>
+          <h3 className="display mt-4 text-3xl text-ink">
+            每月一封，从海上寄出。
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-mist/70">
-            每月一封：一条新的航线、一段值得读的天气、一篇 WindHero
-            船员的航海日志。不打扰，不喧哗，不卖东西。
+          <p className="mt-3 text-sm leading-[1.85] text-ink-soft">
+            一条新的航线、一段值得读的天气、一篇船员日志。
+            不打扰、不喧哗，更不卖东西。
           </p>
-          <div className="mt-6">
+          <div className="mt-7">
             <NewsletterForm />
           </div>
         </div>
@@ -55,7 +55,7 @@ export function SiteFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-mist/80 transition-colors hover:text-sail"
+                    className="text-sm text-ink-soft transition-colors hover:text-ink"
                   >
                     {item.label}
                   </Link>
@@ -66,11 +66,11 @@ export function SiteFooter() {
         ))}
       </div>
 
-      <div className="border-t border-white/5">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 py-6 text-xs text-mist/60 sm:flex-row sm:items-center lg:px-10">
-          <p>© {new Date().getFullYear()} WindHero 逐风人 · 自外海起航</p>
-          <p className="font-mono tracking-[0.18em]">
-            22°16′N · 114°09′E · 外海
+      <div className="border-t border-line/60">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-6 py-6 text-xs text-mist sm:flex-row sm:items-center lg:px-10">
+          <p>© {new Date().getFullYear()} WindHero 逐风人</p>
+          <p className="font-mono tracking-[0.12em]">
+            22°16′N · 114°09′E
           </p>
         </div>
       </div>

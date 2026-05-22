@@ -36,41 +36,39 @@ const crew = [
 export default function AboutPage() {
   return (
     <>
-      <Section className="border-b border-white/5 pt-32">
+      <Section className="border-b border-line/60 pt-36">
         <SectionHeading
           eyebrow="关于"
           title={
             <>
               我们办这所学校，
               <br />
-              是因为我们自己<span className="text-gold">想上的那一所并不存在。</span>
+              是因为我们自己想上的那一所并不存在。
             </>
           }
           lead="WindHero 是一所刻意保持小规模、刻意国际化的学校，由在役船长、气象人和远洋教练共同搭建。我们教那些一个人摸索要花很多年才能学会的部分；也教那些海会顺手让你学会的——关于生活的部分。"
         />
       </Section>
 
-      <Section className="border-b border-white/5">
+      <Section className="border-b border-line/60">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div>
             <Eyebrow>船员名单</Eyebrow>
-            <h2 className="display mt-4 text-3xl text-sail md:text-4xl">
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
               都是真正跑过这些海的人。
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-[1.85] text-mist/70">
+            <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
               导师会和你一起在真实航段上值班。没有明星代言人，
               后甲板上也没有市场部。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-px bg-line/70 sm:grid-cols-2">
             {crew.map((p) => (
-              <article key={p.name} className="bg-ink p-7">
-                <p className="display text-2xl text-sail">{p.name}</p>
-                <p className="mt-1 text-[0.72rem] tracking-[0.28em] text-gold/80">
-                  {p.role}
-                </p>
-                <p className="mt-4 text-sm leading-[1.85] text-mist/70">
+              <article key={p.name} className="bg-paper p-7">
+                <p className="display text-[1.55rem] text-ink">{p.name}</p>
+                <p className="mt-1 text-[0.78rem] text-sea-deep">{p.role}</p>
+                <p className="mt-4 text-[0.95rem] leading-[1.9] text-ink-soft">
                   {p.bio}
                 </p>
               </article>
@@ -79,48 +77,48 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section id="contact" className="border-b border-white/5">
+      <Section id="contact" className="border-b border-line/60">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
             <Eyebrow>岸上办公室</Eyebrow>
-            <h2 className="display mt-4 text-3xl text-sail md:text-4xl">
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
               联系我们。
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-[1.85] text-mist/70">
+            <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
               想做内部船员班、合作、或登上某段远洋——请写信给我们。
               每一封都会被读到，工作日内两日回复。
             </p>
 
-            <dl className="mt-10 space-y-6 border-t border-white/10 pt-8">
+            <dl className="mt-10 space-y-6 border-t border-line/70 pt-8">
               <div>
-                <dt className="eyebrow !text-mist/50">办公室</dt>
-                <dd className="display mt-2 text-xl text-sail">
+                <dt className="eyebrow">办公室</dt>
+                <dd className="display mt-2 text-xl text-ink">
                   香港仔游艇会，香港
                 </dd>
-                <dd className="font-mono text-xs tracking-[0.24em] text-mist/55">
+                <dd className="font-mono text-xs text-mist">
                   22°14′N · 114°09′E
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow !text-mist/50">邮箱</dt>
+                <dt className="eyebrow">邮箱</dt>
                 <dd className="mt-2">
                   <Link
                     href="mailto:hello@windhero.app"
-                    className="inline-flex items-center gap-2 text-base text-sail hover:text-gold"
+                    className="inline-flex items-center gap-2 text-base text-ink hover:text-sea-deep"
                   >
-                    <Mail className="h-4 w-4 text-gold/80" />
+                    <Mail className="h-4 w-4 text-sea" />
                     hello@windhero.app
                   </Link>
                 </dd>
               </div>
               <div>
-                <dt className="eyebrow !text-mist/50">开源仓库</dt>
+                <dt className="eyebrow">开源仓库</dt>
                 <dd className="mt-2">
                   <Link
                     href="https://github.com/coolboylcy/WindHero"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 text-base text-sail hover:text-gold"
+                    className="inline-flex items-center gap-2 text-base text-ink hover:text-sea-deep"
                   >
                     github.com/coolboylcy/WindHero
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -130,15 +128,15 @@ export default function AboutPage() {
             </dl>
           </div>
 
-          <aside className="border border-white/10 bg-gradient-to-b from-deep/40 to-transparent p-8 md:p-10">
-            <p className="eyebrow">订阅船长信</p>
-            <h3 className="display mt-4 text-3xl text-sail">
+          <aside className="border border-line/70 bg-paper-soft/30 p-8 md:p-10">
+            <Eyebrow>船长信</Eyebrow>
+            <h3 className="display mt-4 text-[1.8rem] text-ink">
               这是最方便走进 WindHero 的路。
             </h3>
-            <p className="mt-3 text-sm leading-[1.85] text-mist/70">
+            <p className="mt-3 text-[0.95rem] leading-[1.9] text-ink-soft">
               每月一封——新的航段、值得读的一段天气、以及一篇最近航程留下的船长日志。
             </p>
-            <div className="mt-6">
+            <div className="mt-7">
               <NewsletterForm source="about" />
             </div>
           </aside>

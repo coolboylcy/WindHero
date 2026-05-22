@@ -1,26 +1,28 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
+  axes: ["SOFT", "opsz"],
 });
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -65,9 +67,9 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${inter.variable} ${cormorant.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${interTight.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
     >
-      <body className="bg-ink text-sail min-h-full flex flex-col selection:bg-gold/30">
+      <body className="bg-paper text-ink min-h-full flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

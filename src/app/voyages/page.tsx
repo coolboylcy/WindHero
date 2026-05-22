@@ -22,62 +22,66 @@ const marinas = [
 export default function VoyagesPage() {
   return (
     <>
-      <Section className="border-b border-white/5 pt-32">
+      <Section className="border-b border-line/60 pt-36">
         <SectionHeading
-          eyebrow="航海图"
+          eyebrow="航线"
           title={
             <>
-              世界是一张<span className="text-gold">由航段拼成的海图。</span>
+              世界是一张
+              <br />
+              由航段拼成的海图。
             </>
           }
           lead="每段航程都由跑过这段海若干次的船长亲自带队，船员人数严格限定，让海员素养始终在线、值班始终清醒。"
         />
       </Section>
 
-      <Section id="routes" className="border-b border-white/5">
-        <div className="grid gap-px bg-white/5 md:grid-cols-2">
+      <Section id="routes" className="border-b border-line/60">
+        <div className="grid gap-px bg-line/70 md:grid-cols-2">
           {voyages.map((v) => (
             <article
               key={v.slug}
               id={v.slug}
-              className="scroll-mt-28 bg-ink p-8 md:p-10"
+              className="scroll-mt-28 bg-paper p-8 md:p-10"
             >
-              <div className="flex items-center justify-between text-[0.72rem] tracking-[0.26em] text-mist/55">
-                <span className="font-mono text-gold/80">{v.region}</span>
+              <div className="flex items-center justify-between text-[0.72rem] text-mist">
+                <span className="font-mono tracking-[0.14em] text-sea">
+                  {v.region}
+                </span>
                 <span>{v.difficulty}</span>
               </div>
-              <h3 className="display mt-5 text-3xl text-sail md:text-4xl">
+              <h3 className="display mt-4 text-3xl text-ink md:text-4xl">
                 {v.name}
               </h3>
-              <p className="mt-3 text-sm leading-[1.85] text-mist/70">
+              <p className="mt-3 text-[0.98rem] leading-[1.9] text-ink-soft">
                 {v.brief}
               </p>
 
-              <dl className="mt-8 grid grid-cols-3 gap-6 border-y border-white/10 py-6 text-sm">
+              <dl className="mt-8 grid grid-cols-3 gap-6 border-y border-line/70 py-6 text-sm">
                 <div>
-                  <dt className="eyebrow !text-mist/50">里程</dt>
-                  <dd className="display mt-2 text-xl text-sail">
+                  <dt className="eyebrow">里程</dt>
+                  <dd className="display mt-2 text-xl text-ink">
                     {v.distance}
                   </dd>
                 </div>
                 <div>
-                  <dt className="eyebrow !text-mist/50">季节</dt>
-                  <dd className="display mt-2 text-xl text-sail">{v.season}</dd>
+                  <dt className="eyebrow">季节</dt>
+                  <dd className="display mt-2 text-xl text-ink">{v.season}</dd>
                 </div>
                 <div>
-                  <dt className="eyebrow !text-mist/50">船员上限</dt>
-                  <dd className="display mt-2 text-xl text-sail">6 人</dd>
+                  <dt className="eyebrow">船员上限</dt>
+                  <dd className="display mt-2 text-xl text-ink">6 人</dd>
                 </div>
               </dl>
 
               <div className="mt-6 flex items-center justify-between text-sm">
-                <span className="inline-flex items-center gap-2 text-mist/60">
-                  <Wind className="h-4 w-4 text-gold/80" />
+                <span className="inline-flex items-center gap-2 text-ink-soft">
+                  <Wind className="h-4 w-4 text-sea" />
                   起航前 7 天发出航路简报
                 </span>
                 <Link
                   href="/about#contact"
-                  className="group inline-flex items-center gap-2 text-[0.78rem] tracking-[0.32em] text-gold hover:text-gold-soft"
+                  className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep hover:text-ink"
                 >
                   加入船员名单
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -89,30 +93,28 @@ export default function VoyagesPage() {
       </Section>
 
       <Section id="marinas">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-24">
           <div>
-            <p className="eyebrow">— 港口</p>
-            <h2 className="display mt-4 text-3xl text-sail md:text-4xl">
+            <p className="eyebrow">港口</p>
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
               我们的母港。
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-[1.85] text-mist/70">
+            <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
               船员在这里集合、船在这里停泊；第一次简报，
               通常是在码头边的咖啡桌上完成的。
             </p>
           </div>
-          <ul className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-px bg-line/70 sm:grid-cols-2">
             {marinas.map((m) => (
               <li
                 key={`${m.name}-${m.coord}`}
-                className="flex items-center justify-between gap-4 bg-ink p-6"
+                className="flex items-center justify-between gap-4 bg-paper p-6"
               >
                 <div>
-                  <p className="display text-xl text-sail">{m.name}</p>
-                  <p className="text-xs tracking-[0.24em] text-mist/55">
-                    {m.city}
-                  </p>
+                  <p className="display text-xl text-ink">{m.name}</p>
+                  <p className="text-xs text-mist">{m.city}</p>
                 </div>
-                <span className="inline-flex items-center gap-2 font-mono text-xs text-gold/80">
+                <span className="inline-flex items-center gap-2 font-mono text-xs text-sea">
                   <MapPin className="h-3.5 w-3.5" />
                   {m.coord}
                 </span>

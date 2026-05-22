@@ -24,7 +24,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
       });
       const data: { ok?: boolean; error?: string } = await res
         .json()
-        .catch(() => ({ ok: false, error: "Unknown response" }));
+        .catch(() => ({ ok: false, error: "出了点问题，请稍后再试。" }));
 
       if (!res.ok || !data.ok) {
         setStatus("error");
@@ -33,7 +33,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
       }
 
       setStatus("ok");
-      setMessage("你已经登上船员名册，请留意邮箱。");
+      setMessage("已收到。请留意你的邮箱。");
       setEmail("");
     } catch {
       setStatus("error");
@@ -43,7 +43,7 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
 
   return (
     <form onSubmit={onSubmit} className="w-full">
-      <div className="flex items-center border border-white/15 bg-white/[0.02] transition-colors focus-within:border-gold/70">
+      <div className="flex items-center border-b border-ink/40 transition-colors focus-within:border-ink">
         <input
           type="email"
           required
@@ -51,23 +51,23 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
           inputMode="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="captain@example.com"
-          className="h-12 flex-1 bg-transparent px-4 text-sm text-sail placeholder:text-mist/40 focus:outline-none"
+          placeholder="你的邮箱"
+          className="h-11 flex-1 bg-transparent text-sm text-ink placeholder:text-mist focus:outline-none"
           aria-label="邮箱地址"
           disabled={status === "loading"}
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="group inline-flex h-12 items-center gap-2 border-l border-white/10 px-4 text-[0.78rem] tracking-[0.32em] text-gold transition-colors hover:bg-gold hover:text-ink disabled:opacity-60"
+          className="group inline-flex h-11 items-center gap-2 px-1 text-[0.86rem] text-ink-soft transition-colors hover:text-ink disabled:opacity-60"
         >
           {status === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : status === "ok" ? (
-            <Check className="h-4 w-4" />
+            <Check className="h-4 w-4 text-sea" />
           ) : (
             <>
-              登船
+              订阅
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </>
           )}
@@ -75,12 +75,12 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
       </div>
       <p
         className={
-          "mt-2 min-h-[1.25rem] text-xs " +
+          "mt-2 min-h-[1.1rem] text-xs " +
           (status === "error"
-            ? "text-rust"
+            ? "text-terracotta"
             : status === "ok"
-              ? "text-gold"
-              : "text-mist/50")
+              ? "text-sea-deep"
+              : "text-mist")
         }
         aria-live="polite"
       >
