@@ -128,21 +128,23 @@ body {
   }
 }
 
-/* Hero 上：三角帆的复合漂移——振幅明显，能看到它在动 */
+/* 帆顶在风里左右摆——transform-origin 固定在底部桅杆基座，
+   所以船体不动，只有帆顶在画弧。极小 translate，主要靠 rotate。 */
 @keyframes sail-drift {
   0%,
   100% {
-    transform: translate(0, 0) rotate(-2deg);
-  }
-  25% {
-    transform: translate(-18px, -10px) rotate(-4.5deg);
+    transform: translate(0, 0) rotate(-3.5deg);
   }
   50% {
-    transform: translate(-6px, -22px) rotate(1.2deg);
+    transform: translate(0, -1px) rotate(3.5deg);
   }
-  75% {
-    transform: translate(14px, -8px) rotate(3.5deg);
-  }
+}
+
+/* 船体——极轻微浮动，模拟浪上的"上下浮起" */
+@keyframes hull-bob {
+  0%,
+  100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 
 /* 远景小帆——慢但有可见的位移 */
@@ -228,8 +230,12 @@ body {
 }
 
 .animate-sail-drift {
-  animation: sail-drift 5.5s var(--ease-sail) infinite;
+  animation: sail-drift 4.5s var(--ease-sail) infinite;
   transform-origin: 50% 100%;
+}
+
+.animate-hull-bob {
+  animation: hull-bob 4.5s var(--ease-sail) infinite;
 }
 
 .animate-sail-distant {
@@ -266,6 +272,7 @@ body {
   .animate-fade-in,
   .animate-drift,
   .animate-sail-drift,
+  .animate-hull-bob,
   .animate-sail-distant,
   .animate-sun-breathe,
   .animate-glow-breathe,
