@@ -1,0 +1,305 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, BookOpen, Clock, ExternalLink, GraduationCap } from "lucide-react";
+import { Section } from "@/components/section";
+import {
+  getCourseBySlug,
+  listCourseSlugs,
+} from "@/lib/courses";
+
+type Params = Promise<{ slug: string }>;
+
+export async function generateStaticParams() {
+  return listCourseSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const course = getCourseBySlug(slug);
+  if (!course) return { title: "未找到课程" };
+  return {
+    title: `${course.title} · ${course.code}`,
+    description: course.summary,
+  };
+}
+
+const resourceLabel: Record<string, string> = {
+  book: "图书",
+  tool: "工具",
+  app: "应用",
+  site: "网站",
+  video: "视频",
+  chart: "海图",
+  "open-source": "开源",
+};
+
+export default async function CourseDetailPage({
+  params,
+}: {
+  params: Params;
+}) {
+  const { slug } = await params;
+  const course = getCourseBySlug(slug);
+  if (!course) notFound();
+
+  return (
+    <>
+      {/* ===== Hero ===== */}
+      <Section className="border-b border-line/60 pt-36">
+        <Link
+          href="/courses"
+          className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-mist transition-colors hover:text-ink"
+        >
+          <ArrowLeft className="h-3 w-3" />
+          全部课程
+        </Link>
+
+        <div className="mt-10 grid gap-12 md:grid-cols-[1.6fr_1fr] md:items-end">
+          <div>
+            <div className="flex items-baseline gap-4 font-mono text-[0.74rem] tracking-[0.14em] text-sea-deep">
+              <span>{course.code}</span>
+              <span className="text-mist">·</span>
+              <span className="text-mist">{course.level}</span>
+            </div>
+            <h1 className="display mt-5 text-balance text-5xl text-ink md:text-6xl lg:text-[4rem]">
+              {course.title}
+            </h1>
+            <p className="prose-zh mt-7 max-w-2xl text-[1.05rem] text-ink-soft md:text-[1.1rem]">
+              {course.summary}
+            </p>
+          </div>
+
+          <dl className="space-y-5 border-l border-line/70 pl-7 font-mono text-[0.84rem]">
+            <Meta label="时长" value={course.duration} icon={Clock} />
+            <Meta
+              label="RYA 对标"
+              value={course.ryaEquivalent}
+              icon={GraduationCap}
+            />
+            <Meta
+              label="模块"
+              value={`${course.modules.length} 个模块 · ${course.modules.reduce(
+                (s, m) => s + m.lessons.length,
+                0
+              )} 课时`}
+              icon={BookOpen}
+            />
+          </dl>
+        </div>
+      </Section>
+
+      {/* ===== 适合 + 学完能做 ===== */}
+      <Section className="border-b border-line/60">
+        <div className="grid gap-12 md:grid-cols-2">
+          <div>
+            <p className="eyebrow">这门课适合谁</p>
+            <ul className="mt-6 space-y-4 text-[0.98rem] leading-[1.85] text-ink">
+              {course.suitableFor.map((x, i) => (
+                <li
+                  key={i}
+                  className="grid grid-cols-[1.6rem_1fr] items-baseline gap-3"
+                >
+                  <span className="mt-[0.7em] h-px w-3 bg-sea-deep" />
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow">学完你能做什么</p>
+            <ul className="mt-6 space-y-4 text-[0.98rem] leading-[1.85] text-ink">
+              {course.youWillLearn.map((x, i) => (
+                <li
+                  key={i}
+                  className="grid grid-cols-[2.4rem_1fr] items-baseline gap-3"
+                >
+                  <span className="font-mono text-[0.74rem] tracking-[0.12em] text-sea-deep">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* ===== 模块与课时 ===== */}
+      <Section className="border-b border-line/60">
+        <p className="eyebrow">课程大纲</p>
+        <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+          每一课都在练同一件事——读懂风。
+        </h2>
+
+        <div className="mt-14 space-y-16">
+          {course.modules.map((m) => (
+            <article key={m.slug} id={m.slug} className="scroll-mt-32">
+              <header className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between">
+                <div>
+                  <p className="font-mono text-[0.74rem] tracking-[0.14em] text-sea-deep">
+                    模块 {String(m.index).padStart(2, "0")}
+                  </p>
+                  <h3 className="display mt-3 text-2xl text-ink md:text-[1.7rem]">
+                    {m.title}
+                  </h3>
+                </div>
+                <p className="max-w-md text-[0.94rem] leading-[1.85] text-ink-soft">
+                  {m.summary}
+                </p>
+              </header>
+
+              <div className="mt-8 grid gap-px bg-line/70 md:grid-cols-2">
+                {m.lessons.map((l) => (
+                  <Link
+                    key={l.slug}
+                    href={`/courses/${course.slug}/${l.slug}`}
+                    className="group flex flex-col bg-paper p-7 transition-colors hover:bg-paper-soft/60 md:p-8"
+                  >
+                    <div className="flex items-baseline justify-between font-mono text-[0.72rem] tracking-[0.12em] text-sea-deep">
+                      <span>{l.index}</span>
+                      <span className="text-mist">{l.duration}</span>
+                    </div>
+                    <h4 className="display mt-4 text-xl text-ink md:text-2xl">
+                      {l.title}
+                    </h4>
+                    <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
+                      {l.summary}
+                    </p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-[0.84rem] text-sea-deep transition-colors group-hover:text-ink">
+                      开始这一课
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      {/* ===== 期末考试（仅在课程有 exam 时显示） ===== */}
+      {course.exam ? (
+        <Section className="border-b border-line/60">
+          <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:items-start">
+            <div>
+              <p className="eyebrow">期末模拟考</p>
+              <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+                真正测一遍你的判断力。
+              </h2>
+            </div>
+            <div className="space-y-6 border-l border-line/70 pl-8">
+              <p className="prose-zh text-[1rem] text-ink">{course.exam.brief}</p>
+              <dl className="grid grid-cols-3 gap-4 font-mono text-[0.78rem]">
+                <ExamMeta label="时长" value={`${course.exam.durationMinutes} 分钟`} />
+                <ExamMeta label="题数" value={`${course.exam.questions.length}`} />
+                <ExamMeta label="通过线" value={`${course.exam.passMark}%`} />
+              </dl>
+              {course.exam.refersTo ? (
+                <p className="text-[0.84rem] leading-[1.7] text-mist">
+                  {course.exam.refersTo}
+                </p>
+              ) : null}
+              <Link
+                href={`/courses/${course.slug}/exam`}
+                className="inline-flex items-center gap-2 rounded-sm bg-ink px-5 py-3 font-mono text-[0.74rem] uppercase tracking-[0.16em] text-paper transition-colors hover:bg-sea-deep"
+              >
+                进入模拟考
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+        </Section>
+      ) : course.practicalNote ? (
+        <Section className="border-b border-line/60">
+          <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:items-start">
+            <div>
+              <p className="eyebrow">关于评估</p>
+              <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+                这门课不在屏幕上结业。
+              </h2>
+            </div>
+            <p className="prose-zh border-l border-line/70 pl-8 text-[1rem] text-ink">
+              {course.practicalNote}
+            </p>
+          </div>
+        </Section>
+      ) : null}
+
+      {/* ===== 资源 ===== */}
+      <Section>
+        <p className="eyebrow">推荐资源</p>
+        <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+          我们自己也在用的工具与读物。
+        </h2>
+
+        <div className="mt-12 grid gap-px bg-line/70 md:grid-cols-2 lg:grid-cols-3">
+          {course.resources.map((r) => (
+            <a
+              key={r.title}
+              href={r.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col bg-paper p-7 transition-colors hover:bg-paper-soft/60"
+            >
+              <div className="flex items-baseline justify-between font-mono text-[0.7rem] tracking-[0.14em] text-mist">
+                <span>{resourceLabel[r.type] ?? r.type}</span>
+                <span className={r.free ? "text-sea-deep" : "text-mist"}>
+                  {r.free ? "FREE" : "PAID"}
+                </span>
+              </div>
+              <h3 className="display mt-3 text-lg text-ink">{r.title}</h3>
+              <p className="mt-3 flex-1 text-[0.9rem] leading-[1.8] text-ink-soft">
+                {r.description}
+              </p>
+              {r.guide ? (
+                <p className="mt-4 border-t border-line/70 pt-4 text-[0.82rem] leading-[1.75] text-mist">
+                  {r.guide}
+                </p>
+              ) : null}
+              <span className="mt-5 inline-flex items-center gap-1.5 text-[0.78rem] text-sea-deep transition-colors group-hover:text-ink">
+                打开
+                <ExternalLink className="h-3 w-3" />
+              </span>
+            </a>
+          ))}
+        </div>
+      </Section>
+    </>
+  );
+}
+
+function Meta({
+  label,
+  value,
+  icon: Icon,
+}: {
+  label: string;
+  value: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div>
+      <dt className="flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.16em] text-mist">
+        <Icon className="h-3 w-3" />
+        {label}
+      </dt>
+      <dd className="mt-2 text-[0.96rem] text-ink">{value}</dd>
+    </div>
+  );
+}
+
+function ExamMeta({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <dt className="text-[0.7rem] uppercase tracking-[0.14em] text-mist">
+        {label}
+      </dt>
+      <dd className="mt-2 text-ink">{value}</dd>
+    </div>
+  );
+}

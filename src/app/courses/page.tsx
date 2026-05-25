@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { courses } from "@/lib/content";
+import { hasDetail } from "@/lib/courses";
 
 export const metadata: Metadata = {
   title: "课程",
@@ -49,51 +50,70 @@ export default function CoursesPage() {
             </div>
 
             <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-2">
-              {items.map((c) => (
-                <article
-                  key={c.slug}
-                  id={c.slug}
-                  className="scroll-mt-28 bg-paper p-8 transition-colors hover:bg-paper-soft/60 md:p-10"
-                >
-                  <div className="flex items-baseline justify-between text-[0.72rem] text-mist">
-                    <span className="font-mono tracking-[0.14em] text-sea">
-                      {c.code}
-                    </span>
-                    <span>{c.duration}</span>
-                  </div>
-                  <h3 className="display mt-4 text-3xl text-ink md:text-4xl">
-                    {c.title}
-                  </h3>
-                  <p className="mt-4 text-[0.98rem] leading-[1.9] text-ink-soft">
-                    {c.summary}
-                  </p>
-                  <ul className="mt-7 space-y-3 border-t border-line/70 pt-6 text-[0.95rem] leading-[1.85] text-ink">
-                    {c.modules.map((m, i) => (
-                      <li
-                        key={m}
-                        className="grid grid-cols-[2.6rem_1fr] items-baseline gap-3"
-                      >
-                        <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea">
-                          {String(i + 1).padStart(2, "0")}
+              {items.map((c) => {
+                const detailed = hasDetail(c.slug);
+                return (
+                  <article
+                    key={c.slug}
+                    id={c.slug}
+                    className="scroll-mt-28 bg-paper p-8 transition-colors hover:bg-paper-soft/60 md:p-10"
+                  >
+                    <div className="flex items-baseline justify-between text-[0.72rem] text-mist">
+                      <span className="font-mono tracking-[0.14em] text-sea">
+                        {c.code}
+                      </span>
+                      <span>{c.duration}</span>
+                    </div>
+                    <h3 className="display mt-4 text-3xl text-ink md:text-4xl">
+                      {c.title}
+                    </h3>
+                    <p className="mt-4 text-[0.98rem] leading-[1.9] text-ink-soft">
+                      {c.summary}
+                    </p>
+                    <ul className="mt-7 space-y-3 border-t border-line/70 pt-6 text-[0.95rem] leading-[1.85] text-ink">
+                      {c.modules.map((m, i) => (
+                        <li
+                          key={m}
+                          className="grid grid-cols-[2.6rem_1fr] items-baseline gap-3"
+                        >
+                          <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span>{m}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-8 flex items-center justify-between">
+                      {detailed ? (
+                        <span className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sea-deep">
+                          已开放
                         </span>
-                        <span>{m}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-8 flex items-center justify-between">
-                    <span className="text-[0.78rem] text-mist">
-                      下一期 4 月 14 日开班
-                    </span>
-                    <Link
-                      href="/about#contact"
-                      className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
-                    >
-                      申请入学
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
+                      ) : (
+                        <span className="text-[0.78rem] text-mist">
+                          即将开放
+                        </span>
+                      )}
+                      {detailed ? (
+                        <Link
+                          href={`/courses/${c.slug}`}
+                          className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
+                        >
+                          进入课程
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
+                      ) : (
+                        <Link
+                          href="/about#contact"
+                          className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
+                        >
+                          申请入学
+                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </Section>
         );
