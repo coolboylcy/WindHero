@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
 import type { LessonBlock } from "./types";
+import {
+  InteractiveApparentWind,
+  InteractivePointsOfSail,
+  InteractiveTwelfthsRule,
+} from "./interactive-diagrams";
 
 /**
  * WindHero 课程内置 SVG 图解。
@@ -17,9 +22,10 @@ type DiagramProps = {
   className?: string;
 };
 
-/* —— 1. 点风方位（Points of Sail） —— */
+/* —— 1. 点风方位（Points of Sail） —— 已替换为 InteractivePointsOfSail，下面的静态版本作为 SSR / no-JS 备用 */
 
-function PointsOfSail({ className }: DiagramProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _StaticPointsOfSail({ className }: DiagramProps) {
   const cx = 200;
   const cy = 200;
   const r = 150;
@@ -146,9 +152,10 @@ function PointsOfSail({ className }: DiagramProps) {
   );
 }
 
-/* —— 2. 真风 vs 视风 —— */
+/* —— 2. 真风 vs 视风 —— 已替换为 InteractiveApparentWind */
 
-function ApparentWind({ className }: DiagramProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _StaticApparentWind({ className }: DiagramProps) {
   return (
     <svg
       viewBox="0 0 420 280"
@@ -722,8 +729,11 @@ function DiagramFallback({ kind, className }: DiagramProps & { kind: string }) {
 /* —— 入口 —— */
 
 const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
-  "points-of-sail": PointsOfSail,
-  "apparent-wind": ApparentWind,
+  // 交互式
+  "points-of-sail": () => <InteractivePointsOfSail />,
+  "apparent-wind": () => <InteractiveApparentWind />,
+  "tide-curve": () => <InteractiveTwelfthsRule />,
+  // 静态线稿
   "sea-breeze-cycle": SeaBreezeCycle,
   "pressure-gradient": PressureGradient,
   "frontal-system": FrontalSystem,
@@ -732,7 +742,6 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "lights-vessels": LightsVessels,
   "wind-shift-vmg": (p) => <DiagramFallback kind="wind-shift-vmg" {...p} />,
   "compass-rose": (p) => <DiagramFallback kind="compass-rose" {...p} />,
-  "tide-curve": (p) => <DiagramFallback kind="tide-curve" {...p} />,
   "celestial-triangle": (p) => <DiagramFallback kind="celestial-triangle" {...p} />,
 };
 

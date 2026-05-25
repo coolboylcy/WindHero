@@ -68,6 +68,7 @@ export default async function ExamPage({ params }: { params: Params }) {
         mode="exam"
         passMark={course.exam.passMark}
         durationMinutes={course.exam.durationMinutes}
+        drawCount={course.exam.drawCount}
         title={`${course.title} · 期末考试`}
       />
     </>

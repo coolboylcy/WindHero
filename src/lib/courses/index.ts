@@ -1,7 +1,11 @@
 import type { Course, Lesson } from "./types";
 import { readingTheWind } from "./data/reading-the-wind";
+import { chartworkAndTides } from "./data/chartwork-and-tides";
+import { lightsShapesSounds } from "./data/lights-shapes-sounds";
+import { vhfAndComms } from "./data/vhf-and-comms";
 import { weatherAndRouting } from "./data/weather-and-routing";
 import { seamanshipAndSafety } from "./data/seamanship-and-safety";
+import { seaSurvivalTheory } from "./data/sea-survival-theory";
 import { celestialAndPilotage } from "./data/celestial-and-pilotage";
 import { captainsMind } from "./data/captains-mind";
 import { offshorePassage } from "./data/offshore-passage";
@@ -15,15 +19,21 @@ import { rebalanceCourse } from "./shuffle";
  *
  * 每门课都经过一次确定性洗牌（rebalanceCourse），把 quiz/exam 选项顺序按 question.id
  * 哈希打散——避免作者把正确答案集中在 B/C 的偏置问题。
+ *
+ * 课程顺序按学员推荐学习路径排列：入门 → 进阶 → 船长之路。
  */
 
 export const detailedCourses: Course[] = [
-  readingTheWind,
-  weatherAndRouting,
-  seamanshipAndSafety,
-  celestialAndPilotage,
-  captainsMind,
-  offshorePassage,
+  readingTheWind,           // WH-101 入门
+  chartworkAndTides,        // WH-103 入门
+  lightsShapesSounds,       // WH-105 入门
+  vhfAndComms,              // WH-107 入门
+  weatherAndRouting,        // WH-204 进阶
+  seamanshipAndSafety,      // WH-212 进阶
+  seaSurvivalTheory,        // WH-211 进阶
+  celestialAndPilotage,     // WH-228 进阶
+  captainsMind,             // WH-301 船长之路
+  offshorePassage,          // WH-401 船长之路
 ].map(rebalanceCourse);
 
 const bySlug = new Map<string, Course>(detailedCourses.map((c) => [c.slug, c]));

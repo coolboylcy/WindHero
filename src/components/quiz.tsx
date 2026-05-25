@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { Check, Clock, Play, RotateCcw, X } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  AlertTriangle,
+  Check,
+  Clock,
+  Play,
+  RotateCcw,
+  X,
+} from "lucide-react";
 import type { Question } from "@/lib/courses/types";
 import { cn } from "@/lib/utils";
 
@@ -12,16 +19,40 @@ type Props = {
   passMark?: number;
   /** 仅 exam 模式：限时（分钟）。给 0 视为不限时。 */
   durationMinutes?: number;
+  /** 仅 exam 模式：从 questions 池中随机抽取的题数。不设或 ≥ 总数视为全部。 */
+  drawCount?: number;
   title?: string;
 };
+
+/* —— 工具：基于时间种子的 Fisher-Yates 洗牌（每次考试重新打散） —— */
+function shuffleInPlace<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function sampleQuestions(pool: Question[], n?: number): Question[] {
+  const all = [...pool];
+  shuffleInPlace(all);
+  if (!n || n >= all.length) return all;
+  return all.slice(0, n);
+}
 
 export function Quiz({
   questions,
   mode = "lesson",
   passMark = 70,
   durationMinutes,
+  drawCount,
   title,
 }: Props) {
+  /* —— 考试题集（每次进入 / 重做都随机抽样 + 打散题序） —— */
+  const [activeSet, setActiveSet] = useState<Question[]>(() =>
+    mode === "exam" ? sampleQuestions(questions, drawCount) : questions
+  );
+
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [revealed, setRevealed] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
@@ -31,6 +62,9 @@ export function Quiz({
   const [remaining, setRemaining] = useState<number>(
     mode === "exam" && durationMinutes ? durationMinutes * 60 : 0
   );
+
+  /* —— 切到其他标签页的次数（用于"严格"模式提示） —— */
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
 
   useEffect(() => {
     if (mode !== "exam" || !started || submitted) return;
@@ -58,9 +92,21 @@ export function Quiz({
     return () => window.removeEventListener("beforeunload", handler);
   }, [mode, started, submitted]);
 
+  /* —— 标签页切换检测 —— */
+  useEffect(() => {
+    if (mode !== "exam" || !started || submitted) return;
+    const handler = () => {
+      if (document.visibilityState === "hidden") {
+        setTabSwitchCount((c) => c + 1);
+      }
+    };
+    document.addEventListener("visibilitychange", handler);
+    return () => document.removeEventListener("visibilitychange", handler);
+  }, [mode, started, submitted]);
+
   const score = useMemo(() => {
-    const total = questions.length;
-    const correct = questions.reduce(
+    const total = activeSet.length;
+    const correct = activeSet.reduce(
       (sum, q) => (answers[q.id] === q.correct ? sum + 1 : sum),
       0
     );
@@ -69,36 +115,51 @@ export function Quiz({
       total,
       pct: total > 0 ? Math.round((correct / total) * 100) : 0,
     };
-  }, [answers, questions]);
+  }, [answers, activeSet]);
+
+  const wrongList = useMemo(() => {
+    if (!submitted) return [];
+    return activeSet
+      .map((q, i) => ({ q, i, chosen: answers[q.id] }))
+      .filter((x) => x.chosen !== x.q.correct);
+  }, [submitted, activeSet, answers]);
 
   const allAnswered =
-    Object.keys(answers).length === questions.length && questions.length > 0;
+    Object.keys(answers).length === activeSet.length && activeSet.length > 0;
 
-  function choose(qid: string, idx: number) {
-    if (mode === "lesson" && revealed[qid]) return;
-    if (mode === "exam" && submitted) return;
-    setAnswers((a) => ({ ...a, [qid]: idx }));
-    if (mode === "lesson") {
-      setRevealed((r) => ({ ...r, [qid]: true }));
-    }
-  }
+  const choose = useCallback(
+    (qid: string, idx: number) => {
+      if (mode === "lesson" && revealed[qid]) return;
+      if (mode === "exam" && submitted) return;
+      setAnswers((a) => ({ ...a, [qid]: idx }));
+      if (mode === "lesson") {
+        setRevealed((r) => ({ ...r, [qid]: true }));
+      }
+    },
+    [mode, revealed, submitted]
+  );
 
-  function reset() {
+  const reset = useCallback(() => {
     setAnswers({});
     setRevealed({});
     setSubmitted(false);
+    setTabSwitchCount(0);
     if (mode === "exam") {
       setStarted(false);
       setRemaining(durationMinutes ? durationMinutes * 60 : 0);
+      setActiveSet(sampleQuestions(questions, drawCount));
     }
-  }
+  }, [mode, durationMinutes, questions, drawCount]);
 
   function startExam() {
+    setActiveSet(sampleQuestions(questions, drawCount));
     setStarted(true);
   }
 
   /* —— 考试启动闸 —— */
   if (mode === "exam" && !started) {
+    const drawSize =
+      drawCount && drawCount < questions.length ? drawCount : questions.length;
     return (
       <section className="border-y border-line/70 bg-paper-soft/40 py-16">
         <div className="mx-auto max-w-2xl px-2 text-center">
@@ -109,14 +170,20 @@ export function Quiz({
             准备好了再开始。
           </h3>
           <p className="prose-zh mt-6 text-[1rem] text-ink-soft">
-            点「开始考试」后，倒计时立刻启动、不可暂停。中途刷新或离开页面会触发浏览器确认对话框。建议把网页设为「请勿打扰」、关掉其他标签页，像在考场里一样独立完成。
+            点「开始考试」后，倒计时立刻启动、不可暂停。中途刷新或离开页面会触发浏览器确认对话框；切换到其他标签页会被记录。建议把网页设为请勿打扰、关掉其他标签页，像在考场里一样独立完成。
           </p>
           <ul className="mt-8 grid gap-3 border-y border-line/70 py-6 text-left text-[0.92rem] text-ink">
             <li className="grid grid-cols-[2rem_1fr] items-baseline gap-3">
               <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea-deep">
                 01
               </span>
-              <span>共 {questions.length} 题；及格线 {passMark}%</span>
+              <span>
+                本次抽 <strong>{drawSize}</strong> 题
+                {drawCount && drawCount < questions.length
+                  ? ` （从 ${questions.length} 题题库中随机取样）`
+                  : ""}
+                ；及格线 {passMark}%
+              </span>
             </li>
             <li className="grid grid-cols-[2rem_1fr] items-baseline gap-3">
               <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea-deep">
@@ -130,7 +197,13 @@ export function Quiz({
               <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea-deep">
                 03
               </span>
-              <span>答题过程中不显示对错；交卷后一次性展示解析</span>
+              <span>答题过程不显示对错；交卷后一次性展示成绩、错题与解析</span>
+            </li>
+            <li className="grid grid-cols-[2rem_1fr] items-baseline gap-3">
+              <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea-deep">
+                04
+              </span>
+              <span>每次重做将随机抽新一组题——你看到的考题不会两次相同</span>
             </li>
           </ul>
           <button
@@ -162,23 +235,50 @@ export function Quiz({
             {mode === "exam" && started && !submitted && durationMinutes ? (
               <Timer remaining={remaining} />
             ) : null}
-            {submitted || (mode === "lesson" && Object.keys(revealed).length > 0) ? (
+            {submitted ||
+            (mode === "lesson" && Object.keys(revealed).length > 0) ? (
               <button
                 type="button"
                 onClick={reset}
                 className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-mist transition-colors hover:text-ink"
               >
                 <RotateCcw className="h-3 w-3" />
-                重做
+                {mode === "exam" ? "重做（新抽题）" : "重做"}
               </button>
             ) : null}
           </div>
         </header>
 
+        {/* —— 答题进度条（仅 exam 模式） —— */}
+        {mode === "exam" && started && !submitted ? (
+          <div className="mt-5">
+            <div className="flex items-center justify-between font-mono text-[0.7rem] uppercase tracking-[0.14em] text-mist">
+              <span>进度</span>
+              <span>
+                {Object.keys(answers).length} / {activeSet.length}
+              </span>
+            </div>
+            <div className="mt-2 h-1 w-full overflow-hidden rounded-sm bg-line/60">
+              <div
+                className="h-full bg-sea-deep transition-[width] duration-300"
+                style={{
+                  width: `${(Object.keys(answers).length / activeSet.length) *
+                    100}%`,
+                }}
+              />
+            </div>
+            {tabSwitchCount > 0 ? (
+              <p className="mt-3 inline-flex items-center gap-2 text-[0.78rem] text-coral">
+                <AlertTriangle className="h-3.5 w-3.5" />
+                考试期间已检测到 {tabSwitchCount} 次切换到其他标签页
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+
         <ol className="mt-10 space-y-10">
-          {questions.map((q, qi) => {
-            const showAnswer =
-              mode === "lesson" ? revealed[q.id] : submitted;
+          {activeSet.map((q, qi) => {
+            const showAnswer = mode === "lesson" ? revealed[q.id] : submitted;
             const chosen = answers[q.id];
 
             return (
@@ -256,7 +356,7 @@ export function Quiz({
             {!submitted ? (
               <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
                 <p className="text-[0.86rem] text-mist">
-                  已答 {Object.keys(answers).length} / {questions.length}
+                  已答 {Object.keys(answers).length} / {activeSet.length}
                 </p>
                 <button
                   type="button"
@@ -265,7 +365,7 @@ export function Quiz({
                 >
                   {allAnswered
                     ? "提前交卷"
-                    : `还差 ${questions.length - Object.keys(answers).length} 题——直接交卷`}
+                    : `还差 ${activeSet.length - Object.keys(answers).length} 题——直接交卷`}
                 </button>
               </div>
             ) : (
@@ -275,6 +375,8 @@ export function Quiz({
                 total={score.total}
                 passMark={passMark}
                 timedOut={!!durationMinutes && remaining === 0}
+                tabSwitchCount={tabSwitchCount}
+                wrongList={wrongList}
               />
             )}
           </footer>
@@ -305,36 +407,89 @@ function Timer({ remaining }: { remaining: number }) {
   );
 }
 
+type WrongEntry = { q: Question; i: number; chosen: number | undefined };
+
 function ExamResult({
   pct,
   correct,
   total,
   passMark,
   timedOut,
+  tabSwitchCount,
+  wrongList,
 }: {
   pct: number;
   correct: number;
   total: number;
   passMark: number;
   timedOut: boolean;
+  tabSwitchCount: number;
+  wrongList: WrongEntry[];
 }) {
   const passed = pct >= passMark;
   return (
-    <div className="rounded-sm border border-line/70 bg-paper p-6 md:p-8">
-      <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
-        成绩{timedOut ? " · 时间到自动交卷" : ""}
-      </p>
-      <div className="mt-4 flex items-baseline gap-3">
-        <span className="display text-5xl text-ink">{pct}</span>
-        <span className="font-mono text-[0.86rem] text-mist">
-          分 · {correct} / {total}
-        </span>
+    <div className="space-y-6">
+      <div className="rounded-sm border border-line/70 bg-paper p-6 md:p-8">
+        <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
+          成绩{timedOut ? " · 时间到自动交卷" : ""}
+        </p>
+        <div className="mt-4 flex items-baseline gap-3">
+          <span className="display text-5xl text-ink">{pct}</span>
+          <span className="font-mono text-[0.86rem] text-mist">
+            分 · {correct} / {total}
+          </span>
+          <span
+            className={cn(
+              "ml-3 font-mono text-[0.78rem] tracking-[0.14em]",
+              passed ? "text-sea-deep" : "text-coral"
+            )}
+          >
+            {passed ? "通过" : "未通过"}
+          </span>
+        </div>
+        <p className="mt-4 text-[0.96rem] leading-[1.85] text-ink-soft">
+          {passed
+            ? `通过线是 ${passMark} 分——你过了。但成绩不是终点；回看错题，理解为什么错。下次重做会换一组题——真正吃透知识点的标志，是任何抽样都能稳过。`
+            : `通过线是 ${passMark} 分——这一次没过，不是失败。回到错题对应的章节再读一遍，过 24 小时再考一次。每次重做随机抽新题——船长的判断力是在重复中长出来的。`}
+        </p>
+        {tabSwitchCount > 0 ? (
+          <p className="mt-4 inline-flex items-center gap-2 text-[0.84rem] text-coral">
+            <AlertTriangle className="h-3.5 w-3.5" />
+            本次考试期间切换到其他标签页 {tabSwitchCount} 次——在真实考场里，这不被允许。
+          </p>
+        ) : null}
       </div>
-      <p className="mt-4 text-[0.96rem] leading-[1.85] text-ink-soft">
-        {passed
-          ? `通过线是 ${passMark} 分——你过了。但成绩不是终点；回看那几道错题，理解为什么错。下一阶段的课程会持续考你这些判断。`
-          : `通过线是 ${passMark} 分——这一次没过，不是失败。回到错题对应的章节再读一遍，过 24 小时再考一次。船长的判断力是在重复中长出来的。`}
-      </p>
+
+      {wrongList.length > 0 ? (
+        <div className="rounded-sm border border-line/70 bg-paper p-6 md:p-8">
+          <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-coral">
+            错题汇总 · {wrongList.length} 题
+          </p>
+          <ol className="mt-5 space-y-5">
+            {wrongList.map(({ q, i, chosen }) => (
+              <li key={q.id} className="border-l-2 border-coral/40 pl-4">
+                <p className="text-[0.94rem] leading-[1.8] text-ink">
+                  <span className="mr-2 font-mono text-[0.72rem] tracking-[0.14em] text-mist">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {q.q}
+                </p>
+                <p className="mt-2 text-[0.86rem] text-ink-soft">
+                  <span className="font-mono text-coral">你的答案：</span>
+                  {chosen != null ? q.options[chosen] : "（未作答）"}
+                </p>
+                <p className="mt-1 text-[0.86rem] text-ink-soft">
+                  <span className="font-mono text-sea-deep">正确：</span>
+                  {q.options[q.correct]}
+                </p>
+                <p className="mt-2 text-[0.82rem] leading-[1.75] text-mist">
+                  {q.explanation}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ) : null}
     </div>
   );
 }

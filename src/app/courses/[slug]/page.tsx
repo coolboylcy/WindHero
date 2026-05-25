@@ -196,7 +196,15 @@ export default async function CourseDetailPage({
               <p className="prose-zh text-[1rem] text-ink">{course.exam.brief}</p>
               <dl className="grid grid-cols-3 gap-4 font-mono text-[0.78rem]">
                 <ExamMeta label="时长" value={`${course.exam.durationMinutes} 分钟`} />
-                <ExamMeta label="题数" value={`${course.exam.questions.length}`} />
+                <ExamMeta
+                  label="题数"
+                  value={
+                    course.exam.drawCount &&
+                    course.exam.drawCount < course.exam.questions.length
+                      ? `抽 ${course.exam.drawCount} / 池 ${course.exam.questions.length}`
+                      : `${course.exam.questions.length}`
+                  }
+                />
                 <ExamMeta label="通过线" value={`${course.exam.passMark}%`} />
               </dl>
               {course.exam.refersTo ? (

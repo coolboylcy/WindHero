@@ -2,21 +2,21 @@
 
 @theme {
   /* —— 高级地中海色板 ——
-     纯净的白、深邃的海军蓝、清亮的爱琴海蓝。无米黄，无橄榄，无做旧。
-     对标 The Row / Loro Piana / Aman 的色感。 */
-  --color-paper: #fbfbf8;          /* 主背景：极冷白，像漂白的亚麻 */
-  --color-paper-soft: #f1f1ec;     /* 次级面板 / hover 微差 */
-  --color-line: #d9d9d2;           /* 极细分隔线 */
+     纯净的白带极淡蓝灰、深邃的海军蓝、清亮的爱琴海蓝。
+     对标 The Row / Loro Piana / Aman 的色感，但向海更靠近一点。 */
+  --color-paper: #f5f7fa;          /* 主背景：冷白偏极淡蓝灰 */
+  --color-paper-soft: #e9eef3;     /* 次级面板 / hover 微差 */
+  --color-line: #cfd6df;           /* 极细分隔线，带蓝灰 */
 
-  --color-ink: #0e2540;            /* 主文字：深海军蓝 */
-  --color-ink-soft: #3a4f6e;       /* 次文字 */
-  --color-mist: #8090a4;           /* 弱文字 / 元信息 */
+  --color-ink: #0d2742;            /* 主文字：深海军蓝（更冷） */
+  --color-ink-soft: #3a5573;       /* 次文字 */
+  --color-mist: #7d92aa;           /* 弱文字 / 元信息 */
 
-  --color-sea: #2d7db6;            /* 强调色：清亮爱琴海蓝 */
-  --color-sea-deep: #0e5285;       /* 强调悬浮 / 链接 */
-  --color-sea-soft: #c5d8e6;       /* 极浅海蓝（远景、卡片背景） */
+  --color-sea: #2d83be;            /* 强调色：清亮爱琴海蓝 */
+  --color-sea-deep: #0e5586;       /* 强调悬浮 / 链接 */
+  --color-sea-soft: #c2d6e7;       /* 极浅海蓝（远景、卡片背景） */
 
-  --color-coral: #d04a3b;          /* 极少用的高光红，仅在关键 CTA / 引言 */
+  --color-coral: #d04a3b;          /* 极少用的高光红，仅在关键 CTA / 警示 */
 
   /* Fonts —— 现代出版物风衬线，去掉古典装饰 */
   --font-sans: var(--font-inter-tight), "PingFang SC", "Hiragino Sans GB",
@@ -34,8 +34,8 @@
 }
 
 :root {
-  --background: #fbfbf8;
-  --foreground: #0e2540;
+  --background: #f5f7fa;
+  --foreground: #0d2742;
   color-scheme: light;
 }
 

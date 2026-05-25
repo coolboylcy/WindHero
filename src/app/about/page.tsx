@@ -7,31 +7,8 @@ import { NewsletterForm } from "@/components/newsletter-form";
 export const metadata: Metadata = {
   title: "关于",
   description:
-    "谁在主理 WindHero，我们在哪里航海，以及怎么找到岸上的办公室。",
+    "WindHero 由站长良辰主理——一个从零开始的船长。这里写下他为什么办这所学校。",
 };
-
-const crew = [
-  {
-    name: "林 维",
-    role: "创始人 · 主讲船长",
-    bio: "南海引航员，远洋航程超过 60,000 海里，前气象官。相信一门课程必须在真实天气里能被验证。",
-  },
-  {
-    name: "Marisol Ortega",
-    role: "课程总监",
-    bio: "Yachtmaster Ocean。曾为两支 ARC 跨大西洋船队和一支悉尼-霍巴特船队做安全训练。",
-  },
-  {
-    name: "新垣 俊志",
-    role: "引航与天文导航",
-    bio: "驻冲绳，引航员兼传统航海者。教会你电子海图遗忘的那一半导航功夫。",
-  },
-  {
-    name: "Henrik Sund",
-    role: "天气与航路",
-    bio: "前北大西洋邮轮的航路气象官。读 GRIB 的方式，像医生读核磁共振。",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -41,62 +18,131 @@ export default function AboutPage() {
           eyebrow="关于"
           title={
             <>
-              我们办这所学校，
+              我办这所学校，
               <br />
-              是因为我们自己想上的那一所并不存在。
+              是因为我自己想上的那一所并不存在。
             </>
           }
-          lead="WindHero 是一所刻意保持小规模、刻意国际化的学校，由在役船长、气象人和远洋教练共同搭建。我们教那些一个人摸索要花很多年才能学会的部分；也教那些海会顺手让你学会的——关于生活的部分。"
+          lead="WindHero 是一个由一名「从零开始的船长」搭建的学校——也是一份公开的学习笔记。它的每一节课都是站长良辰自己在学的那一节；写出来既是为了让下一个想学航海的人不必再独自摸索，也是为了让自己学得更扎实。"
         />
       </Section>
 
+      {/* ===== 站长信 ===== */}
       <Section className="border-b border-line/60">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
           <div>
-            <Eyebrow>船员名单</Eyebrow>
-            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-              都是真正跑过这些海的人。
+            <Eyebrow>站长</Eyebrow>
+            <h2 className="display mt-4 text-4xl text-ink md:text-5xl">
+              良辰。
             </h2>
-            <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
-              导师会和你一起在真实航段上值班。没有明星代言人，
-              后甲板上也没有市场部。
+            <p className="mt-3 font-mono text-[0.78rem] tracking-[0.16em] text-sea-deep">
+              FOUNDER · 从零开始的船长
+            </p>
+            <p className="mt-8 max-w-md text-[0.96rem] leading-[1.9] text-ink-soft">
+              我没有海军背景，没有家族船队，也不是从小被父亲带在船上长大的那种人。
+              三十岁这一年，我决定从零开始学航海。
+            </p>
+            <p className="mt-5 max-w-md text-[0.96rem] leading-[1.9] text-ink-soft">
+              WindHero 是这段学习的副产品。每读懂一个概念、跑通一次操作，我就把它整理成一节课——
+              用一个「初学者」的视角写给「初学者」。如果你也站在岸边、看着远方的桅杆想着「我能学会吗」——这门课就是给你的。
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-px bg-line/70 sm:grid-cols-2">
-            {crew.map((p) => (
-              <article key={p.name} className="bg-paper p-7">
-                <p className="display text-[1.55rem] text-ink">{p.name}</p>
-                <p className="mt-1 text-[0.78rem] text-sea-deep">{p.role}</p>
-                <p className="mt-4 text-[0.95rem] leading-[1.9] text-ink-soft">
-                  {p.bio}
-                </p>
-              </article>
-            ))}
+          <article className="border-l border-line/70 pl-8 md:pl-12">
+            <Eyebrow>站长手记</Eyebrow>
+            <div className="mt-6 space-y-7 text-[1rem] leading-[1.95] text-ink prose-zh md:text-[1.05rem]">
+              <p>
+                这个站是我一个人写的。每一门课、每一道题、每一张图，都是我自己先读懂、再写出来。
+              </p>
+              <p>
+                所以这不是一所有「全明星师资」的学校。它更像一个开放的学习笔记——
+                我在前面踩着别人踩过的浪，把自己摔倒的地方画成图，
+                让走在我后面的人不必再摔同样一次。
+              </p>
+              <p>
+                我对标的是 RYA（英国皇家游艇协会）的笔试体系：
+                Day Skipper Theory、Coastal &amp; Yachtmaster Theory、Sea Survival、VHF/SRC、
+                Yachtmaster Ocean Theory。WindHero 的目标是覆盖这五张笔试所有知识点，
+                并用一个「为什么」的视角讲透每一个公式与每一条规则。
+              </p>
+              <p>
+                但 RYA 证书 WindHero 不发——按规定，那必须由 RYA 认证学校在认证海图与认证海上时间里完成。
+                WindHero 能做的是：让你在登上认证学校的甲板之前，已经站得稳。
+              </p>
+              <p>
+                如果你也是从零开始的航海者，欢迎写信给我。我读每一封。
+              </p>
+              <p className="text-mist">
+                —— 良辰
+              </p>
+            </div>
+          </article>
+        </div>
+      </Section>
+
+      {/* ===== 教学理念 ===== */}
+      <Section className="border-b border-line/60">
+        <div className="grid gap-12 lg:grid-cols-3">
+          <div>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
+              01 · 一手原创
+            </p>
+            <h3 className="display mt-4 text-2xl text-ink">
+              不抄教材，只解释原理。
+            </h3>
+            <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
+              所有正文、题目、案例都由我亲笔写。对标 RYA 笔试大纲，
+              但用我作为初学者最不能接受「死记硬背」的那种态度，把每一个为什么讲到底。
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
+              02 · 严格考试
+            </p>
+            <h3 className="display mt-4 text-2xl text-ink">
+              真的考你。
+            </h3>
+            <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
+              每门课配真实考场体验——倒计时不可暂停、随机抽题、错题汇总。
+              重做必抽新题。能稳过的人是真懂的人。
+            </p>
+          </div>
+          <div>
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
+              03 · 开放与开源
+            </p>
+            <h3 className="display mt-4 text-2xl text-ink">
+              一切都写在仓库里。
+            </h3>
+            <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
+              代码、内容、试题、图解——全部在 GitHub 开源。
+              你可以提 issue、提 PR、把它 fork 走，按自己的航海舞台改写。
+            </p>
           </div>
         </div>
       </Section>
 
+      {/* ===== 联系 ===== */}
       <Section id="contact" className="border-b border-line/60">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
           <div>
-            <Eyebrow>岸上办公室</Eyebrow>
+            <Eyebrow>写信给我</Eyebrow>
             <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-              联系我们。
+              联系。
             </h2>
             <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
-              想做内部船员班、合作、或登上某段远洋——请写信给我们。
-              每一封都会被读到，工作日内两日回复。
+              想推荐一本被遗漏的书、指出一道题的错误、聊聊一段你自己跑过的航段——
+              都写信给我。每一封都会读到。
             </p>
 
             <dl className="mt-10 space-y-6 border-t border-line/70 pt-8">
               <div>
-                <dt className="eyebrow">办公室</dt>
+                <dt className="eyebrow">站长</dt>
                 <dd className="display mt-2 text-xl text-ink">
-                  香港仔游艇会，香港
+                  良辰
                 </dd>
                 <dd className="font-mono text-xs text-mist">
-                  22°14′N · 114°09′E
+                  从零开始的船长
                 </dd>
               </div>
               <div>
@@ -134,7 +180,8 @@ export default function AboutPage() {
               这是最方便走进 WindHero 的路。
             </h3>
             <p className="mt-3 text-[0.95rem] leading-[1.9] text-ink-soft">
-              每月一封——新的航段、值得读的一段天气、以及一篇最近航程留下的船长日志。
+              每月一封——新写完的课、读过的一篇好天气分析、
+              以及我作为初学者最近又被打脸的地方。
             </p>
             <div className="mt-7">
               <NewsletterForm source="about" />

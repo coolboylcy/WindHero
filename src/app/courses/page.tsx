@@ -2,13 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
-import { courses } from "@/lib/content";
-import { hasDetail } from "@/lib/courses";
+import { detailedCourses } from "@/lib/courses";
 
 export const metadata: Metadata = {
   title: "课程",
   description:
-    "从读风入门到指挥一段远洋——WindHero 的完整课程体系。",
+    "10 门课，对标 RYA 笔试体系——从读风入门到指挥一段远洋。",
 };
 
 const levels = ["入门", "进阶", "船长之路"] as const;
@@ -21,17 +20,24 @@ export default function CoursesPage() {
           eyebrow="课程"
           title={
             <>
-              一所为想要真功夫的水手
+              一所为从零开始的船长
               <br />
               而建的学校。
             </>
           }
-          lead="六门课，三个等级。自学的理论课、集体班的实操、以及船上的真实里程。船长之路以一段你自己规划、亲口答辩并出海完成的远洋航段收尾。"
+          lead="十门课，三个等级，对标 RYA Day Skipper → Yachtmaster Ocean 的完整笔试体系。每一门都由站长良辰原创撰写，配真实考场体验——随机抽题、倒计时、错题汇总。"
         />
+        <p className="mt-8 inline-flex items-center gap-2 text-[0.86rem] text-sea-deep">
+          想看每节课对应哪一项 RYA 大纲——
+          <Link href="/rya" className="underline-offset-4 hover:underline">
+            进入 RYA 对照页
+          </Link>
+          <ArrowRight className="h-3.5 w-3.5" />
+        </p>
       </Section>
 
       {levels.map((level) => {
-        const items = courses.filter((c) => c.level === level);
+        const items = detailedCourses.filter((c) => c.level === level);
         return (
           <Section key={level} className="border-b border-line/60">
             <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
@@ -51,7 +57,10 @@ export default function CoursesPage() {
 
             <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-2">
               {items.map((c) => {
-                const detailed = hasDetail(c.slug);
+                const lessonCount = c.modules.reduce(
+                  (s, m) => s + m.lessons.length,
+                  0
+                );
                 return (
                   <article
                     key={c.slug}
@@ -70,46 +79,52 @@ export default function CoursesPage() {
                     <p className="mt-4 text-[0.98rem] leading-[1.9] text-ink-soft">
                       {c.summary}
                     </p>
-                    <ul className="mt-7 space-y-3 border-t border-line/70 pt-6 text-[0.95rem] leading-[1.85] text-ink">
-                      {c.modules.map((m, i) => (
+
+                    <dl className="mt-6 grid grid-cols-3 gap-3 border-y border-line/70 py-4 font-mono text-[0.7rem] uppercase tracking-[0.12em]">
+                      <div>
+                        <dt className="text-mist">模块</dt>
+                        <dd className="mt-1 text-ink">{c.modules.length}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-mist">课时</dt>
+                        <dd className="mt-1 text-ink">{lessonCount}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-mist">期末</dt>
+                        <dd className="mt-1 text-ink">
+                          {c.exam
+                            ? c.exam.drawCount
+                              ? `抽 ${c.exam.drawCount}`
+                              : `${c.exam.questions.length} 题`
+                            : "无笔试"}
+                        </dd>
+                      </div>
+                    </dl>
+
+                    <ul className="mt-6 space-y-3 text-[0.95rem] leading-[1.85] text-ink">
+                      {c.modules.map((m) => (
                         <li
-                          key={m}
+                          key={m.slug}
                           className="grid grid-cols-[2.6rem_1fr] items-baseline gap-3"
                         >
                           <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea">
-                            {String(i + 1).padStart(2, "0")}
+                            {String(m.index).padStart(2, "0")}
                           </span>
-                          <span>{m}</span>
+                          <span>{m.title}</span>
                         </li>
                       ))}
                     </ul>
                     <div className="mt-8 flex items-center justify-between">
-                      {detailed ? (
-                        <span className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sea-deep">
-                          已开放
-                        </span>
-                      ) : (
-                        <span className="text-[0.78rem] text-mist">
-                          即将开放
-                        </span>
-                      )}
-                      {detailed ? (
-                        <Link
-                          href={`/courses/${c.slug}`}
-                          className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
-                        >
-                          进入课程
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </Link>
-                      ) : (
-                        <Link
-                          href="/about#contact"
-                          className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
-                        >
-                          申请入学
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </Link>
-                      )}
+                      <span className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sea-deep">
+                        RYA · {c.ryaEquivalent}
+                      </span>
+                      <Link
+                        href={`/courses/${c.slug}`}
+                        className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
+                      >
+                        进入课程
+                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                      </Link>
                     </div>
                   </article>
                 );
@@ -128,14 +143,14 @@ const levelCopy: Record<
 > = {
   入门: {
     title: "入门。",
-    lead: "海的词汇表——风、帆面、点风方位，以及那些让你在甲板上不至于受伤的好习惯。",
+    lead: "海的词汇表 + RYA Day Skipper Theory 笔试全部知识点：风的物理、海图作业、潮汐计算、IRPCS 灯型号型、VHF/SRC。",
   },
   进阶: {
     title: "进阶海员素养。",
-    lead: "天气、航路、引航与安全。把一名水手变成你愿意托付夜班的人。",
+    lead: "天气、航路、海上求生、海员素养、引航与天文导航——对应 RYA Coastal/Yachtmaster Theory 与 Sea Survival。",
   },
   船长之路: {
     title: "船长之路。",
-    lead: "船长的思维：领导力、判断力，以及一段真正的远洋航段作为收尾。",
+    lead: "船长的思维 + 远洋航段——对标 RYA Yachtmaster Ocean Theory，并直接前置准备 Yachtmaster 实操。",
   },
 };

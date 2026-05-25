@@ -82,6 +82,8 @@ export type Lesson = {
   body: LessonBlock[];
   /** 课后小测 */
   quiz: Question[];
+  /** 对应的 RYA 大纲条目，便于学员对照官方 syllabus */
+  ryaSyllabusItems?: string[];
 };
 
 /** —— 模块（多课时合集） —— */
@@ -123,8 +125,14 @@ export type Exam = {
   durationMinutes: number;
   /** 及格分（百分比 0–100） */
   passMark: number;
-  /** 完整题库（按真实考试规格） */
+  /** 完整题库 —— 真实考试时会从这个池子里随机抽题（如设置了 drawCount） */
   questions: Question[];
+  /**
+   * 每次考试随机抽取的题数。
+   * 不设或 ≥ questions.length 时使用全部题目。
+   * 设置后每次考试随机从题库抽 drawCount 道、每次重做都换一组。
+   */
+  drawCount?: number;
   /** 说明 */
   brief: string;
   /** 真实考试参考（如对标 RYA Day Skipper Theory exam） */
