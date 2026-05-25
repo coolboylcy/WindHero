@@ -751,6 +751,16 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "celestial-triangle": (p) => <DiagramFallback kind="celestial-triangle" {...p} />,
 };
 
+/** 这些 kind 是交互式的——使用更宽容器、紧凑内边距，让滑块与 SVG 能并排展示。 */
+const INTERACTIVE_KINDS: ReadonlySet<DiagramKind> = new Set<DiagramKind>([
+  "points-of-sail",
+  "apparent-wind",
+  "tide-curve",
+  "three-cell-circulation",
+  "coriolis-deflection",
+  "isobar-wind",
+]);
+
 export function CourseDiagram({
   kind,
   caption,
@@ -759,13 +769,30 @@ export function CourseDiagram({
   caption?: string;
 }) {
   const Cmp = registry[kind];
+  const interactive = INTERACTIVE_KINDS.has(kind);
+
+  if (interactive) {
+    return (
+      <figure className="my-8">
+        <div className="rounded-sm border border-line/70 bg-paper-soft/30 p-4 sm:p-5 md:p-6">
+          <Cmp className="text-ink" />
+        </div>
+        {caption ? (
+          <figcaption className="mt-3 text-center font-mono text-[0.7rem] tracking-[0.12em] text-mist">
+            {caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    );
+  }
+
   return (
-    <figure className="my-10">
-      <div className="rounded-sm border border-line/70 bg-paper-soft/40 p-6 md:p-10">
-        <Cmp className="mx-auto block h-auto w-full max-w-2xl text-ink" />
+    <figure className="my-8">
+      <div className="rounded-sm border border-line/70 bg-paper-soft/40 p-4 sm:p-6 md:p-8">
+        <Cmp className="mx-auto block h-auto w-full max-w-2xl max-h-[55vh] text-ink" />
       </div>
       {caption ? (
-        <figcaption className="mt-3 text-center font-mono text-[0.72rem] tracking-[0.12em] text-mist">
+        <figcaption className="mt-3 text-center font-mono text-[0.7rem] tracking-[0.12em] text-mist">
           {caption}
         </figcaption>
       ) : null}

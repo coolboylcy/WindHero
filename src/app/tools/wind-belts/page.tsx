@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind } from "lucide-react";
-import { Section, SectionHeading } from "@/components/section";
+import { Section } from "@/components/section";
 import { regions, cellInfo } from "@/lib/tools/wind-belts-data";
 import { WindBeltsExplorer } from "./explorer";
 
@@ -35,23 +35,17 @@ export const metadata: Metadata = {
 export default function WindBeltsPage() {
   return (
     <>
-      {/* ==================== Hero ==================== */}
-      <Section className="border-b border-line/60 pt-36">
-        <SectionHeading
-          eyebrow="工具 · 全球风带查询"
-          title={
-            <>
-              你想去的海域，
-              <br />
-              此刻吹的是什么风？
-            </>
-          }
-          lead="输入海域或拖动地球纬度，看主导风向、最佳出航月份、台风/飓风窗口。这是船长出门前的第一份功课——比任何天气 App 都先决定你能不能去。"
-        />
-      </Section>
-
-      {/* ==================== Tool ==================== */}
-      <Section className="border-b border-line/60">
+      {/* ==================== Hero + Tool（首屏） ==================== */}
+      <Section className="border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+        <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
+          <p className="eyebrow">工具 · 全球风带查询</p>
+          <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
+            你想去的海域，此刻吹的是什么风？
+          </h1>
+          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
+            输入海域或拖动地球纬度——看主导风、最佳月份、台风窗口。出航前的第一份功课。
+          </p>
+        </header>
         <WindBeltsExplorer />
       </Section>
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind } from "lucide-react";
-import { Section, SectionHeading } from "@/components/section";
+import { Section } from "@/components/section";
 import { SynopticExplorer } from "./explorer";
 
 export const metadata: Metadata = {
@@ -30,19 +30,18 @@ export const metadata: Metadata = {
 export default function SynopticPage() {
   return (
     <>
-      {/* ==================== Hero ==================== */}
-      <Section className="border-b border-line/60 pt-36">
-        <SectionHeading
-          eyebrow="工具 · 天气图读图"
-          title={
-            <>
-              一张地面气压图，
-              <br />
-              比天气 App 多说一万字。
-            </>
-          }
-          lead="看预报数字是别人替你读图。这页教你自己看：等压线密集说明什么、L 与 H 在哪、锋面前后风怎么变、为什么北半球低压逆时针。配可拖动的天气图沙盒，让你拿手感。"
-        />
+      {/* ==================== Hero + Tool（首屏） ==================== */}
+      <Section className="border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+        <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
+          <p className="eyebrow">工具 · 天气图读图</p>
+          <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
+            一张地面气压图，比天气 App 多说一万字。
+          </h1>
+          <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
+            拖动滑块改变等压线密度、切换半球——看风向风强如何同步改变。下方有完整原理。
+          </p>
+        </header>
+        <SynopticExplorer />
       </Section>
 
       {/* ==================== Step 1：怎么看 ==================== */}
@@ -51,39 +50,33 @@ export default function SynopticPage() {
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2.2rem]">
           先认识那一堆封闭曲线。
         </h2>
-        <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-          <div className="space-y-5 prose-zh text-[1rem] leading-[1.9] text-ink-soft">
-            <p>
-              <strong className="text-ink">等压线（isobar）</strong>
-              是地面气压相同的点连成的线，通常每 4 hPa 画一根。标准大气压是 1013 hPa——比 1013 高的是「高压」H，比 1013 低的是「低压」L。
-            </p>
-            <p>
-              船长看天气图，第一眼不看 L/H 在哪，而是看
-              <strong className="text-ink">等压线密集度</strong>
-              ——两根线靠得越近，气压在那点变化越剧烈，风越强。这一条比记十个术语都重要。
-            </p>
-            <p>
-              等压线本身代表「这条线上的气压都是 1004」之类。线的形状是地球各处空气压力分布的等值线，可类比地形图上的等高线——只是这次是「气压地图」。
-            </p>
-            <ul className="space-y-2">
-              <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
-                <span className="font-mono text-sea-deep">·</span>
-                <span>线密 → 气压梯度大 → 风强</span>
-              </li>
-              <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
-                <span className="font-mono text-sea-deep">·</span>
-                <span>线疏 → 气压梯度小 → 风弱</span>
-              </li>
-              <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
-                <span className="font-mono text-sea-deep">·</span>
-                <span>闭合的圆圈是低压 L 或高压 H 的中心</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <SynopticExplorer />
-          </div>
+        <div className="mt-8 max-w-3xl space-y-5 prose-zh text-[1rem] leading-[1.9] text-ink-soft">
+          <p>
+            <strong className="text-ink">等压线（isobar）</strong>
+            是地面气压相同的点连成的线，通常每 4 hPa 画一根。标准大气压是 1013 hPa——比 1013 高的是「高压」H，比 1013 低的是「低压」L。
+          </p>
+          <p>
+            船长看天气图，第一眼不看 L/H 在哪，而是看
+            <strong className="text-ink">等压线密集度</strong>
+            ——两根线靠得越近，气压在那点变化越剧烈，风越强。这一条比记十个术语都重要。
+          </p>
+          <p>
+            等压线本身代表「这条线上的气压都是 1004」之类。线的形状是地球各处空气压力分布的等值线，可类比地形图上的等高线——只是这次是「气压地图」。
+          </p>
+          <ul className="space-y-2">
+            <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
+              <span className="font-mono text-sea-deep">·</span>
+              <span>线密 → 气压梯度大 → 风强</span>
+            </li>
+            <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
+              <span className="font-mono text-sea-deep">·</span>
+              <span>线疏 → 气压梯度小 → 风弱</span>
+            </li>
+            <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
+              <span className="font-mono text-sea-deep">·</span>
+              <span>闭合的圆圈是低压 L 或高压 H 的中心</span>
+            </li>
+          </ul>
         </div>
       </Section>
 
