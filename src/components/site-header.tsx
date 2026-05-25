@@ -8,10 +8,9 @@ import { cn } from "@/lib/utils";
 
 const navItems: { href: string; label: string }[] = [
   { href: "/courses", label: "课程" },
-  { href: "/rya", label: "RYA 对照" },
+  { href: "/certifications", label: "认证体系" },
+  { href: "/schools", label: "学校" },
   { href: "/tools", label: "工具" },
-  { href: "/voyages", label: "航线" },
-  { href: "/journal", label: "航海日志" },
   { href: "/about", label: "关于" },
 ];
 

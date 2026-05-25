@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookOpen, Clock, ExternalLink, GraduationCap } from "lucide-react";
+import { Anchor, ArrowLeft, ArrowRight, BookOpen, Clock, ExternalLink, GraduationCap } from "lucide-react";
 import { Section } from "@/components/section";
 import {
   getCourseBySlug,
   listCourseSlugs,
 } from "@/lib/courses";
+import { getMapping } from "@/lib/certifications/mappings";
+import {
+  courseStages,
+  stageInfo,
+  type Stage,
+} from "@/lib/certifications/stages";
+import { bodyInfo, type CertBody } from "@/lib/certifications/comparison";
 
 type Params = Promise<{ slug: string }>;
 
@@ -237,6 +244,128 @@ export default async function CourseDetailPage({
           </div>
         </Section>
       ) : null}
+
+      {/* ===== 三体系映射 ===== */}
+      {(() => {
+        const mapping = getMapping(course.slug);
+        if (!mapping) return null;
+        const bodies: CertBody[] = ["rya", "asa", "iyt"];
+        return (
+          <Section className="border-b border-line/60 bg-paper-soft/30">
+            <p className="eyebrow">对应认证体系</p>
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+              这门课能让你过哪些笔试。
+            </h2>
+            <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.85] text-ink-soft">
+              本课覆盖的 RYA / ASA / IYT 大纲条目。看不到对应的体系——说明那个体系把这部分知识融在了别的课里，你只要全跑通 WindHero 13 门，三体系都不缺。
+            </p>
+
+            <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-3">
+              {bodies.map((b) => {
+                const items = mapping[b];
+                const info = bodyInfo[b];
+                return (
+                  <article key={b} className="flex flex-col bg-paper p-6 md:p-7">
+                    <div className="flex items-baseline justify-between font-mono text-[0.72rem] tracking-[0.14em] text-sea-deep">
+                      <span>{info.name}</span>
+                      <span className="text-mist">{info.country}</span>
+                    </div>
+                    <p className="mt-2 text-[0.78rem] text-mist">{info.fullName}</p>
+                    {items.length > 0 ? (
+                      <ul className="mt-5 space-y-2 text-[0.86rem] leading-[1.7] text-ink-soft">
+                        {items.map((it, i) => (
+                          <li
+                            key={i}
+                            className="grid grid-cols-[1.2rem_1fr] items-baseline gap-2"
+                          >
+                            <BookOpen className="mt-[0.2em] h-3 w-3 text-sea-deep" />
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-5 text-[0.86rem] leading-[1.7] text-mist">
+                        无直接对应——本主题在 {info.name} 体系中融入其他课程。
+                      </p>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3 text-[0.86rem]">
+              <Link
+                href="/certifications"
+                className="inline-flex items-center gap-1.5 text-sea-deep underline-offset-4 hover:underline"
+              >
+                查看三体系完整对照
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <span className="text-mist">·</span>
+              <Link
+                href="/schools"
+                className="inline-flex items-center gap-1.5 text-sea-deep underline-offset-4 hover:underline"
+              >
+                找认证学校做实操
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </Section>
+        );
+      })()}
+
+      {/* ===== 必须线下完成的部分 ===== */}
+      {(() => {
+        const stages = courseStages[course.slug] ?? [];
+        const needsPractical = stages.some((s) =>
+          (["crew", "day-skipper", "night-coastal", "offshore", "ocean"] as Stage[]).includes(s)
+        );
+        if (!needsPractical) return null;
+        return (
+          <Section className="border-b border-line/60">
+            <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+              <div>
+                <p className="eyebrow">线下必须完成的部分</p>
+                <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+                  这门课学完后，
+                  <br />
+                  下一步去认证学校。
+                </h2>
+                <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
+                  按 {course.ryaEquivalent} 等级，本课对应的实操考核、海上里程、湿训部分必须在 RYA / ASA / IYT 认证学校完成。WindHero 让你登船时已经站得稳，但发证仍由认证学校。
+                </p>
+                <ul className="mt-6 space-y-2.5 text-[0.9rem] leading-[1.75] text-ink-soft">
+                  {stages.slice(0, 3).map((s) => (
+                    <li key={s} className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">
+                      <Anchor className="mt-[0.2em] h-3.5 w-3.5 text-coral" />
+                      <span>
+                        <strong className="text-ink">{stageInfo[s].label}</strong>
+                        {" "}阶段实操：{stageInfo[s].ryaEquiv} / {stageInfo[s].asaEquiv} / {stageInfo[s].iytEquiv}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Link
+                href="/schools"
+                className="group flex flex-col justify-center rounded-sm border border-coral/40 bg-coral/5 p-8 transition-colors hover:bg-coral/10 md:p-10"
+              >
+                <Anchor className="h-7 w-7 text-coral" />
+                <h3 className="display mt-5 text-2xl text-ink">
+                  全球认证学校目录
+                </h3>
+                <p className="mt-3 text-[0.92rem] leading-[1.8] text-ink-soft">
+                  24 所精选学校，可按地区、认证体系、阶段、中文支持筛选。
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-[0.84rem] text-coral transition-colors group-hover:text-ink">
+                  查看学校目录
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            </div>
+          </Section>
+        );
+      })()}
 
       {/* ===== 资源 ===== */}
       <Section>

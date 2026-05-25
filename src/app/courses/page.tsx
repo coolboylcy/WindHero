@@ -2,155 +2,219 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
-import { detailedCourses } from "@/lib/courses";
+import { detailedCourses, getCourseBySlug } from "@/lib/courses";
+import {
+  courseStages,
+  stageInfo,
+  stageOrder,
+  type Stage,
+} from "@/lib/certifications/stages";
 
 export const metadata: Metadata = {
-  title: "课程",
+  title: "课程 · 13 门覆盖三体系笔试",
   description:
-    "10 门课，对标 RYA 笔试体系——从读风入门到指挥一段远洋。",
+    "WindHero 按 6 阶段组织课程：入门 / 船员 / 日间船长 / 夜间近岸 / 远海远航 / 跨洋。13 门课对应 RYA、ASA、IYT 三大体系的所有笔试要求。",
 };
 
-const levels = ["入门", "进阶", "船长之路"] as const;
-
 export default function CoursesPage() {
+  /* 按主阶段分组：每门课只显示在其第一个（主）阶段下 */
+  const byStage = new Map<Stage, typeof detailedCourses>();
+  for (const stage of stageOrder) byStage.set(stage, []);
+  for (const course of detailedCourses) {
+    const stages = courseStages[course.slug] ?? [];
+    const primary = stages[0];
+    if (primary && byStage.has(primary)) {
+      byStage.get(primary)!.push(course);
+    }
+  }
+
   return (
     <>
-      <Section className="border-b border-line/60 pt-36">
+      <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <SectionHeading
           eyebrow="课程"
           title={
             <>
-              一所为从零开始的船长
+              从「我能不能上船」
               <br />
-              而建的学校。
+              到「我能不能跨太平洋」。
             </>
           }
-          lead="十门课，三个等级，对标 RYA Day Skipper → Yachtmaster Ocean 的完整笔试体系。每一门都由站长良辰原创撰写，配真实考场体验——随机抽题、倒计时、错题汇总。"
+          lead="WindHero 13 门课按 6 阶段组织：入门 → 船员 → 日间船长 → 夜间近岸 → 远海远航 → 跨洋。每个阶段对应 RYA / ASA / IYT 三体系的等级——按这条路径学完，三体系的笔试你都能过。"
         />
-        <p className="mt-8 inline-flex items-center gap-2 text-[0.86rem] text-sea-deep">
-          想看每节课对应哪一项 RYA 大纲——
-          <Link href="/rya" className="underline-offset-4 hover:underline">
-            进入 RYA 对照页
+        <div className="mt-8 flex flex-wrap gap-3 text-[0.86rem]">
+          <Link
+            href="/certifications"
+            className="inline-flex items-center gap-1.5 text-sea-deep underline-offset-4 hover:underline"
+          >
+            三体系对比表
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
-          <ArrowRight className="h-3.5 w-3.5" />
-        </p>
+          <span className="text-mist">·</span>
+          <Link
+            href="/schools"
+            className="inline-flex items-center gap-1.5 text-sea-deep underline-offset-4 hover:underline"
+          >
+            全球认证学校目录
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
       </Section>
 
-      {levels.map((level) => {
-        const items = detailedCourses.filter((c) => c.level === level);
+      {stageOrder.map((stage) => {
+        const courses = byStage.get(stage) ?? [];
+        if (courses.length === 0) return null;
+        const info = stageInfo[stage];
+
         return (
-          <Section key={level} className="border-b border-line/60">
-            <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <p className="eyebrow">{level}</p>
-                <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-                  {levelCopy[level].title}
-                </h2>
-                <p className="mt-3 max-w-xl text-[0.98rem] leading-[1.9] text-ink-soft">
-                  {levelCopy[level].lead}
+          <Section key={stage} id={stage} className="border-b border-line/60">
+            {/* —— 阶段标题 —— */}
+            <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-12">
+              <header className="border-l-2 border-sea-deep/60 pl-6">
+                <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sea-deep">
+                  阶段 · {info.sub}
                 </p>
-              </div>
-              <p className="font-mono text-[0.78rem] tracking-[0.16em] text-mist">
-                共 {items.length} 门
-              </p>
-            </div>
+                <h2 className="display mt-3 text-3xl text-ink md:text-4xl">
+                  {info.label}
+                </h2>
+                <p className="mt-4 text-[0.96rem] leading-[1.9] text-ink-soft">
+                  {info.intro}
+                </p>
 
-            <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-2">
-              {items.map((c) => {
-                const lessonCount = c.modules.reduce(
-                  (s, m) => s + m.lessons.length,
-                  0
-                );
-                return (
-                  <article
-                    key={c.slug}
-                    id={c.slug}
-                    className="scroll-mt-28 bg-paper p-8 transition-colors hover:bg-paper-soft/60 md:p-10"
-                  >
-                    <div className="flex items-baseline justify-between text-[0.72rem] text-mist">
-                      <span className="font-mono tracking-[0.14em] text-sea">
-                        {c.code}
-                      </span>
-                      <span>{c.duration}</span>
-                    </div>
-                    <h3 className="display mt-4 text-3xl text-ink md:text-4xl">
-                      {c.title}
-                    </h3>
-                    <p className="mt-4 text-[0.98rem] leading-[1.9] text-ink-soft">
-                      {c.summary}
-                    </p>
+                <dl className="mt-6 space-y-1.5 font-mono text-[0.74rem]">
+                  <div className="grid grid-cols-[2.8rem_1fr] gap-2">
+                    <dt className="text-mist">RYA</dt>
+                    <dd className="text-ink-soft">{info.ryaEquiv}</dd>
+                  </div>
+                  <div className="grid grid-cols-[2.8rem_1fr] gap-2">
+                    <dt className="text-mist">ASA</dt>
+                    <dd className="text-ink-soft">{info.asaEquiv}</dd>
+                  </div>
+                  <div className="grid grid-cols-[2.8rem_1fr] gap-2">
+                    <dt className="text-mist">IYT</dt>
+                    <dd className="text-ink-soft">{info.iytEquiv}</dd>
+                  </div>
+                </dl>
 
-                    <dl className="mt-6 grid grid-cols-3 gap-3 border-y border-line/70 py-4 font-mono text-[0.7rem] uppercase tracking-[0.12em]">
-                      <div>
-                        <dt className="text-mist">模块</dt>
-                        <dd className="mt-1 text-ink">{c.modules.length}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-mist">课时</dt>
-                        <dd className="mt-1 text-ink">{lessonCount}</dd>
-                      </div>
-                      <div>
-                        <dt className="text-mist">期末</dt>
-                        <dd className="mt-1 text-ink">
-                          {c.exam
-                            ? c.exam.drawCount
-                              ? `抽 ${c.exam.drawCount}`
-                              : `${c.exam.questions.length} 题`
-                            : "无笔试"}
-                        </dd>
-                      </div>
-                    </dl>
+                <p className="mt-6 text-[0.86rem] leading-[1.7] text-mist">
+                  学完能做：{info.achievement}
+                </p>
+              </header>
 
-                    <ul className="mt-6 space-y-3 text-[0.95rem] leading-[1.85] text-ink">
-                      {c.modules.map((m) => (
-                        <li
-                          key={m.slug}
-                          className="grid grid-cols-[2.6rem_1fr] items-baseline gap-3"
-                        >
-                          <span className="font-mono text-[0.72rem] tracking-[0.12em] text-sea">
-                            {String(m.index).padStart(2, "0")}
+              {/* —— 课程卡片 —— */}
+              <div className="grid gap-px bg-line/70 sm:grid-cols-2">
+                {courses.map((c) => {
+                  const lessonCount = c.modules.reduce(
+                    (s, m) => s + m.lessons.length,
+                    0
+                  );
+                  const otherStages = (courseStages[c.slug] ?? []).slice(1);
+                  return (
+                    <Link
+                      key={c.slug}
+                      href={`/courses/${c.slug}`}
+                      className="group flex flex-col bg-paper p-6 transition-colors hover:bg-paper-soft/60"
+                    >
+                      <div className="flex items-baseline justify-between text-[0.72rem] text-mist">
+                        <span className="font-mono tracking-[0.14em] text-sea">
+                          {c.code}
+                        </span>
+                        <span>{c.duration}</span>
+                      </div>
+                      <h3 className="display mt-3 text-xl text-ink md:text-2xl">
+                        {c.title}
+                      </h3>
+                      <p className="mt-3 flex-1 text-[0.92rem] leading-[1.8] text-ink-soft">
+                        {c.summary}
+                      </p>
+
+                      <dl className="mt-5 grid grid-cols-3 gap-2 border-t border-line/70 pt-4 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-mist">
+                        <div>
+                          <dt>模块</dt>
+                          <dd className="mt-1 text-ink">
+                            {c.modules.length}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>课时</dt>
+                          <dd className="mt-1 text-ink">{lessonCount}</dd>
+                        </div>
+                        <div>
+                          <dt>期末</dt>
+                          <dd className="mt-1 text-ink">
+                            {c.exam
+                              ? c.exam.drawCount
+                                ? `抽 ${c.exam.drawCount}`
+                                : `${c.exam.questions.length} 题`
+                              : "无笔试"}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      {otherStages.length > 0 ? (
+                        <div className="mt-4 flex flex-wrap gap-1.5">
+                          <span className="font-mono text-[0.66rem] uppercase tracking-[0.1em] text-mist">
+                            也覆盖
                           </span>
-                          <span>{m.title}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-8 flex items-center justify-between">
-                      <span className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-sea-deep">
-                        RYA · {c.ryaEquivalent}
-                      </span>
-                      <Link
-                        href={`/courses/${c.slug}`}
-                        className="group inline-flex items-center gap-2 text-[0.86rem] text-sea-deep transition-colors hover:text-ink"
-                      >
+                          {otherStages.map((s) => (
+                            <span
+                              key={s}
+                              className="rounded-sm border border-line/70 bg-paper-soft/40 px-1.5 py-0.5 font-mono text-[0.66rem] tracking-[0.04em] text-ink-soft"
+                            >
+                              {stageInfo[s].label}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      <span className="mt-5 inline-flex items-center gap-2 text-[0.84rem] text-sea-deep transition-colors group-hover:text-ink">
                         进入课程
                         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </Link>
-                    </div>
-                  </article>
-                );
-              })}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </Section>
         );
       })}
+
+      {/* —— 实操线下导流 —— */}
+      <Section>
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-12">
+          <div>
+            <p className="eyebrow">学完之后</p>
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+              然后去 RYA / ASA / IYT 学校做实操。
+            </h2>
+            <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
+              WindHero 教你过笔试。所有实操考核、海上里程、湿训部分必须在认证学校完成——这是三体系的硬规定。WindHero 的责任是让你登船时已经站得稳。
+            </p>
+          </div>
+          <Link
+            href="/schools"
+            className="group flex flex-col justify-center rounded-sm border border-coral/40 bg-coral/5 p-8 transition-colors hover:bg-coral/10 md:p-10"
+          >
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-coral">
+              下一步
+            </p>
+            <h3 className="display mt-4 text-2xl text-ink">
+              全球认证学校目录
+            </h3>
+            <p className="mt-3 text-[0.92rem] leading-[1.85] text-ink-soft">
+              24 所精选学校 · 可按地区、认证体系、阶段筛选 · 中文友好学校标注
+            </p>
+            <span className="mt-5 inline-flex items-center gap-2 text-[0.84rem] text-coral transition-colors group-hover:text-ink">
+              查看学校目录
+              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        </div>
+      </Section>
     </>
   );
 }
 
-const levelCopy: Record<
-  (typeof levels)[number],
-  { title: string; lead: string }
-> = {
-  入门: {
-    title: "入门。",
-    lead: "海的词汇表 + RYA Day Skipper Theory 笔试全部知识点：风的物理、海图作业、潮汐计算、IRPCS 灯型号型、VHF/SRC。",
-  },
-  进阶: {
-    title: "进阶海员素养。",
-    lead: "天气、航路、海上求生、海员素养、引航与天文导航——对应 RYA Coastal/Yachtmaster Theory 与 Sea Survival。",
-  },
-  船长之路: {
-    title: "船长之路。",
-    lead: "船长的思维 + 远洋航段——对标 RYA Yachtmaster Ocean Theory，并直接前置准备 Yachtmaster 实操。",
-  },
-};
+/* getCourseBySlug 在本页未直接使用，但通过 detailedCourses 间接遍历 */
+void getCourseBySlug;
