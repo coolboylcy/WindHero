@@ -1,0 +1,161 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, Wind } from "lucide-react";
+import { Section, SectionHeading } from "@/components/section";
+import { regions, cellInfo } from "@/lib/tools/wind-belts-data";
+import { WindBeltsExplorer } from "./explorer";
+
+export const metadata: Metadata = {
+  title: "全球风带查询 · Wind Belts by Region",
+  description:
+    "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。基于三圈环流 + 季风模型——出航前的第一份功课。",
+  keywords: [
+    "全球风带",
+    "信风",
+    "盛行西风",
+    "季风",
+    "trade winds",
+    "prevailing westerlies",
+    "monsoon",
+    "三圈环流",
+    "Hadley cell",
+    "出航季节",
+    "台风季",
+    "飓风季",
+    "WindHero",
+  ],
+  openGraph: {
+    title: "全球风带查询 · WindHero",
+    description:
+      "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。",
+    type: "website",
+  },
+};
+
+export default function WindBeltsPage() {
+  return (
+    <>
+      {/* ==================== Hero ==================== */}
+      <Section className="border-b border-line/60 pt-36">
+        <SectionHeading
+          eyebrow="工具 · 全球风带查询"
+          title={
+            <>
+              你想去的海域，
+              <br />
+              此刻吹的是什么风？
+            </>
+          }
+          lead="输入海域或拖动地球纬度，看主导风向、最佳出航月份、台风/飓风窗口。这是船长出门前的第一份功课——比任何天气 App 都先决定你能不能去。"
+        />
+      </Section>
+
+      {/* ==================== Tool ==================== */}
+      <Section className="border-b border-line/60">
+        <WindBeltsExplorer />
+      </Section>
+
+      {/* ==================== 三圈环流原理 ==================== */}
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <p className="eyebrow">原理 · 为什么有风带</p>
+        <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2.2rem]">
+          地球只有一台风的发动机，分了三层。
+        </h2>
+        <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-3">
+          {(["hadley-N", "ferrel-N", "polar-N"] as const).map((c) => {
+            const info = cellInfo[c];
+            return (
+              <article key={c} className="bg-paper p-7 md:p-8">
+                <p className="font-mono text-[0.72rem] tracking-[0.14em] text-sea-deep">
+                  {info.latLabel}
+                </p>
+                <h3 className="display mt-3 text-xl text-ink">{info.name}</h3>
+                <p className="mt-3 text-[0.94rem] leading-[1.8] text-ink-soft">
+                  主导风：{info.primaryWind}
+                </p>
+                <p className="mt-2 text-[0.86rem] leading-[1.75] text-mist">
+                  {info.sailing}
+                </p>
+              </article>
+            );
+          })}
+        </div>
+        <p className="mt-8 max-w-2xl text-[0.95rem] leading-[1.85] text-ink-soft">
+          想看完整三圈环流的物理原理与 Coriolis 偏向的几何来源——读{" "}
+          <Link
+            href="/courses/reading-the-wind/why-the-wind-blows"
+            className="text-sea-deep underline-offset-4 hover:underline"
+          >
+            《WH-101 · 风为什么会吹》
+          </Link>
+          。
+        </p>
+      </Section>
+
+      {/* ==================== 全部 region 列表（SEO） ==================== */}
+      <Section className="border-b border-line/60">
+        <p className="eyebrow">收录海域</p>
+        <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2.2rem]">
+          12 个全球主要航海舞台。
+        </h2>
+
+        <div className="mt-12 grid gap-px bg-line/70 md:grid-cols-2 lg:grid-cols-3">
+          {regions.map((r) => (
+            <article key={r.slug} className="bg-paper p-7">
+              <div className="flex items-baseline justify-between">
+                <h3 className="display text-lg text-ink">{r.name}</h3>
+                <span className="font-mono text-[0.7rem] text-mist">
+                  {r.latApprox >= 0
+                    ? `${r.latApprox}°N`
+                    : `${-r.latApprox}°S`}
+                </span>
+              </div>
+              <p className="mt-3 font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sea-deep">
+                {r.region}
+              </p>
+              <p className="mt-3 text-[0.88rem] leading-[1.75] text-ink-soft">
+                <strong className="text-ink">主导风</strong>：{r.prevailingWind}
+              </p>
+              <p className="mt-2 text-[0.88rem] leading-[1.75] text-ink-soft">
+                <strong className="text-ink">最佳月份</strong>：{r.bestMonths}
+              </p>
+              {r.risks.length > 0 ? (
+                <p className="mt-2 text-[0.84rem] leading-[1.7] text-coral">
+                  ⚠ {r.risks[0].label}（{r.risks[0].period}）
+                </p>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      {/* ==================== CTA ==================== */}
+      <Section>
+        <div className="mx-auto max-w-3xl text-center">
+          <Wind className="mx-auto h-7 w-7 text-sea-deep" />
+          <h2 className="display mt-6 text-3xl text-ink md:text-4xl">
+            风带是底图。预报是天气。
+          </h2>
+          <p className="mt-5 text-[1rem] leading-[1.9] text-ink-soft">
+            这个工具告诉你的是「常年画面」——选窗口、选月份。出门前的具体那一周还要看预报。
+            想学怎么看预报、读 GRIB、判断锋面——
+            <Link
+              href="/courses/weather-and-routing"
+              className="text-sea-deep underline-offset-4 hover:underline"
+            >
+              进入 WH-204 天气与航路课
+            </Link>
+            。
+          </p>
+          <Link
+            href="/courses/reading-the-wind"
+            className="mt-8 inline-flex items-center gap-2 rounded-sm bg-ink px-6 py-3 font-mono text-[0.78rem] uppercase tracking-[0.16em] text-paper transition-colors hover:bg-sea-deep"
+          >
+            从「读懂风」开始
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </Section>
+    </>
+  );
+}

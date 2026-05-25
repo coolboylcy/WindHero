@@ -2,7 +2,10 @@ import type { ReactNode } from "react";
 import type { LessonBlock } from "./types";
 import {
   InteractiveApparentWind,
+  InteractiveCoriolis,
+  InteractiveIsobarWind,
   InteractivePointsOfSail,
+  InteractiveThreeCellCirculation,
   InteractiveTwelfthsRule,
 } from "./interactive-diagrams";
 
@@ -733,6 +736,9 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "points-of-sail": () => <InteractivePointsOfSail />,
   "apparent-wind": () => <InteractiveApparentWind />,
   "tide-curve": () => <InteractiveTwelfthsRule />,
+  "three-cell-circulation": () => <InteractiveThreeCellCirculation />,
+  "coriolis-deflection": () => <InteractiveCoriolis />,
+  "isobar-wind": () => <InteractiveIsobarWind />,
   // 静态线稿
   "sea-breeze-cycle": SeaBreezeCycle,
   "pressure-gradient": PressureGradient,

@@ -77,7 +77,7 @@ export const marineFirstAid: Course = {
             {
               type: "diagram",
               kind: "colregs-crossing",
-              caption: "图 1.1 · DR.ABC 决策树——每个字母是一个分支，任一卡住就在该节点处理，不进入下一节点",
+              caption: "图 1.1 · 借用避碰示意图比喻 DR.ABC 决策树（示意）——每个字母是一个分支节点，任一卡住就在该节点处理，不进入下一节点",
             },
             {
               type: "heading",
@@ -395,8 +395,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 1.2 · 患者在驾驶舱地板上的最佳位置：head-tilt chin-lift 同时方便监测 5 个生命体征",
+              kind: "colregs-crossing",
+              caption: "图 1.2 · 借用避碰示意图比喻患者评估流程（示意）：把患者放在驾驶舱地板上，救援者一侧 head-tilt chin-lift、同伴另一侧监测 5 个生命体征",
             },
             {
               type: "definition",
@@ -572,8 +572,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 2.1 · 船上 CPR 的姿态：救援者跪在患者一侧、用腿夹住患者躯干、肘关节锁直",
+              kind: "colregs-crossing",
+              caption: "图 2.1 · 借用避碰示意图比喻船上 CPR 姿态（示意）：救援者跪在患者一侧、用一条腿夹住患者躯干、肘关节锁直，让自己与患者「同步随船摇」",
             },
             {
               type: "heading",
@@ -821,8 +821,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 2.2 · 三种气道阻塞手法：成人腹冲、婴儿胸冲、孕妇胸冲",
+              kind: "colregs-crossing",
+              caption: "图 2.2 · 借用避碰示意图比喻三种气道阻塞手法（示意）：成人用腹冲、婴儿用胸冲（食指中指）、孕妇用胸冲（CPR 按压点）——按对象选手法",
             },
             {
               type: "definition",
@@ -1084,8 +1084,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 3.1 · 三种止血手法的递进：直接压迫 → 抬高肢体 → 加压敷料 → 止血带（最后手段）",
+              kind: "colregs-crossing",
+              caption: "图 3.1 · 借用避碰示意图比喻止血手法的递进（示意）：直接压迫 → 抬高肢体 → 加压敷料 → 止血带（最后手段）——能用低风险方法解决就不上高风险方法",
             },
             {
               type: "quote",
@@ -1311,8 +1311,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 3.2 · 低温症复温的「核心优先」原则：温敷腹股沟/腋下/颈部，不在四肢直接施热",
+              kind: "colregs-crossing",
+              caption: "图 3.2 · 借用避碰示意图比喻低温症复温的「核心优先」原则（示意）：温敷腹股沟 / 腋下 / 颈部三个核心区域，不在四肢直接施热——避免 after-drop",
             },
             {
               type: "quote",

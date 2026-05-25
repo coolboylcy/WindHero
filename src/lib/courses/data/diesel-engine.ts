@@ -692,7 +692,7 @@ export const dieselEngine: Course = {
               type: "diagram",
               kind: "pressure-gradient",
               caption:
-                "图 2.2 · 间接冷却系统的两条压力 / 温度回路：左侧海水（蓝色，开放，单向）；右侧淡水（绿色，封闭，循环），在热交换器里相遇但不混合",
+                "图 2.2 · 借用气压等势图比喻间接冷却的两条回路（示意）：一边是海水（开放、单向、带走热）；一边是淡水（封闭、循环、绕引擎），两条回路在热交换器里相遇但不混合",
             },
             {
               type: "definition",

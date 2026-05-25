@@ -157,8 +157,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 1.1 · 正确穿戴：领口托在锁骨上方、crotch strap 扣紧、tether 扣在中线 jackline 上",
+              kind: "colregs-crossing",
+              caption: "图 1.1 · 救生衣穿戴检查示意（借用人-船相对位置图）：领口托在锁骨上方、crotch strap 扣紧、tether 扣在中线 jackline 上",
             },
             {
               type: "quote",
@@ -344,7 +344,7 @@ export const seaSurvivalTheory: Course = {
             {
               type: "diagram",
               kind: "colregs-crossing",
-              caption: "图 1.2 · 发射策略：远距离（>3 海里）用降落伞 + 烟雾，近距离用手持指示精确位置",
+              caption: "图 1.2 · 发射策略示意（借用相对距离图）：远距离（>3 海里）救援船一侧用降落伞 + 烟雾，近距离改用手持指示精确位置",
             },
             {
               type: "heading",
@@ -549,8 +549,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 2.1 · 救生筏外观、HRU 安装位置、painter line 走线",
+              kind: "colregs-crossing",
+              caption: "图 2.1 · 救生筏与船的相对位置示意：HRU 装在支架与船之间、painter line 通向船的下风一侧",
             },
             {
               type: "callout",
@@ -714,8 +714,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "buoyage-iala-a",
-              caption: "图 2.2 · 入筏后 6 件事的顺序与空间布置",
+              kind: "colregs-crossing",
+              caption: "图 2.2 · 入筏后 6 件事的顺序与空间布置（示意流程图）：cut painter → sea anchor → 伤员 → 清点 → 篷顶 → 信号",
             },
             {
               type: "heading",
@@ -872,6 +872,10 @@ export const seaSurvivalTheory: Course = {
               text: "Cold shock 是第一个、也是最被低估的杀手。当皮肤温度在 1 秒内从 30°C 骤降到 10°C，全身肌肉、心血管、呼吸系统同时产生应激反应：① 强制大口吸气（gasp reflex），如果此刻你正好在水下，水直接进入气道；② 过度换气（hyperventilation），每分钟呼吸 40+ 次，吸入大量空气，血氧饱和但 CO2 排出过快，导致脑供血失衡、晕厥；③ 血管骤缩使外周血压升高、心率升高，对有心脏基础病的人可能直接诱发心律失常或心梗。这一切发生在前 60 秒。RNLI（英国皇家救援协会）数据：冷水落水死亡的 50% 以上发生在第一分钟，多数原因是吸水或心律失常，不是低温。",
             },
             {
+              type: "paragraph",
+              text: "为什么是「冷水休克 → 游泳失效 → 低温症 → 心跳骤停」这个顺序，而不是直接冻死？因为人体的散热是分层的，每一层失守需要不同时间。第一层是皮肤温度感受器——它在你入水的 0–3 分钟里被「吓到」，触发交感神经反射风暴，这是 cold shock 的来源；它和你的核心体温几乎没关系，是个纯反射事件。第二层是四肢骨骼肌的温度——浸在冷水里的手脚约 3–30 分钟会从 35°C 降到 27°C 以下，肌肉黏度变高、神经传导变慢，结果是你的手握不住绳子、脚踢不出像样的水花——这是 swimming failure，多数人这时才发现自己「真的爬不上船」。第三层是核心体温（直肠/食道温度）——它有衣服、皮下脂肪、强烈外周血管收缩三层保护，下降速度大约 1°C 每 10–20 分钟，所以一般要 30 分钟以上才掉到 35°C（hypothermia 的医学起点）。第四层是心电稳定——核心温度跌到 32°C 以下时心室纤颤风险大增，但「after-drop」（救起后冷血涌回心脏）也可能在任何阶段触发心跳骤停。换句话说，前 3 分钟杀你的是神经反射，3–30 分钟杀你的是肌肉失能，30 分钟以后杀你的才是核心降温——救援节奏要踩在这个时间表上。",
+            },
+            {
               type: "definition",
               term: "Cold Shock Response（冷水休克）",
               meaning:
@@ -932,8 +936,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
-              caption: "图 3.1 · HELP 姿势（单人）与 Huddle 姿势（多人）：减少高失温部位的暴露",
+              kind: "colregs-crossing",
+              caption: "图 3.1 · HELP 姿势（单人）与 Huddle 姿势（多人）的水中相对位置示意：高失温部位（胸、腋、腹股沟）被压紧或被互相覆盖",
             },
             {
               type: "heading",

@@ -224,9 +224,9 @@ export const seamanshipAndSafety: Course = {
             },
             {
               type: "diagram",
-              kind: "wind-shift-vmg",
+              kind: "points-of-sail",
               caption:
-                "图 1.2 · 风速涨到临界点时，船的有效推进力反而下降——继续撑只是受罪",
+                "图 1.2 · 缩帆等级与帆面对照：从全帆到 reef 3，再到 trysail + storm jib——风越大，帆越小，重心越低",
             },
             {
               type: "heading",
@@ -351,9 +351,9 @@ export const seamanshipAndSafety: Course = {
             },
             {
               type: "diagram",
-              kind: "lights-vessels",
+              kind: "colregs-crossing",
               caption:
-                "图 2.1 · 落水后船每 10 秒拉开的距离：90 秒后超过 320 米，能见度急剧下降",
+                "图 2.1 · 落水后船每 10 秒拉开的距离（示意，借用相对位置图）：90 秒后超过 320 米，能见度急剧下降",
             },
             {
               type: "heading",
@@ -516,6 +516,10 @@ export const seamanshipAndSafety: Course = {
               title: "RYA 和 USCG 都推 Quick Stop 作默认",
               body:
                 "近 15 年的训练数据显示，Quick Stop 对新手和疲劳船员的容错性更高，最终救援成功率更高。Figure-8 是「能熟练操作时的更优解」，但 Quick Stop 是「任何状态下都能做对」的解。如果你不确定，永远用 Quick Stop。",
+            },
+            {
+              type: "paragraph",
+              text: "把两种动作放在一起再小结一句：Quick Stop 的适用情境是「能见度差 / 风大 / 浪高 / 船员少 / 自己也快累瘫」——总之一切让你脑力下降的条件下，选 Quick Stop，让船自己留在原地。Figure-8 的适用情境是「白天 + 中等风 / 风 10–18 节 + 至少两个清醒训练有素的船员 + 没有挂 spinnaker」——总之一切宽裕的条件下，老船长会用 Figure-8 把最后接近做得更精细。两种动作不是「哪个对」的二选一，而是「我现在还有多少余量」的诚实判断。",
             },
             {
               type: "paragraph",
@@ -800,7 +804,7 @@ export const seamanshipAndSafety: Course = {
             {
               type: "diagram",
               kind: "compass-rose",
-              caption: "图 3.2 · 4-on-4-off vs 3-on-6-off：班表节奏对比",
+              caption: "图 3.2 · 24 小时被切成 6 段（4-on-4-off）或 8 段（3-on-6-off）的「时钟视图」——把方位盘当作一天的循环",
             },
             {
               type: "callout",

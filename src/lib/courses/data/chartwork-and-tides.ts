@@ -71,8 +71,8 @@ export const chartworkAndTides: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 1.1 · 海图上的罗经盘：外圈真北 (T)、内圈磁北 (M)，标注当年变化角及年变率",
+              kind: "buoyage-iala-a",
+              caption: "图 1.1 · IALA A 浮标系统（红左绿右、自海向陆）——海图图例里最先要在 3 秒内认出来的一组符号",
             },
             {
               type: "heading",
@@ -568,7 +568,7 @@ export const chartworkAndTides: Course = {
             {
               type: "diagram",
               kind: "compass-rose",
-              caption: "图 2.1 · 三条 LOP 交出 cocked hat：A 灯塔方位 045° T、B 塔方位 110° T、C 山顶方位 200° T",
+              caption: "图 2.1 · 罗经盘用来读取三个地标的方位（45° / 110° / 200° T）；三条 LOP 在海图上交叉出的 cocked hat 要靠你在纸图上手画",
             },
             {
               type: "list",
@@ -738,8 +738,8 @@ export const chartworkAndTides: Course = {
             },
             {
               type: "diagram",
-              kind: "wind-shift-vmg",
-              caption: "图 2.2 · CTS 向量三角形：起点 A 出潮流向量到 T、T 出船速向量交目标线于 X、T→X 即 CTS",
+              kind: "apparent-wind",
+              caption: "图 2.2 · 借「真风+船速→视风」的合成三角形示意 CTS 的向量加法逻辑：把「真风」换成「潮流」、把「船速向量」换到 T 点出发——几何完全同构。真实 CTS 三角形要在海图上手画",
             },
             {
               type: "callout",
@@ -959,7 +959,7 @@ export const chartworkAndTides: Course = {
             {
               type: "diagram",
               kind: "tide-curve",
-              caption: "图 3.1 · 14 天潮汐周期：满月/新月时 Springs（最高最低）、上下弦时 Neaps（最弱）",
+              caption: "图 3.1 · 一个潮汐周期（约 12h 25min）内 HW/LW 的起伏示意；14 天 Springs/Neaps 包络要把 14 条这样的曲线幅度排起来看（图未画包络）",
             },
             {
               type: "paragraph",
@@ -1454,7 +1454,7 @@ export const chartworkAndTides: Course = {
             {
               type: "diagram",
               kind: "compass-rose",
-              caption: "图 4.1 · 潮流菱形示例：每一行给出 HW ± 一小时时的潮流方向与 Springs/Neaps 两组流速",
+              caption: "图 4.1 · 罗经盘用来读取潮流的 set 方向（真方位）；diamond 实际数据是一张时间-方向-Springs/Neaps 速率的表格（见上一段表格示例）",
             },
             {
               type: "paragraph",
@@ -1647,8 +1647,8 @@ export const chartworkAndTides: Course = {
             },
             {
               type: "diagram",
-              kind: "wind-shift-vmg",
-              caption: "图 4.2 · 3 小时多段 EP 累积：每小时船速向量与潮流向量叠加，潮流方向可能逐小时变化",
+              kind: "apparent-wind",
+              caption: "图 4.2 · 借向量合成三角形示意「船速 + 潮流 = 真实位移」每小时的叠加；多小时 EP 是把这种三角形一段段串成 Z 字形，要在海图上手画",
             },
             {
               type: "callout",

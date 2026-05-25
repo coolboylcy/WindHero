@@ -1068,7 +1068,7 @@ export const radarAndElectronics: Course = {
             {
               type: "diagram",
               kind: "colregs-crossing",
-              caption: "图 3.2 · AIS 与雷达的互补关系——AIS 给你身份和远距离感知，雷达给你近距离物理回波",
+              caption: "图 3.2 · 借用避碰示意图比喻 AIS 与雷达的互补关系（示意）：AIS 给你身份和远距离感知，雷达给你近距离物理回波——两个数据源在不同区段彼此补盲",
             },
             {
               type: "definition",
@@ -1083,6 +1083,10 @@ export const radarAndElectronics: Course = {
             {
               type: "paragraph",
               text: "电子海图分两大类——ENC（Electronic Navigational Chart，矢量电子海图）与 RNC（Raster Navigational Chart，扫描位图电子海图）。它们看起来都是「屏幕上的海图」，但内部结构截然不同。",
+            },
+            {
+              type: "paragraph",
+              text: "在继续往下之前先把这一节会反复出现的几个缩写一次性串清楚：IMO（International Maritime Organization）是联合国下属的国际海事组织，制定全球船舶安全规则；SOLAS（Safety of Life at Sea）是 IMO 主持的国际公约，规定 300 总吨以上商船必须配备的设备清单；ECDIS（Electronic Chart Display and Information System）是 SOLAS 强制商船使用的「合规电子海图系统」，必须使用 ENC 矢量海图。游艇不在 SOLAS 强制范围，但「向商船标准看齐」是 RYA 体系一贯的纪律——所以这套缩写值得认得。「ENC 基于 S-57 标准」里的 S-57 是国际水文组织（IHO）规定的矢量海图数据格式，相当于「电子海图行业的 PDF 规范」。",
             },
             {
               type: "list",

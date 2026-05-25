@@ -44,7 +44,10 @@ export type LessonBlock =
         | "tide-curve"
         | "lights-vessels"
         | "colregs-crossing"
-        | "celestial-triangle";
+        | "celestial-triangle"
+        | "three-cell-circulation"
+        | "coriolis-deflection"
+        | "isobar-wind";
       caption?: string;
     }
   | { type: "quote"; text: string; attribution?: string }

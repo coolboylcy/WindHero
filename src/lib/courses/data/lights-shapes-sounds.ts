@@ -838,7 +838,7 @@ export const lightsShapesSounds: Course = {
               type: "diagram",
               kind: "colregs-crossing",
               caption:
-                "图 3.1 · 窄水道超越协商：— · — · 请求右舷超越 → 前船同意（— · — ·）或拒绝（5 短）",
+                "图 3.1 · 窄水道超越协商示意（借用动力船相遇插画表达「两船协调」）：— · — · 请求右舷超越 → 前船同意（— · — ·）或拒绝（5 短）",
             },
             {
               type: "paragraph",
@@ -1009,7 +1009,7 @@ export const lightsShapesSounds: Course = {
             {
               type: "diagram",
               kind: "compass-rose",
-              caption: "图 3.2 · 雾航靠耳朵：用罗盘读每个声号方向，在脑中建立「不可见船地图」",
+              caption: "图 3.2 · 雾航靠耳朵示意：用罗盘读每个声号方向，在脑中建立「不可见船地图」——这正好用得上罗盘读方位的肌肉记忆",
             },
             {
               type: "paragraph",

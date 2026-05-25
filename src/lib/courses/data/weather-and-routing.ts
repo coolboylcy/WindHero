@@ -56,6 +56,10 @@ export const weatherAndRouting: Course = {
               text: "中纬度天气的主角是低压系统（low-pressure system，也叫温带气旋）。它不像台风那样诞生于热带海面，而是出现在冷暖气团交界的「极锋（polar front）」上——北边是来自极地的冷空气，南边是来自副热带的暖空气，两者本来沿一条波浪状的边界相安无事。直到边界上出现一个小扰动，剧情才开始。",
             },
             {
+              type: "paragraph",
+              text: "上面这段话有三个新名词，我们先按顺序拆一下，后面整节都会反复用到。第一个是「气团（air mass）」——一大片在水平方向温度湿度大致均匀的空气，往往覆盖几百到几千公里。第二个是「极锋」——并不是「极地的锋」，而是「极地冷气团」和「副热带暖气团」常年贴在一起、推来推去的那条边界，北半球大致沿 40°–60° 纬度蜿蜒。第三个是「温带气旋」——和热带气旋（台风、飓风）完全是两种生物：热带气旋靠暖海面蒸发提供能量，温带气旋靠极锋两侧冷暖气团的「温差势能」推动，所以它的家在中纬度的海面或陆地上空，而不是赤道。理解了这三个词，下面四个生命阶段你就不用再去查字典。",
+            },
+            {
               type: "diagram",
               kind: "pressure-gradient",
               caption: "图 1.1 · 北半球低压外围风场：等压线越密，风越强；中心反而是「眼」",
@@ -353,7 +357,7 @@ export const weatherAndRouting: Course = {
             {
               type: "diagram",
               kind: "pressure-gradient",
-              caption: "图 2.1 · 数值预报：地球被切成网格，每个格点上方程组在向前演化",
+              caption: "图 2.1 · NWP 输出的最终产品：地面气压等值线场——所有 GRIB 风场都是从类似的格点解里抽取出来的",
             },
             {
               type: "heading",
@@ -489,8 +493,8 @@ export const weatherAndRouting: Course = {
             },
             {
               type: "diagram",
-              kind: "pressure-gradient",
-              caption: "图 2.2 · spaghetti plot 概念图：50 根成员路径如果收敛 = 信号强；如果发散 = 不确定性高",
+              kind: "frontal-system",
+              caption: "图 2.2 · 同一锋面系统在多个 ensemble 成员里的位置漂移示意：收敛 = 信号强，发散 = 不确定性高（spaghetti plot 思路）",
             },
             {
               type: "definition",
