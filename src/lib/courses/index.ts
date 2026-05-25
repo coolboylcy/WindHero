@@ -3,6 +3,9 @@ import { readingTheWind } from "./data/reading-the-wind";
 import { chartworkAndTides } from "./data/chartwork-and-tides";
 import { lightsShapesSounds } from "./data/lights-shapes-sounds";
 import { vhfAndComms } from "./data/vhf-and-comms";
+import { dieselEngine } from "./data/diesel-engine";
+import { marineFirstAid } from "./data/marine-first-aid";
+import { radarAndElectronics } from "./data/radar-and-electronics";
 import { weatherAndRouting } from "./data/weather-and-routing";
 import { seamanshipAndSafety } from "./data/seamanship-and-safety";
 import { seaSurvivalTheory } from "./data/sea-survival-theory";
@@ -28,6 +31,9 @@ export const detailedCourses: Course[] = [
   chartworkAndTides,        // WH-103 入门
   lightsShapesSounds,       // WH-105 入门
   vhfAndComms,              // WH-107 入门
+  dieselEngine,             // WH-109 进阶 · 柴油机
+  marineFirstAid,           // WH-111 进阶 · 急救
+  radarAndElectronics,      // WH-113 进阶 · 雷达与电子导航
   weatherAndRouting,        // WH-204 进阶
   seamanshipAndSafety,      // WH-212 进阶
   seaSurvivalTheory,        // WH-211 进阶
