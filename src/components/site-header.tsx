@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "./logo";
 
 const navItems: { href: string; label: string }[] = [
   { href: "/courses", label: "课程" },
@@ -23,17 +24,11 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
-          className="group flex items-baseline gap-2.5"
           aria-label="WindHero 首页"
           onClick={() => setOpen(false)}
+          className="transition-opacity hover:opacity-80"
         >
-          <Wordmark className="h-3 w-3 text-sea" />
-          <span className="display text-[1.35rem] leading-none text-ink">
-            Wind<span className="text-sea">hero</span>
-          </span>
-          <span className="hidden text-[0.68rem] tracking-[0.22em] text-mist sm:inline">
-            逐风人
-          </span>
+          <Logo size="md" showTagline />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex">
@@ -53,7 +48,7 @@ export function SiteHeader() {
                 {item.label}
                 <span
                   className={cn(
-                    "absolute -bottom-1.5 left-0 right-0 mx-auto h-px w-4 origin-center scale-x-0 bg-sea transition-transform duration-500 ease-out",
+                    "absolute -bottom-1.5 left-0 right-0 mx-auto h-px w-4 origin-center scale-x-0 bg-sun transition-transform duration-500 ease-out",
                     active && "scale-x-100"
                   )}
                 />
@@ -67,7 +62,7 @@ export function SiteHeader() {
             href="/courses"
             className="inline-flex h-9 items-center gap-2 border border-ink/80 px-4 text-[0.82rem] text-ink transition-colors hover:bg-ink hover:text-paper"
           >
-            报名
+            开始学习
           </Link>
         </div>
 
@@ -99,21 +94,11 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="mt-3 inline-flex h-10 items-center justify-center border border-ink text-[0.82rem] text-ink"
             >
-              报名
+              开始学习
             </Link>
           </nav>
         </div>
       ) : null}
     </header>
-  );
-}
-
-/** Very small geometric mark — a filled square dot. No compass, no flourish. */
-function Wordmark({ className }: { className?: string }) {
-  return (
-    <span
-      aria-hidden
-      className={cn("inline-block rounded-full bg-current", className)}
-    />
   );
 }

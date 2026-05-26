@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  /* —— 高级地中海色板 ——
-     纯净的白带极淡蓝灰、深邃的海军蓝、清亮的爱琴海蓝。
-     对标 The Row / Loro Piana / Aman 的色感，但向海更靠近一点。 */
+  /* —— Mediterranean Editorial · 赤子之心 ——
+     冷调 Aegean 蓝 + 暖调 Sun-gold 强调。
+     基调来自地中海海平面，强调来自破晓时的太阳。 */
   --color-paper: #f5f7fa;          /* 主背景：冷白偏极淡蓝灰 */
   --color-paper-soft: #e9eef3;     /* 次级面板 / hover 微差 */
-  --color-line: #cfd6df;           /* 极细分隔线，带蓝灰 */
+  --color-paper-warm: #f4ebd9;     /* 暖色面板 — 给"希望""成就"类区块 */
+  --color-line: #cfd6df;           /* 极细分隔线 */
+  --color-line-warm: #d9c9a0;      /* 暖色分隔线 — 用于地平线装饰 */
 
   --color-ink: #0d2742;            /* 主文字：深海军蓝（更冷） */
   --color-ink-soft: #3a5573;       /* 次文字 */
@@ -16,13 +18,17 @@
   --color-sea-deep: #0e5586;       /* 强调悬浮 / 链接 */
   --color-sea-soft: #c2d6e7;       /* 极浅海蓝（远景、卡片背景） */
 
-  --color-coral: #d04a3b;          /* 极少用的高光红，仅在关键 CTA / 警示 */
+  --color-sun: #c8923a;            /* Sun-gold — 赤子之心的暖光 · 朝阳 / 黄铜 */
+  --color-sun-deep: #9a6e25;       /* 暖色 hover / 强调链接 */
+  --color-sun-soft: #f0deb4;       /* 暖色软底 */
+
+  --color-coral: #c2493a;          /* 警示红（更暖一点） */
 
   /* Fonts —— 现代出版物风衬线，去掉古典装饰 */
   --font-sans: var(--font-inter-tight), "PingFang SC", "Hiragino Sans GB",
     "Source Han Sans SC", "Microsoft YaHei", ui-sans-serif, system-ui,
     -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-source-serif), "Source Han Serif SC",
+  --font-serif: var(--font-fraunces), "Source Han Serif SC",
     "Noto Serif CJK SC", "Songti SC", ui-serif, Georgia, serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo,
     monospace;
@@ -70,11 +76,14 @@ body {
   color: var(--color-mist);
 }
 
-/* Display — Source Serif 4，现代出版物质感的衬线。
-   Weight 400/500 给画面以分量，不再"轻飘飘"。 */
+/* Display — Fraunces variable serif：克制偏暖，
+   开启 OPSZ（光学尺寸）让大字更舒展、小字更有筋骨。
+   关闭一切装饰特性，保持现代出版物气质。 */
 .display {
   font-family: var(--font-serif);
-  font-weight: 400;
+  font-weight: 420;
+  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 0;
+  font-feature-settings: "ss01" off, "ss02" off;
   letter-spacing: var(--tracking-display);
   line-height: 1.08;
 }
@@ -82,6 +91,47 @@ body {
 .display-medium {
   font-family: var(--font-serif);
   font-weight: 500;
+  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 0;
+}
+
+.display-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 420;
+  font-variation-settings: "opsz" 96, "SOFT" 50, "WONK" 0;
+}
+
+/* 地平线装饰 —— 一条极细的暖色线带一个小金点，象征朝阳 */
+.horizon-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-sun);
+}
+.horizon-mark::before {
+  content: "";
+  display: inline-block;
+  width: 2.4rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.horizon-mark::after {
+  content: "";
+  display: inline-block;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+/* 强调"赤子之心"的小提示文字 —— 暖色衬线斜体 */
+.sun-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 420;
+  color: var(--color-sun-deep);
+  letter-spacing: 0.005em;
 }
 
 /* 长文中文段落的呼吸节奏 */

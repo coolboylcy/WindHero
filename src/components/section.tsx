@@ -16,6 +16,25 @@ export function Section({
   );
 }
 
+/** 地平线分隔装饰 —— 极细暖色线 + 中央朝阳点。
+ *  用在重要 section 之间，作为视觉换气节点。
+ *  保持极克制：在 lg+ 下才显形，移动端隐藏避免拥挤。 */
+export function HorizonDivider({ className }: { className?: string }) {
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "relative mx-auto hidden h-px max-w-7xl items-center px-6 lg:flex lg:px-10",
+        className
+      )}
+    >
+      <span className="h-px flex-1 bg-line-warm/40" />
+      <span className="mx-3 inline-block h-1 w-1 rounded-full bg-sun" />
+      <span className="h-px flex-1 bg-line-warm/40" />
+    </div>
+  );
+}
+
 export function Eyebrow({
   children,
   className,

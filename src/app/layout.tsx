@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import {
+  jsonLdScript,
+  organizationLd,
+  websiteLd,
+} from "@/lib/seo/jsonld";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -11,11 +16,17 @@ const interTight = Inter_Tight({
   weight: ["300", "400", "500", "600"],
 });
 
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
+/**
+ * Fraunces ——
+ * 变量字体，OPSZ / SOFT / WONK 三轴可控。
+ * 关掉 WONK，让大字保持端庄；开启 SOFT 让圆角微暖，呼应"赤子之心"。
+ */
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
-  axes: ["opsz"],
+  axes: ["opsz", "SOFT", "WONK"],
+  style: ["normal", "italic"],
 });
 
 const jetbrains = JetBrains_Mono({
@@ -32,30 +43,54 @@ export const metadata: Metadata = {
     template: "%s · WindHero 逐风人",
   },
   description:
-    "WindHero 逐风人是一所现代航海学院与探索社区。学会读风、规划真实远航、建立船长的判断力——在变化的风里，依然掌控自己的方向。",
+    "由一名从零开始的船长搭建的现代航海学院。13 门原创课程对应 RYA / ASA / IYT 三大民用帆船认证体系的全部笔试——学风、学海图、学船长的判断力。",
   keywords: [
     "WindHero",
     "逐风人",
     "现代航海",
     "航海学院",
     "帆船课程",
-    "远航",
-    "船长培训",
+    "RYA 认证",
+    "ASA 认证",
+    "IYT 认证",
+    "Day Skipper",
+    "Yachtmaster",
+    "Bareboat Skipper",
+    "Sea Survival",
+    "VHF SRC",
+    "中文 帆船 学校",
+    "海图作业",
+    "潮汐计算",
+    "天气与航路",
+    "六分仪 天文导航",
     "Sailing",
     "Master the Wind",
   ],
+  authors: [{ name: "良辰", url: "https://windhero.vercel.app/about" }],
+  creator: "良辰",
+  publisher: "WindHero",
   openGraph: {
     title: "WindHero 逐风人 — 驾驭风的方向",
     description:
-      "现代航海学院与探索社区。学会读风、规划航线、建立船长的判断力。",
+      "由一名从零开始的船长搭建的现代航海学院。13 门原创课程覆盖 RYA / ASA / IYT 三体系全部笔试。",
+    siteName: "WindHero 逐风人",
     type: "website",
     locale: "zh_CN",
     alternateLocale: ["en_US"],
+    url: "https://windhero.vercel.app",
   },
   twitter: {
     card: "summary_large_image",
     title: "WindHero 逐风人 — Master the Wind",
-    description: "为现代探索者准备的航海学院与社区。",
+    description: "为「从零开始的船长」搭建的现代航海学院。",
+    creator: "@windhero",
+  },
+  alternates: {
+    canonical: "https://windhero.vercel.app",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -67,9 +102,17 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${interTight.variable} ${sourceSerif.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${interTight.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="bg-paper text-ink min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(websiteLd) }}
+        />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

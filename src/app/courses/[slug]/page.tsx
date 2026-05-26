@@ -14,6 +14,7 @@ import {
   type Stage,
 } from "@/lib/certifications/stages";
 import { bodyInfo, type CertBody } from "@/lib/certifications/comparison";
+import { breadcrumbLd, courseLd, jsonLdScript } from "@/lib/seo/jsonld";
 
 type Params = Promise<{ slug: string }>;
 
@@ -54,8 +55,22 @@ export default async function CourseDetailPage({
   const course = getCourseBySlug(slug);
   if (!course) notFound();
 
+  const breadcrumb = breadcrumbLd([
+    { name: "首页", url: "/" },
+    { name: "课程", url: "/courses" },
+    { name: course.title, url: `/courses/${course.slug}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(courseLd(course)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
+      />
       {/* ===== Hero ===== */}
       <Section className="border-b border-line/60 pt-36">
         <Link
