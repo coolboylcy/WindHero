@@ -9,10 +9,11 @@ import { Logo } from "./logo";
 
 const navItems: { href: string; label: string }[] = [
   { href: "/courses", label: "课程" },
-  { href: "/certifications", label: "认证体系" },
+  { href: "/cases", label: "案例" },
+  { href: "/glossary", label: "词典" },
+  { href: "/certifications", label: "认证" },
   { href: "/schools", label: "学校" },
   { href: "/tools", label: "工具" },
-  { href: "/about", label: "关于" },
 ];
 
 export function SiteHeader() {

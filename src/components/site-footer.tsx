@@ -22,10 +22,12 @@ const footerNav: { title: string; items: { href: string; label: string }[] }[] =
       ],
     },
     {
-      title: "工具",
+      title: "工具与库",
       items: [
         { href: "/tools/wind-belts", label: "全球风带查询" },
         { href: "/tools/synoptic", label: "天气图读图" },
+        { href: "/glossary", label: "航海词典 120+" },
+        { href: "/cases", label: "真实案例库" },
         { href: "/about", label: "关于站长" },
       ],
     },
