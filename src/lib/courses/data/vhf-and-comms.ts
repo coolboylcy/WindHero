@@ -665,6 +665,24 @@ export const vhfAndComms: Course = {
               text: "你可能会问：为什么不直接让 DSC 一次发完所有信息（船名、人数、援助类型）？为什么还要回到 CH16 语音？答案是带宽。CH70 上的数字爆发只有几百毫秒，能塞下的字段有限——更长的报文会占用频道更久，影响并发的其他报警。所以系统的设计是「数字字段（短而准）+ 语音字段（长而详）」分两步走。DSC 解决「在哪、是谁、什么大类」；CH16 语音解决剩下的所有细节。两步缺一不可。",
             },
             {
+              type: "callout",
+              tone: "tip",
+              title: "DSC 操作 6 步速查卡（撕下来贴驾驶舱）",
+              body: "压力下任何记忆都会丢，只剩 6 个动作。打印这一张，贴在 VHF 旁边。",
+            },
+            {
+              type: "list",
+              ordered: true,
+              items: [
+                "① 掀盖 —— 翻开红色塑料保护盖，露出 Distress 按钮",
+                "② 按红按钮 —— 长按 5 秒直到机器发出确认蜂鸣",
+                "③ 选遇险类型 —— 从菜单选 Fire / Flooding / Collision / Sinking / MOB 等；来不及就用 Unspecified",
+                "④ 确认位置 —— 屏幕显示 GPS 经纬度，核对是否正确（未连 GPS 时手动输入）",
+                "⑤ 按发送 —— 再次确认后按 Send / Transmit，机器在 CH70 发出 DSC 数据包",
+                "⑥ 监听 CH 16 —— 立刻切到 CH16，用语音补充完整 MAYDAY 报文，并守听岸台应答",
+              ],
+            },
+            {
               type: "practice",
               prompt:
                 "找到你这艘船的 VHF/DSC 设备，进入 Distress 菜单（不要按红按钮）——浏览一遍 Nature of Distress 的所有可选项（Fire、Flooding、Collision...）。把每一项的中英文对应都写下来，下次真要按红按钮前，你会知道翻到哪一格。",
@@ -863,6 +881,20 @@ export const vhfAndComms: Course = {
               title: "PAN-PAN MEDICO：医疗紧急的特殊变体",
               body:
                 "「PAN-PAN MEDICO」（或 PAN MEDICAL）是 PAN-PAN 的医疗紧急子类，专用于船员需要医疗咨询或建议的情况——比如有人胸痛但你不确定是否心梗。岸台会接你到岸基医生做远程问诊。这是一个非常实用但被低估的频道——医疗紧急在远岸船上发生频率不低。",
+            },
+            {
+              type: "callout",
+              tone: "tip",
+              title: "完整 MAYDAY 脚本范例（覆盖 MIPDANIO 全部 7 项）",
+              body:
+                "假设船名 Sea Pearl、呼号 MGYS3、MMSI 232123456，位置 50°15'N 002°30'W，正在快速进水，需要立刻泵水救援，4 人在船准备登筏：「MAYDAY · MAYDAY · MAYDAY（M=魔法词×3）· This is sailing vessel Sea Pearl, Sea Pearl, Sea Pearl, Call Sign Mike Golf Yankee Sierra Three, MMSI two-three-two-one-two-three-fower-fife-six（I=身份×3+呼号+MMSI）· MAYDAY Sea Pearl · Position fife-zero degrees one-fife minutes north, zero-zero-two degrees three-zero minutes west（P=位置）· Flooding, taking on water rapidly through hull breach（D=遇险性质）· Require immediate pump and assistance（A=援助类型）· Fower persons on board（N=人数）· Preparing to abandon to liferaft, EPIRB activated（I=其他关键信息，如弃船意图与已采取动作）· Over.」念完整段约 35 秒——慢、清晰、每个字段顺序固定。",
+            },
+            {
+              type: "callout",
+              tone: "tip",
+              title: "PAN-PAN 范例对照",
+              body:
+                "同一艘船改成「失去动力、漂向 lee shore、船体完好、人员安全」场景：「PAN-PAN · PAN-PAN · PAN-PAN · All stations, all stations, all stations · This is sailing vessel Sea Pearl, Sea Pearl, Sea Pearl, Call Sign Mike Golf Yankee Sierra Three, MMSI two-three-two-one-two-three-fower-fife-six · Position fife-zero one-fife north, zero-zero-two three-zero west · Engine failure, drifting east at one knot toward rocks · Request tow assistance within next two hours · Fower persons on board, all safe · Over.」与 MAYDAY 对比：开头魔法词不同；用 All stations 而非「MAYDAY 船名」；援助描述更详（有时间窗）；人数后不报弃船意图（不存在弃船）。两份报文整体节奏一致，只是「严重程度档位」换了。",
             },
             {
               type: "practice",
@@ -1075,6 +1107,13 @@ export const vhfAndComms: Course = {
                 "把你自己的 MMSI（9 位数字）用海事数字读法念一遍，再用 NATO 字母表把你的船名拼读出来。两件事都录下来回放。如果听不出某个数字或字母是哪一个，说明你的发音还不够标准。重复练习直到你听自己的录音能 100% 正确还原。",
               hint:
                 "9 位 MMSI 的标准读法每位之间停顿很短，但每位之内的元音要拉满——「TOO」念得比平时长一点点会让对方听得更清楚。",
+            },
+            {
+              type: "practice",
+              prompt:
+                "拿一张纸，做两件事：① 用 NATO 字母表拼出你的船名（如船名是 Sea Pearl，写 Sierra · Echo · Alfa · space · Papa · Echo · Alfa · Romeo · Lima）；② 用海事数字读法写出你紧急联络人电话号码的尾 4 位（如尾号 5093，写 FIFE · ZE-RO · NIN-ER · TREE）。两段都大声念 3 遍，并录音对照——发音要让录音里的自己能 100% 还原原字母与数字。如果暂时没有船名或联络人，就用「家乡城市名 + 自己手机号尾 4 位」替代。",
+              hint:
+                "关键易错点：Alfa 不是 Alpha；Juliet 不是 Juliett；5 = FIFE 不是 Five；9 = NINER 不是 Nine；0 = ZE-RO 不是 Oh。错一个就视作整段练习失败，从头再来。",
             },
             {
               type: "paragraph",

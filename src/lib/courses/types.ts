@@ -47,7 +47,10 @@ export type LessonBlock =
         | "celestial-triangle"
         | "three-cell-circulation"
         | "coriolis-deflection"
-        | "isobar-wind";
+        | "isobar-wind"
+        | "cts-plotter"
+        | "lights-identifier"
+        | "heave-to-balance";
       caption?: string;
     }
   | { type: "quote"; text: string; attribution?: string }

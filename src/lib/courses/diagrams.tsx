@@ -3,7 +3,10 @@ import type { LessonBlock } from "./types";
 import {
   InteractiveApparentWind,
   InteractiveCoriolis,
+  InteractiveCtsPlotter,
+  InteractiveHeaveToBalance,
   InteractiveIsobarWind,
+  InteractiveLightsIdentifier,
   InteractivePointsOfSail,
   InteractiveThreeCellCirculation,
   InteractiveTwelfthsRule,
@@ -739,6 +742,9 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "three-cell-circulation": () => <InteractiveThreeCellCirculation />,
   "coriolis-deflection": () => <InteractiveCoriolis />,
   "isobar-wind": () => <InteractiveIsobarWind />,
+  "cts-plotter": () => <InteractiveCtsPlotter />,
+  "lights-identifier": () => <InteractiveLightsIdentifier />,
+  "heave-to-balance": () => <InteractiveHeaveToBalance />,
   // 静态线稿
   "sea-breeze-cycle": SeaBreezeCycle,
   "pressure-gradient": PressureGradient,
@@ -759,6 +765,9 @@ const INTERACTIVE_KINDS: ReadonlySet<DiagramKind> = new Set<DiagramKind>([
   "three-cell-circulation",
   "coriolis-deflection",
   "isobar-wind",
+  "cts-plotter",
+  "lights-identifier",
+  "heave-to-balance",
 ]);
 
 export function CourseDiagram({
