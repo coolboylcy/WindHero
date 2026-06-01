@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AlertTriangle, MapPin, Navigation } from "lucide-react";
+import { AlertTriangle, CalendarDays, ListChecks, MapPin, Navigation } from "lucide-react";
 import {
   regions,
   cellInfo,
   inferCellFromLat,
+  regionsByCell,
   type Region,
   type Cell,
 } from "@/lib/tools/wind-belts-data";
@@ -39,6 +40,35 @@ export function WindBeltsExplorer() {
       : inferCellFromLat(lat);
 
   const cell = cellInfo[inferredCell];
+  const latitudeLabel = effectiveLat >= 0 ? `${effectiveLat}°N` : `${-effectiveLat}°S`;
+  const sisterRegions = regionsByCell(inferredCell)
+    .filter((region) => region.slug !== selectedRegion?.slug)
+    .slice(0, 3);
+
+  const riskCount = selectedRegion?.risks.length ?? 0;
+  const windowStatus =
+    mode === "region" && selectedRegion
+      ? riskCount > 1
+        ? "需要严格避开季节"
+        : riskCount === 1
+          ? "窗口可用但要盯风险"
+          : "常年风险较低"
+      : "纬度只给常年底图";
+
+  const deckChecks =
+    mode === "region" && selectedRegion
+      ? [
+          `把 ${selectedRegion.bestMonths} 当作第一候选窗口。`,
+          selectedRegion.risks[0]
+            ? `避开 ${selectedRegion.risks[0].period} 的${selectedRegion.risks[0].label}。`
+            : "仍要检查当地风暴、海雾和潮汐流。",
+          "出发前 72 小时叠加 GRIB、表面天气图和港口预报。",
+        ]
+      : [
+          "用纬度判断信风 / 西风 / 极地东风的常年背景。",
+          "再切回海域模式，加入季风、台风和局地地形修正。",
+          "不要用风带图替代未来一周的真实天气图。",
+        ];
 
   const advisory =
     mode === "region" && selectedRegion
@@ -206,15 +236,34 @@ export function WindBeltsExplorer() {
             三圈环流地球
           </p>
           <p className="font-mono text-[0.7rem] tracking-[0.12em] text-sea-deep">
-            {effectiveLat >= 0 ? `${effectiveLat}°N` : `${-effectiveLat}°S`}
+            {latitudeLabel}
           </p>
         </div>
         <div className="mt-2 flex-1 rounded-sm border border-line/70 bg-paper/80 p-3 sm:p-4">
           <BareThreeCellEarth lat={effectiveLat} />
         </div>
-        <p className="mt-2 text-[0.74rem] leading-[1.5] text-mist">
-          蓝 = 信风 · 红 = 西风 · 深色 = 极地东风
-        </p>
+        <div className="mt-3 grid gap-3 border-t border-line/70 pt-3 sm:grid-cols-2">
+          <div>
+            <p className="font-mono text-[0.64rem] uppercase tracking-[0.12em] text-mist">
+              同风带海域
+            </p>
+            <div className="mt-2 space-y-1.5">
+              {sisterRegions.map((region) => (
+                <p key={region.slug} className="text-[0.78rem] leading-[1.45] text-ink-soft">
+                  {region.name}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="font-mono text-[0.64rem] uppercase tracking-[0.12em] text-mist">
+              图例
+            </p>
+            <p className="mt-2 text-[0.74rem] leading-[1.55] text-mist">
+              蓝 = 信风 · 红 = 西风 · 深色 = 极地东风
+            </p>
+          </div>
+        </div>
       </div>
 
       <aside className="wh-dark-panel flex flex-col justify-between rounded-sm p-5 text-paper">
@@ -223,16 +272,37 @@ export function WindBeltsExplorer() {
             Skipper brief
           </p>
           <h3 className="display mt-3 text-2xl text-paper">{advisory.title}</h3>
+          <div className="mt-4 grid gap-2 border-y border-paper/15 py-4">
+            <div className="grid grid-cols-[1.2rem_1fr] gap-2 text-[0.84rem] leading-[1.55] text-paper-soft">
+              <CalendarDays className="mt-0.5 h-4 w-4 text-sun-soft" />
+              <span>{windowStatus}</span>
+            </div>
+            <div className="grid grid-cols-[1.2rem_1fr] gap-2 text-[0.84rem] leading-[1.55] text-paper-soft">
+              <MapPin className="mt-0.5 h-4 w-4 text-sun-soft" />
+              <span>{cell.latLabel} · {cell.primaryWind}</span>
+            </div>
+          </div>
           <p className="mt-4 text-[0.92rem] leading-[1.85] text-paper-soft">
             {advisory.body}
           </p>
         </div>
         <div className="mt-8 border-t border-paper/15 pt-4">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-mist">
-            Watch item
+          <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-mist">
+            <ListChecks className="h-3.5 w-3.5" />
+            Deck checks
           </p>
-          <p className="mt-2 text-[0.86rem] leading-[1.7] text-sun-soft">
-            {advisory.meta}
+          <ol className="mt-3 space-y-2.5 text-[0.82rem] leading-[1.65] text-paper-soft">
+            {deckChecks.map((item, index) => (
+              <li key={item} className="grid grid-cols-[1.5rem_1fr] gap-2">
+                <span className="font-mono text-sun-soft">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-4 text-[0.78rem] leading-[1.6] text-sun-soft">
+            Watch item · {advisory.meta}
           </p>
         </div>
       </aside>

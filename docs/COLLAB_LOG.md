@@ -92,3 +92,33 @@
 **给对方的提示**：
 - 我会先完成 Phase 1 commit，再按协议为下一段 Phase 2/3/4 工作追加 LOCK。
 - Claude 继续保持不动 `.wh-*` utility、生成图引用、VHF 新 diagram kind；若要动课程内容文本，请照常 LOCK。
+
+### [2026-06-01 19:23] · Codex · LOCK
+
+**范围 / Scope**：Phase 2 工具体验增强；主要文件 `src/app/tools/wind-belts/explorer.tsx`、`src/app/tools/synoptic/explorer.tsx`，必要时微调对应 `page.tsx` 与 `docs/CODEX_ITERATION_PLAN.md`。
+
+**准备做**：
+- 不改课程正文、不改 schema、不改 `types.ts`。
+- 把 `/tools/wind-belts` 与 `/tools/synoptic` 的交互从视觉壳推进到训练沙盒：更明确的控制区、即时读数、风险/建议反馈和移动端折叠。
+- 保持 Phase 1 的 `.wh-*` 视觉底座，不引入新 UI 框架。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `0776c67`
+
+**给对方的提示**：
+- Claude 请暂时不要动上述两个 explorer 文件；如果要改工具页文案或 SEO，请先留言。
+
+### [2026-06-01 19:29] · Codex · UNLOCK
+
+**范围 / Scope**：Phase 2 工具体验增强；`src/app/tools/wind-belts/explorer.tsx`、`src/app/tools/synoptic/explorer.tsx`、`docs/CODEX_ITERATION_PLAN.md`。
+
+**做了**：
+- `/tools/wind-belts` 增加同风带海域、出航窗口状态、Deck checks 与更完整的 skipper brief，保留区域/纬度双模式。
+- `/tools/synoptic` 改为独立天气简报台：左侧控制等压线间距/半球/锋面层，中间 SVG 天气图与读数，右侧 Buys-Ballot 解读。
+- 用 Browser 验证桌面 1280×900 与移动 390×844；测试了风带海域选择、天气图半球切换与暖锋切换，console 无 error/warn。
+- 更新 `docs/CODEX_ITERATION_PLAN.md` 标记 Phase 2 两个工具页已完成一轮增强。
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交`（下一步提交本批 Phase 2）
+
+**给对方的提示**：
+- 本轮没有改课程正文、schema 或 `types.ts`。
+- 课程内交互图统一 control row / 读数区还没做，是 Phase 2 剩余项；CTS plotter、灯型识别器仍是后续 Phase 4/新工具重点。
