@@ -50,7 +50,13 @@ export type LessonBlock =
         | "isobar-wind"
         | "cts-plotter"
         | "lights-identifier"
-        | "heave-to-balance";
+        | "heave-to-balance"
+        | "vhf-radio-horizon"
+        | "vhf-station-identity"
+        | "gmdss-alert-loop"
+        | "dsc-distress-timeline"
+        | "mayday-message-structure"
+        | "vhf-call-format";
       caption?: string;
     }
   | { type: "quote"; text: string; attribution?: string }

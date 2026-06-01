@@ -161,8 +161,17 @@ export function Quiz({
     const drawSize =
       drawCount && drawCount < questions.length ? drawCount : questions.length;
     return (
-      <section className="border-y border-line/70 bg-paper-soft/40 py-16">
-        <div className="mx-auto max-w-2xl px-2 text-center">
+      <section className="relative overflow-hidden border-y border-line/70 bg-paper-soft/40 py-16">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-[0.10]"
+          style={{
+            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div className="wh-instrument-panel relative mx-auto max-w-2xl rounded-sm px-6 py-8 text-center md:px-8">
           <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
             考前确认
           </p>
@@ -220,8 +229,17 @@ export function Quiz({
   }
 
   return (
-    <section className="border-y border-line/70 bg-paper-soft/40 py-12">
-      <div className="mx-auto max-w-3xl px-2">
+    <section className="relative overflow-hidden border-y border-line/70 bg-paper-soft/40 py-12">
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div className="wh-instrument-panel relative mx-auto max-w-3xl rounded-sm px-5 py-6 md:px-7">
         <header className="flex items-baseline justify-between gap-4">
           <div>
             <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">

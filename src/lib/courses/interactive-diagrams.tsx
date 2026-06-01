@@ -107,7 +107,7 @@ export function InteractivePointsOfSail({ className }: Props) {
             max={180}
             value={boatHeading}
             onChange={(e) => setBoatHeading(parseInt(e.target.value, 10))}
-            className="mt-2 w-full accent-[var(--color-sea-deep)]"
+            className="wh-range mt-2 w-full"
           />
         </div>
         <div className="border-t border-line/70 pt-3">
@@ -240,7 +240,7 @@ function ControlRow({
         step={step}
         value={v}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="mt-1.5 w-full accent-[var(--color-sea-deep)]"
+        className="wh-range mt-1.5 w-full"
       />
     </div>
   );
@@ -463,7 +463,7 @@ export function InteractiveThreeCellCirculation({ className }: Props) {
             step={1}
             value={lat}
             onChange={(e) => setLat(parseInt(e.target.value, 10))}
-            className="mt-1.5 w-full accent-[var(--color-sea-deep)]"
+            className="wh-range mt-1.5 w-full"
           />
           <div className="mt-1 flex justify-between font-mono text-[0.62rem] text-mist">
             <span>南极</span>
@@ -600,7 +600,7 @@ export function InteractiveIsobarWind({ className }: Props) {
             step={5}
             value={spacing}
             onChange={(e) => setSpacing(parseInt(e.target.value, 10))}
-            className="mt-1.5 w-full accent-[var(--color-sea-deep)]"
+            className="wh-range mt-1.5 w-full"
           />
           <div className="mt-1 flex justify-between font-mono text-[0.62rem] text-mist">
             <span>密 → 风强</span>
@@ -958,7 +958,7 @@ export function InteractiveCtsPlotter({ className }: Props) {
             type="checkbox"
             checked={useLeeway}
             onChange={(e) => setUseLeeway(e.target.checked)}
-            className="accent-[var(--color-sea-deep)]"
+            className="wh-range"
           />
           <span className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-ink-soft">
             加入 leeway 偏移 10°

@@ -35,7 +35,17 @@ export default async function ExamPage({ params }: { params: Params }) {
 
   return (
     <>
-      <Section className="border-b border-line/60 pt-36">
+      <Section className="relative overflow-hidden border-b border-line/60 pt-36">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.13]"
+          style={{
+            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div aria-hidden className="wh-chart-wash -z-10" />
         <Link
           href={`/courses/${course.slug}`}
           className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-mist transition-colors hover:text-ink"
@@ -55,11 +65,16 @@ export default async function ExamPage({ params }: { params: Params }) {
             {course.exam.brief}
           </p>
 
-          <dl className="mt-10 grid grid-cols-3 gap-6 border-y border-line/70 py-6 font-mono text-[0.84rem]">
+          <dl className="wh-instrument-panel mt-10 grid grid-cols-3 gap-6 rounded-sm px-6 py-5 font-mono text-[0.84rem]">
             <ExamMeta label="时长" value={`${course.exam.durationMinutes} 分钟`} />
             <ExamMeta label="题数" value={`${course.exam.questions.length}`} />
             <ExamMeta label="通过线" value={`${course.exam.passMark}%`} />
           </dl>
+          <div className="wh-status-strip mt-5">
+            <span>Chart table mode</span>
+            <span>No pause</span>
+            <span>Submit once</span>
+          </div>
         </div>
       </Section>
 

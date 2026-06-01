@@ -40,12 +40,37 @@ export function WindBeltsExplorer() {
 
   const cell = cellInfo[inferredCell];
 
+  const advisory =
+    mode === "region" && selectedRegion
+      ? {
+          title: "航行窗口判断",
+          body: `${selectedRegion.bestMonths} 是这片海域的优先窗口；出发前再用真实天气图确认锋面、热带系统和局地加速区。`,
+          meta: selectedRegion.risks[0]
+            ? `${selectedRegion.risks[0].label} · ${selectedRegion.risks[0].period}`
+            : "常年风险低于热带海域",
+        }
+      : {
+          title: "纬度只是底图",
+          body: "纬度能告诉你常年风带，但不能替代季风、洋流、岛屿加速和一周内的预报判断。",
+          meta: `${cell.latLabel} · ${cell.primaryWind}`,
+        };
+
   return (
-    <div className="grid gap-5 lg:grid-cols-[1fr_1.2fr] lg:gap-7 lg:items-stretch">
+    <div className="wh-tool-shell rounded-sm p-4 sm:p-5 lg:p-6">
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <div className="relative grid gap-5 lg:grid-cols-[0.8fr_1.25fr_0.85fr] lg:gap-6 lg:items-stretch">
       {/* ===== 左：输入 + 结果 ===== */}
-      <div className="space-y-4">
+      <div className="wh-instrument-panel space-y-4 rounded-sm p-4 sm:p-5">
         {/* 模式切换 */}
-        <div className="inline-flex overflow-hidden rounded-sm border border-line">
+        <div className="inline-flex overflow-hidden rounded-sm border border-line bg-paper/80">
           {(["region", "latitude"] as Mode[]).map((m) => (
             <button
               key={m}
@@ -98,7 +123,7 @@ export function WindBeltsExplorer() {
               step={1}
               value={lat}
               onChange={(e) => setLat(parseInt(e.target.value, 10))}
-              className="mt-2 w-full accent-[var(--color-sea-deep)]"
+              className="wh-range mt-2 w-full"
             />
             <div className="mt-1 flex justify-between font-mono text-[0.62rem] text-mist">
               <span>80°S</span>
@@ -109,7 +134,7 @@ export function WindBeltsExplorer() {
         )}
 
         {/* 结果卡片 */}
-        <article className="rounded-sm border border-line/70 bg-paper-soft/30 p-4 sm:p-5">
+        <article className="rounded-sm border border-line/70 bg-paper/75 p-4 sm:p-5">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sea-deep">
             所在环流 · {cell.latLabel}
           </p>
@@ -175,16 +200,42 @@ export function WindBeltsExplorer() {
       </div>
 
       {/* ===== 右：地球可视化（紧凑版，仅 SVG，无内部 grid） ===== */}
-      <div className="relative flex flex-col">
-        <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-mist">
-          三圈环流地球
-        </p>
-        <div className="mt-2 flex-1 rounded-sm border border-line/70 bg-paper-soft/30 p-3 sm:p-4">
+      <div className="wh-instrument-panel relative flex flex-col rounded-sm p-4 sm:p-5">
+        <div className="flex items-baseline justify-between gap-4">
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-mist">
+            三圈环流地球
+          </p>
+          <p className="font-mono text-[0.7rem] tracking-[0.12em] text-sea-deep">
+            {effectiveLat >= 0 ? `${effectiveLat}°N` : `${-effectiveLat}°S`}
+          </p>
+        </div>
+        <div className="mt-2 flex-1 rounded-sm border border-line/70 bg-paper/80 p-3 sm:p-4">
           <BareThreeCellEarth lat={effectiveLat} />
         </div>
         <p className="mt-2 text-[0.74rem] leading-[1.5] text-mist">
           蓝 = 信风 · 红 = 西风 · 深色 = 极地东风
         </p>
+      </div>
+
+      <aside className="wh-dark-panel flex flex-col justify-between rounded-sm p-5 text-paper">
+        <div>
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sun-soft">
+            Skipper brief
+          </p>
+          <h3 className="display mt-3 text-2xl text-paper">{advisory.title}</h3>
+          <p className="mt-4 text-[0.92rem] leading-[1.85] text-paper-soft">
+            {advisory.body}
+          </p>
+        </div>
+        <div className="mt-8 border-t border-paper/15 pt-4">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-mist">
+            Watch item
+          </p>
+          <p className="mt-2 text-[0.86rem] leading-[1.7] text-sun-soft">
+            {advisory.meta}
+          </p>
+        </div>
+      </aside>
       </div>
     </div>
   );

@@ -72,7 +72,17 @@ export default async function CourseDetailPage({
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
       />
       {/* ===== Hero ===== */}
-      <Section className="border-b border-line/60 pt-36">
+      <Section className="relative overflow-hidden border-b border-line/60 pt-36">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.12]"
+          style={{
+            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div aria-hidden className="wh-chart-wash -z-10" />
         <Link
           href="/courses"
           className="inline-flex items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.16em] text-mist transition-colors hover:text-ink"
@@ -81,7 +91,7 @@ export default async function CourseDetailPage({
           全部课程
         </Link>
 
-        <div className="mt-10 grid gap-12 md:grid-cols-[1.6fr_1fr] md:items-end">
+        <div className="mt-10 grid gap-12 lg:grid-cols-[1.45fr_0.95fr] lg:items-end">
           <div>
             <div className="flex items-baseline gap-4 font-mono text-[0.74rem] tracking-[0.14em] text-sea-deep">
               <span>{course.code}</span>
@@ -94,24 +104,40 @@ export default async function CourseDetailPage({
             <p className="prose-zh mt-7 max-w-2xl text-[1.05rem] text-ink-soft md:text-[1.1rem]">
               {course.summary}
             </p>
+            <div className="wh-status-strip mt-8">
+              <span>Pathway · {course.level}</span>
+              <span>{course.modules.length} modules</span>
+              <span>
+                {course.modules.reduce((s, m) => s + m.lessons.length, 0)} lessons
+              </span>
+            </div>
           </div>
 
-          <dl className="space-y-5 border-l border-line/70 pl-7 font-mono text-[0.84rem]">
-            <Meta label="时长" value={course.duration} icon={Clock} />
-            <Meta
-              label="RYA 对标"
-              value={course.ryaEquivalent}
-              icon={GraduationCap}
+          <aside className="wh-instrument-panel rounded-sm p-5">
+            <div
+              aria-hidden
+              className="min-h-[210px] rounded-sm border border-line/60 bg-cover bg-center"
+              style={{
+                backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+              }}
             />
-            <Meta
-              label="模块"
-              value={`${course.modules.length} 个模块 · ${course.modules.reduce(
-                (s, m) => s + m.lessons.length,
-                0
-              )} 课时`}
-              icon={BookOpen}
-            />
-          </dl>
+            <dl className="mt-5 grid gap-5 font-mono text-[0.84rem] sm:grid-cols-3 lg:grid-cols-1">
+              <Meta label="时长" value={course.duration} icon={Clock} />
+              <Meta
+                label="RYA 对标"
+                value={course.ryaEquivalent}
+                icon={GraduationCap}
+              />
+              <Meta
+                label="模块"
+                value={`${course.modules.length} 个模块 · ${course.modules.reduce(
+                  (s, m) => s + m.lessons.length,
+                  0
+                )} 课时`}
+                icon={BookOpen}
+              />
+            </dl>
+          </aside>
         </div>
       </Section>
 

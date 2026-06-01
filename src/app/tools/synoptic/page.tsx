@@ -31,7 +31,17 @@ export default function SynopticPage() {
   return (
     <>
       {/* ==================== Hero + Tool（首屏） ==================== */}
-      <Section className="border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+      <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.16]"
+          style={{
+            backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div aria-hidden className="wh-chart-wash -z-10" />
         <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
           <p className="eyebrow">工具 · 天气图读图</p>
           <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
@@ -40,6 +50,11 @@ export default function SynopticPage() {
           <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
             拖动滑块改变等压线密度、切换半球——看风向风强如何同步改变。下方有完整原理。
           </p>
+          <div className="wh-status-strip mt-5">
+            <span>Isobars</span>
+            <span>Wind force</span>
+            <span>Hemisphere rule</span>
+          </div>
         </header>
         <SynopticExplorer />
       </Section>

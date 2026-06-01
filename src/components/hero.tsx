@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 /**
@@ -9,46 +10,23 @@ import { ArrowRight } from "lucide-react";
  */
 export function Hero() {
   return (
-    <section className="relative isolate h-[100svh] min-h-[640px] overflow-hidden bg-paper text-ink">
-      {/* ===== 远海渐变（蓝） + 远处地平线 + 一颗暖色的"朝阳" ===== */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10"
-        style={{
-          height: "32%",
-          background:
-            "linear-gradient(180deg, transparent 0%, rgba(125,179,210,0.16) 35%, rgba(45,125,182,0.30) 100%)",
-        }}
+    <section className="relative isolate h-[100svh] min-h-[660px] overflow-hidden bg-paper text-ink">
+      <Image
+        src="/images/generated/hero-ocean-training-v1.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="-z-20 object-cover object-[64%_50%]"
       />
-      {/* 地平线 */}
+      <div aria-hidden className="wh-image-wash -z-10" />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 -z-10"
-        style={{
-          bottom: "32%",
-          height: "1px",
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(45,125,182,0.35) 25%, rgba(45,125,182,0.35) 75%, transparent 100%)",
-        }}
-      />
-      {/* 朝阳：贴近地平线右上方 */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -z-10 animate-fade-up"
-        style={{
-          right: "12%",
-          bottom: "34%",
-          width: "120px",
-          height: "120px",
-          borderRadius: "999px",
-          background:
-            "radial-gradient(circle at 30% 30%, rgba(240,222,180,0.85) 0%, rgba(200,146,58,0.45) 45%, rgba(200,146,58,0) 75%)",
-          filter: "blur(0.5px)",
-        }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-paper via-paper/70 to-transparent"
       />
 
       {/* ===== 主内容 ===== */}
-      <div className="mx-auto flex h-full max-w-7xl flex-col justify-center px-6 lg:px-10">
+      <div className="mx-auto flex h-full max-w-7xl flex-col justify-center px-6 pb-12 pt-28 lg:px-10">
         <div className="max-w-3xl animate-fade-up">
           <p className="horizon-mark">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-sun-deep">
@@ -85,11 +63,19 @@ export function Hero() {
               <span className="h-px w-6 bg-current transition-all group-hover:w-10" />
             </Link>
           </div>
+
+          <div className="wh-instrument-panel mt-12 max-w-2xl px-5 py-4">
+            <div className="wh-status-strip">
+              <span>13 门原创课程</span>
+              <span>RYA / ASA / IYT 对照</span>
+              <span>工具 · 图解 · 模拟考</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ===== 底部坐标 strip ===== */}
-      <div className="absolute inset-x-0 bottom-6 z-10 mx-auto flex max-w-7xl items-center justify-between px-6 text-[0.7rem] text-mist lg:px-10">
+      <div className="absolute inset-x-0 bottom-6 z-10 mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 text-[0.7rem] text-mist lg:px-10">
         <span className="font-mono tracking-[0.2em]">22°16′N</span>
         <span className="font-mono tracking-[0.32em]">
           航向 037° · 真北

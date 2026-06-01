@@ -697,37 +697,245 @@ function LightsVessels({ className }: DiagramProps) {
   );
 }
 
-/* —— Fallback —— */
-
-function DiagramFallback({ kind, className }: DiagramProps & { kind: string }) {
+function WindShiftVmg({ className }: DiagramProps) {
   return (
-    <svg
-      viewBox="0 0 400 200"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1}
-    >
-      <rect x={1} y={1} width={398} height={198} className="stroke-line/80" />
-      <text
-        x={200}
-        y={96}
-        textAnchor="middle"
-        className="fill-mist font-mono"
-        fontSize="11"
-        letterSpacing="0.1em"
-      >
-        图解：{kind}
-      </text>
-      <text
-        x={200}
-        y={114}
-        textAnchor="middle"
-        className="fill-mist"
-        fontSize="10"
-      >
-        （待补充）
-      </text>
+    <svg viewBox="0 0 520 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <line x1={260} y1={28} x2={260} y2={268} className="stroke-mist/50" strokeDasharray="4 5" />
+      <text x={260} y={22} textAnchor="middle" className="fill-mist font-mono" fontSize="10" letterSpacing="0.1em">目标方向</text>
+      <path d="M260 250 L186 94" className="stroke-sea-deep" strokeWidth={2} />
+      <path d="M260 250 L334 94" className="stroke-coral" strokeWidth={2} />
+      <path d="M260 250 L210 250 L210 145" className="stroke-mist" strokeDasharray="3 4" />
+      <path d="M260 250 L310 250 L310 145" className="stroke-mist" strokeDasharray="3 4" />
+      <text x={170} y={88} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">左舷抢风</text>
+      <text x={350} y={88} textAnchor="middle" className="fill-coral font-mono" fontSize="10">右舷抢风</text>
+      <text x={112} y={168} className="fill-ink" fontSize="12">VMG = 船速投影到目标方向</text>
+      <text x={112} y={188} className="fill-mist" fontSize="10">风摆后，比较哪一舷投影更长</text>
+      <g transform="translate(260 250)">
+        <ellipse cx={0} cy={8} rx={18} ry={5} className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1={-26} x2={0} y2={4} className="stroke-ink" strokeWidth={1.5} />
+        <path d="M0 -26 L16 3 L0 -2 Z" className="fill-paper-soft stroke-ink" />
+      </g>
+      <g className="stroke-sun-deep fill-sun-deep">
+        <line x1={88} y1={54} x2={132} y2={84} strokeWidth={1.5} />
+        <polygon points="132,84 120,83 126,74" />
+        <text x={68} y={54} className="fill-sun-deep font-mono" fontSize="10">新风向</text>
+      </g>
+    </svg>
+  );
+}
+
+function CompassRose({ className }: DiagramProps) {
+  const cx = 260;
+  const cy = 160;
+  const r = 104;
+  return (
+    <svg viewBox="0 0 520 320" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <circle cx={cx} cy={cy} r={r} className="stroke-mist/70 fill-paper" />
+      <circle cx={cx} cy={cy} r={r * 0.72} className="stroke-mist/35" />
+      {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
+        const a = ((deg - 90) * Math.PI) / 180;
+        const x1 = cx + Math.cos(a) * (deg % 90 === 0 ? r - 18 : r - 10);
+        const y1 = cy + Math.sin(a) * (deg % 90 === 0 ? r - 18 : r - 10);
+        const x2 = cx + Math.cos(a) * r;
+        const y2 = cy + Math.sin(a) * r;
+        return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} className="stroke-ink/70" />;
+      })}
+      <path d={`M${cx} ${cy - r + 8} L${cx + 12} ${cy} L${cx} ${cy + r - 8} L${cx - 12} ${cy} Z`} className="fill-sea-soft/35 stroke-sea-deep" />
+      <path d={`M${cx - r + 8} ${cy} L${cx} ${cy - 12} L${cx + r - 8} ${cy} L${cx} ${cy + 12} Z`} className="fill-paper-soft stroke-ink" />
+      {[
+        ["N", cx, cy - r - 16],
+        ["E", cx + r + 16, cy + 4],
+        ["S", cx, cy + r + 26],
+        ["W", cx - r - 16, cy + 4],
+      ].map(([label, x, y]) => (
+        <text key={label} x={x} y={y} textAnchor="middle" className="fill-ink font-mono" fontSize="12" letterSpacing="0.12em">{label}</text>
+      ))}
+      <path d="M260 160 L344 108" className="stroke-coral" strokeWidth={2} />
+      <polygon points="344,108 331,111 337,121" className="fill-coral stroke-coral" />
+      <text x={352} y={106} className="fill-coral font-mono" fontSize="10">真方位 058°T</text>
+      <text x={76} y={260} className="fill-mist" fontSize="11">用于方位、航向、风向与潮流方向的共同参照。</text>
+    </svg>
+  );
+}
+
+function CelestialTriangle({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 520 320" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <circle cx={260} cy={160} r={118} className="stroke-mist/60 fill-paper" />
+      <path d="M260 42 C318 92 352 144 376 242" className="stroke-sea-deep" />
+      <path d="M260 42 C214 102 184 164 156 242" className="stroke-sea-deep" />
+      <path d="M156 242 C222 276 310 276 376 242" className="stroke-sea-deep" />
+      <circle cx={260} cy={42} r={5} className="fill-coral stroke-coral" />
+      <circle cx={156} cy={242} r={5} className="fill-ink stroke-ink" />
+      <circle cx={376} cy={242} r={5} className="fill-sun stroke-sun" />
+      <text x={260} y={28} textAnchor="middle" className="fill-coral font-mono" fontSize="10">天体 GP</text>
+      <text x={132} y={260} className="fill-ink font-mono" fontSize="10">观测点</text>
+      <text x={382} y={260} className="fill-sun-deep font-mono" fontSize="10">天极 P</text>
+      <text x={252} y={178} textAnchor="middle" className="fill-ink" fontSize="12">PZX 球面三角形</text>
+      <text x={252} y={198} textAnchor="middle" className="fill-mist" fontSize="10">高度 · 赤纬 · 时角互相约束</text>
+      <line x1={74} y1={92} x2={166} y2={92} className="stroke-mist" />
+      <text x={74} y={78} className="fill-mist font-mono" fontSize="10">六分仪测高度 Ho</text>
+      <path d="M86 94 C122 120 142 154 154 218" className="stroke-mist" strokeDasharray="3 4" />
+    </svg>
+  );
+}
+
+function VhfRadioHorizon({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 520 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <path d="M42 238 Q260 286 478 238" className="stroke-sea-deep fill-sea-soft/30" />
+      <g transform="translate(120 190)">
+        <path d="M-34 28 H34 L22 42 H-22 Z" className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1={-74} x2={0} y2={28} className="stroke-ink" strokeWidth={1.6} />
+        <path d="M0 -74 L24 22 L0 14 Z" className="fill-paper stroke-ink" />
+        <line x1={0} y1={-74} x2={0} y2={-96} className="stroke-coral" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(400 172)">
+        <path d="M-44 48 H44 L30 62 H-30 Z" className="fill-paper-soft stroke-ink" />
+        <rect x="-12" y="-48" width="24" height="96" className="fill-paper stroke-ink" />
+        <line x1={0} y1={-48} x2={0} y2={-116} className="stroke-coral" strokeWidth={1.5} />
+      </g>
+      <path d="M120 94 Q260 30 400 56" className="stroke-sea-deep" strokeWidth={1.8} />
+      <path d="M120 94 Q260 182 400 56" className="stroke-mist" strokeDasharray="4 5" />
+      <text x={260} y={46} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">可见天线 = 可通信</text>
+      <text x={260} y={128} textAnchor="middle" className="fill-mist" fontSize="10">地球曲面挡住低天线；高度比功率更关键</text>
+      <text x={260} y={266} textAnchor="middle" className="fill-ink font-mono" fontSize="10">D ≈ 1.23 × (√h1 + √h2) NM</text>
+    </svg>
+  );
+}
+
+function VhfStationIdentity({ className }: DiagramProps) {
+  const items = [
+    ["船名", "SEA PEARL", "人耳识别"],
+    ["MMSI", "232123456", "DSC / AIS 机器身份"],
+    ["Call Sign", "MGYS3", "正式电台呼号"],
+  ];
+  return (
+    <svg viewBox="0 0 520 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <g transform="translate(260 84)">
+        <path d="M-60 32 H60 L42 48 H-42 Z" className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1={-58} x2={0} y2={32} className="stroke-ink" strokeWidth={1.5} />
+        <path d="M0 -58 L34 28 L0 18 Z" className="fill-paper stroke-ink" />
+      </g>
+      {items.map((it, i) => {
+        const x = 94 + i * 166;
+        return (
+          <g key={it[0]} transform={`translate(${x} 196)`}>
+            <rect x="-62" y="-42" width="124" height="84" rx="2" className="fill-paper stroke-line" />
+            <text x={0} y="-18" textAnchor="middle" className="fill-mist font-mono" fontSize="9" letterSpacing="0.1em">{it[0]}</text>
+            <text x={0} y="4" textAnchor="middle" className="fill-ink font-mono" fontSize="12">{it[1]}</text>
+            <text x={0} y="26" textAnchor="middle" className="fill-sea-deep" fontSize="10">{it[2]}</text>
+            <line x1={0} y1="-42" x2={260 - x} y2="-92" className="stroke-mist" strokeDasharray="3 4" />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function GmdssAlertLoop({ className }: DiagramProps) {
+  const nodes = [
+    [100, 154, "报警", "船 → 岸"],
+    [260, 74, "协调", "MRCC"],
+    [420, 154, "现场通信", "救援 → 船"],
+    [260, 234, "定位", "EPIRB / SART"],
+  ] as const;
+  return (
+    <svg viewBox="0 0 520 310" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <path d="M142 140 C172 92 206 76 230 74" className="stroke-sea-deep" markerEnd="url(#gmdssArrow)" />
+      <path d="M292 74 C342 80 384 110 404 136" className="stroke-sea-deep" markerEnd="url(#gmdssArrow)" />
+      <path d="M420 188 C390 224 334 238 294 234" className="stroke-sea-deep" markerEnd="url(#gmdssArrow)" />
+      <path d="M226 234 C176 228 124 198 108 178" className="stroke-sea-deep" markerEnd="url(#gmdssArrow)" />
+      <defs>
+        <marker id="gmdssArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0 0 L8 4 L0 8 Z" className="fill-sea-deep" />
+        </marker>
+      </defs>
+      {nodes.map(([x, y, title, sub]) => (
+        <g key={title}>
+          <circle cx={x} cy={y} r={44} className="fill-paper stroke-line" />
+          <text x={x} y={y - 4} textAnchor="middle" className="fill-ink" fontSize="13">{title}</text>
+          <text x={x} y={y + 15} textAnchor="middle" className="fill-mist font-mono" fontSize="9">{sub}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+function DscDistressTimeline({ className }: DiagramProps) {
+  const steps = [
+    ["T+0", "红按钮 5 秒"],
+    ["CH70", "DSC 数据包"],
+    ["CH16", "语音 MAYDAY"],
+    ["~4 min", "无应答自动重发"],
+    ["ACK", "岸台/船只应答"],
+  ];
+  return (
+    <svg viewBox="0 0 560 250" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <line x1={58} y1={124} x2={500} y2={124} className="stroke-line" />
+      {steps.map((s, i) => {
+        const x = 66 + i * 108;
+        return (
+          <g key={s[0]}>
+            <circle cx={x} cy={124} r={18} className={i === 0 ? "fill-coral stroke-coral" : "fill-paper stroke-sea-deep"} />
+            <text x={x} y={129} textAnchor="middle" className={i === 0 ? "fill-paper font-mono" : "fill-sea-deep font-mono"} fontSize="9">{String(i + 1).padStart(2, "0")}</text>
+            <text x={x} y={78} textAnchor="middle" className="fill-ink font-mono" fontSize="10">{s[0]}</text>
+            <text x={x} y={168} textAnchor="middle" className="fill-ink" fontSize="11">{s[1]}</text>
+          </g>
+        );
+      })}
+      <text x={280} y={214} textAnchor="middle" className="fill-mist" fontSize="10">DSC 负责唤醒机器；CH16 负责让人听懂事故细节。</text>
+    </svg>
+  );
+}
+
+function MaydayMessageStructure({ className }: DiagramProps) {
+  const fields = ["M", "I", "P", "D", "A", "N", "I/O"];
+  const labels = ["MAYDAY", "Identity", "Position", "Distress", "Assistance", "Number", "Info / Over"];
+  return (
+    <svg viewBox="0 0 560 260" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <rect x={30} y={54} width={500} height={128} rx="2" className="fill-paper stroke-line" />
+      {fields.map((f, i) => {
+        const x = 58 + i * 72;
+        return (
+          <g key={f}>
+            <rect x={x} y={84} width={54} height={54} className={i === 0 ? "fill-coral/10 stroke-coral" : "fill-paper-soft stroke-line"} />
+            <text x={x + 27} y={108} textAnchor="middle" className={i === 0 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="14">{f}</text>
+            <text x={x + 27} y={128} textAnchor="middle" className="fill-ink" fontSize="8.5">{labels[i]}</text>
+          </g>
+        );
+      })}
+      <text x={280} y={44} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">MIPDANIO 标准遇险报文顺序</text>
+      <text x={280} y={214} textAnchor="middle" className="fill-mist" fontSize="10">顺序固定，目的不是好看，是让岸台在压力下不漏字段。</text>
+    </svg>
+  );
+}
+
+function VhfCallFormat({ className }: DiagramProps) {
+  const blocks = [
+    ["01", "呼对方", "Solent Coastguard ×3"],
+    ["02", "报自己", "This is Sea Pearl ×3"],
+    ["03", "讲事情", "Request radio check"],
+    ["04", "交接", "OVER / OUT"],
+  ];
+  return (
+    <svg viewBox="0 0 560 250" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      {blocks.map((b, i) => {
+        const x = 36 + i * 132;
+        return (
+          <g key={b[0]}>
+            <rect x={x} y={72} width={112} height={88} rx="2" className="fill-paper stroke-line" />
+            <text x={x + 16} y={98} className="fill-sea-deep font-mono" fontSize="10">{b[0]}</text>
+            <text x={x + 56} y={120} textAnchor="middle" className="fill-ink" fontSize="13">{b[1]}</text>
+            <text x={x + 56} y={142} textAnchor="middle" className="fill-mist" fontSize="9">{b[2]}</text>
+            {i < blocks.length - 1 ? (
+              <path d={`M${x + 116} 116 H${x + 130}`} className="stroke-sea-deep" />
+            ) : null}
+          </g>
+        );
+      })}
+      <text x={280} y={46} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">VHF 三段式呼叫</text>
+      <text x={280} y={204} textAnchor="middle" className="fill-mist" fontSize="10">先叫对方，让对方开始听；再说明你是谁；最后才说请求。</text>
     </svg>
   );
 }
@@ -752,9 +960,15 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "buoyage-iala-a": BuoyageIalaA,
   "colregs-crossing": ColregsCrossing,
   "lights-vessels": LightsVessels,
-  "wind-shift-vmg": (p) => <DiagramFallback kind="wind-shift-vmg" {...p} />,
-  "compass-rose": (p) => <DiagramFallback kind="compass-rose" {...p} />,
-  "celestial-triangle": (p) => <DiagramFallback kind="celestial-triangle" {...p} />,
+  "wind-shift-vmg": WindShiftVmg,
+  "compass-rose": CompassRose,
+  "celestial-triangle": CelestialTriangle,
+  "vhf-radio-horizon": VhfRadioHorizon,
+  "vhf-station-identity": VhfStationIdentity,
+  "gmdss-alert-loop": GmdssAlertLoop,
+  "dsc-distress-timeline": DscDistressTimeline,
+  "mayday-message-structure": MaydayMessageStructure,
+  "vhf-call-format": VhfCallFormat,
 };
 
 /** 这些 kind 是交互式的——使用更宽容器、紧凑内边距，让滑块与 SVG 能并排展示。 */
@@ -783,7 +997,7 @@ export function CourseDiagram({
   if (interactive) {
     return (
       <figure className="my-8">
-        <div className="rounded-sm border border-line/70 bg-paper-soft/30 p-4 sm:p-5 md:p-6">
+        <div className="wh-instrument-panel rounded-sm p-4 sm:p-5 md:p-6">
           <Cmp className="text-ink" />
         </div>
         {caption ? (
@@ -797,7 +1011,7 @@ export function CourseDiagram({
 
   return (
     <figure className="my-8">
-      <div className="rounded-sm border border-line/70 bg-paper-soft/40 p-4 sm:p-6 md:p-8">
+      <div className="wh-instrument-panel rounded-sm p-4 sm:p-6 md:p-8">
         <Cmp className="mx-auto block h-auto w-full max-w-2xl max-h-[55vh] text-ink" />
       </div>
       {caption ? (

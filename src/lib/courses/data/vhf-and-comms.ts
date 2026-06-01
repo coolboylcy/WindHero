@@ -72,8 +72,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 1.1 · 视距通信示意（无专用插画，用罗盘图占位）：电波被地球曲面挡住，决定有效距离的不是功率，是天线高度。公式 D ≈ 1.23 × (√h1 + √h2) 海里",
+              kind: "vhf-radio-horizon",
+              caption: "图 1.1 · 视距通信示意：电波被地球曲面挡住，决定有效距离的不是功率，是天线高度。公式 D ≈ 1.23 × (√h1 + √h2) 海里",
             },
             {
               type: "heading",
@@ -267,8 +267,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 1.2 · 电台身份示意（无专用插画，用罗盘图占位）：每艘装机船在国际通信网中的三种身份——MMSI（9 位数字） + Call Sign（字母呼号） + 船名",
+              kind: "vhf-station-identity",
+              caption: "图 1.2 · 电台身份示意：每艘装机船在国际通信网中的三种身份——MMSI（9 位数字） + Call Sign（字母呼号） + 船名",
             },
             {
               type: "heading",
@@ -456,8 +456,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 2.1 · GMDSS 三层闭环示意（无专用流程图，用罗盘图占位）：报警（你 → 岸） → 协调（岸 → 救援资源） → 现场通信（救援 → 你）",
+              kind: "gmdss-alert-loop",
+              caption: "图 2.1 · GMDSS 三层闭环示意：报警（你 → 岸） → 协调（岸 → 救援资源） → 现场通信（救援 → 你）",
             },
             {
               type: "heading",
@@ -598,8 +598,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 2.2 · DSC 4 分钟流程示意（无专用流程图，用罗盘图占位）：红按钮 → CH70 数据包 → 附近 DSC 触发 → 4 分钟自动重发 → CH16 语音补充 MAYDAY",
+              kind: "dsc-distress-timeline",
+              caption: "图 2.2 · DSC 4 分钟流程示意：红按钮 → CH70 数据包 → 附近 DSC 触发 → 4 分钟自动重发 → CH16 语音补充 MAYDAY",
             },
             {
               type: "heading",
@@ -826,8 +826,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 3.1 · MIPDANIO 7 项报文结构示意（无专用流程图，用罗盘图占位）：每一项都对应 MAYDAY 报文中的一个固定位置，缺一不可",
+              kind: "mayday-message-structure",
+              caption: "图 3.1 · MIPDANIO 7 项报文结构示意：每一项都对应 MAYDAY 报文中的一个固定位置，缺一不可",
             },
             {
               type: "heading",
@@ -1091,8 +1091,8 @@ export const vhfAndComms: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
-              caption: "图 3.2 · 三段式呼叫格式示意（无专用流程图，用罗盘图占位）：先呼对方 → 再报自己 → 再讲事情；结束用 OVER（等回答）或 OUT（结束）",
+              kind: "vhf-call-format",
+              caption: "图 3.2 · 三段式呼叫格式示意：先呼对方 → 再报自己 → 再讲事情；结束用 OVER（等回答）或 OUT（结束）",
             },
             {
               type: "callout",

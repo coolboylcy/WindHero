@@ -36,7 +36,17 @@ export default function WindBeltsPage() {
   return (
     <>
       {/* ==================== Hero + Tool（首屏） ==================== */}
-      <Section className="border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+      <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.16]"
+          style={{
+            backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div aria-hidden className="wh-chart-wash -z-10" />
         <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
           <p className="eyebrow">工具 · 全球风带查询</p>
           <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
@@ -45,6 +55,11 @@ export default function WindBeltsPage() {
           <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
             输入海域或拖动地球纬度——看主导风、最佳月份、台风窗口。出航前的第一份功课。
           </p>
+          <div className="wh-status-strip mt-5">
+            <span>Wind belts</span>
+            <span>Season window</span>
+            <span>Skipper brief</span>
+          </div>
         </header>
         <WindBeltsExplorer />
       </Section>

@@ -150,6 +150,82 @@ body {
   );
 }
 
+/* —— 质感化迭代组件基类：仪表盘、工具沙盒、海图桌面 —— */
+
+.wh-image-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(245, 247, 250, 0.96) 0%, rgba(245, 247, 250, 0.78) 38%, rgba(245, 247, 250, 0.18) 72%),
+    linear-gradient(180deg, rgba(245, 247, 250, 0.04) 0%, rgba(245, 247, 250, 0.92) 100%);
+}
+
+.wh-chart-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(245, 247, 250, 0.82) 0%, rgba(245, 247, 250, 0.96) 72%),
+    linear-gradient(90deg, rgba(13, 39, 66, 0.08), transparent 42%, rgba(45, 131, 190, 0.10));
+}
+
+.wh-instrument-panel {
+  border: 1px solid color-mix(in srgb, var(--color-line) 78%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(233, 238, 243, 0.64)),
+    rgba(245, 247, 250, 0.72);
+  box-shadow: 0 20px 60px rgba(13, 39, 66, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.wh-dark-panel {
+  border: 1px solid rgba(207, 214, 223, 0.24);
+  background:
+    linear-gradient(180deg, rgba(13, 39, 66, 0.92), rgba(9, 31, 54, 0.96)),
+    var(--color-ink);
+  box-shadow: 0 24px 70px rgba(13, 39, 66, 0.20);
+}
+
+.wh-status-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+.wh-status-strip > span {
+  border-left: 1px solid color-mix(in srgb, var(--color-line) 82%, transparent);
+  padding-left: 0.65rem;
+}
+
+.wh-status-strip > span:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.wh-tool-shell {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-line) 72%, transparent);
+  background:
+    linear-gradient(135deg, rgba(245, 247, 250, 0.92), rgba(233, 238, 243, 0.76)),
+    var(--color-paper);
+  box-shadow: 0 28px 80px rgba(13, 39, 66, 0.10);
+}
+
+.wh-range {
+  accent-color: var(--color-sea-deep);
+}
+
+.wh-range:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-sea) 58%, transparent);
+  outline-offset: 4px;
+}
+
 /* —— 仅保留一个极简的进入微动效 —— */
 
 @keyframes fade-up {

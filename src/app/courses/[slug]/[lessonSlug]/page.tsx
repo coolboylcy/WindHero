@@ -50,11 +50,23 @@ export default async function LessonPage({ params }: { params: Params }) {
   if (!found) notFound();
 
   const { lesson, moduleTitle, moduleIndex, prev, next } = found;
+  const flatLessons = listLessonsFlat(course);
+  const lessonPosition = flatLessons.findIndex((x) => x.lesson.slug === lesson.slug) + 1;
 
   return (
     <>
       {/* ===== Lesson Hero ===== */}
-      <Section className="border-b border-line/60 pt-36">
+      <Section className="relative overflow-hidden border-b border-line/60 pt-36">
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 opacity-[0.11]"
+          style={{
+            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <div aria-hidden className="wh-chart-wash -z-10" />
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.72rem] tracking-[0.14em]">
           <Link
             href={`/courses/${course.slug}`}
@@ -69,7 +81,7 @@ export default async function LessonPage({ params }: { params: Params }) {
           </span>
         </div>
 
-        <div className="mt-10 grid gap-12 md:grid-cols-[1.6fr_1fr] md:items-end">
+        <div className="mt-10 grid gap-12 lg:grid-cols-[1.55fr_0.95fr] lg:items-end">
           <div>
             <div className="flex items-baseline gap-4 font-mono text-[0.74rem] tracking-[0.14em] text-sea-deep">
               <span>课时 {lesson.index}</span>
@@ -82,9 +94,16 @@ export default async function LessonPage({ params }: { params: Params }) {
             <p className="prose-zh mt-7 max-w-2xl text-[1.04rem] text-ink-soft">
               {lesson.summary}
             </p>
+            <div className="wh-status-strip mt-8">
+              <span>
+                Lesson {lessonPosition} / {flatLessons.length}
+              </span>
+              <span>Module {String(moduleIndex).padStart(2, "0")}</span>
+              <span>{lesson.duration}</span>
+            </div>
           </div>
 
-          <div className="border-l border-line/70 pl-7">
+          <div className="wh-instrument-panel rounded-sm p-6">
             <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-mist">
               学完你能做什么
             </p>
@@ -99,12 +118,20 @@ export default async function LessonPage({ params }: { params: Params }) {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 h-1 overflow-hidden rounded-full bg-line/70">
+              <div
+                className="h-full bg-sea-deep"
+                style={{
+                  width: `${Math.max(4, (lessonPosition / flatLessons.length) * 100)}%`,
+                }}
+              />
+            </div>
           </div>
         </div>
       </Section>
 
       {/* ===== Body ===== */}
-      <Section className="border-b border-line/60">
+      <Section className="border-b border-line/60 bg-paper">
         <article className="mx-auto max-w-3xl">
           <LessonRenderer blocks={lesson.body} />
         </article>
