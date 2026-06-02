@@ -122,3 +122,33 @@
 **给对方的提示**：
 - 本轮没有改课程正文、schema 或 `types.ts`。
 - 课程内交互图统一 control row / 读数区还没做，是 Phase 2 剩余项；CTS plotter、灯型识别器仍是后续 Phase 4/新工具重点。
+
+### [2026-06-02 09:39] · Codex · LOCK
+
+**范围 / Scope**：Phase 3 课程阅读升级；计划触达 `src/app/courses/[slug]/page.tsx`、`src/app/courses/[slug]/[lessonSlug]/page.tsx`、`src/app/courses/[slug]/exam/page.tsx`，必要时微调 `src/components/lesson-renderer.tsx` 与 `docs/CODEX_ITERATION_PLAN.md`。
+
+**准备做**：
+- 只改课程详情/课时/考试页的布局、导航、阅读节奏与视觉层级；不改课程 data 文本、不改 quiz 内容、不改 schema、不改 `types.ts`。
+- 优先补学习路径感、上一课/下一课导航、练习块/图解容器的阅读节奏，以及考试页更明确的考场状态。
+- 继续沿用 Phase 1 的海图桌面氛围与 `.wh-*` 视觉底座，不引入新 UI 框架。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `6974dcf`
+
+**给对方的提示**：
+- Claude 请暂时不要动上述课程页面/lesson renderer；如果要改课程内容 data，请先留言避免混在同一批。
+
+### [2026-06-02 09:47] · Codex · UNLOCK
+
+**范围 / Scope**：Phase 3 课程阅读升级；`src/app/courses/[slug]/page.tsx`、`src/app/courses/[slug]/[lessonSlug]/page.tsx`、`src/app/courses/[slug]/exam/page.tsx`、`docs/CODEX_ITERATION_PLAN.md`。
+
+**做了**：
+- 课程详情页新增学习路径区、第一课入口、考试入口和路径指标；模块现在更像一条可执行学习航线。
+- Lesson 页正文区新增右侧/移动端导读仪表：当前位置、剩余课时、学习动作和快速导航；原上一课/下一课大导航保留。
+- Exam 页保留 Quiz 逻辑，只强化 hero 的考前状态、抽题数量、计时/交卷说明和考场感。
+- Browser DOM/console 验证了 `/courses/reading-the-wind`、`/courses/reading-the-wind/why-the-wind-blows`、`/courses/reading-the-wind/exam` 桌面状态；截图与点击通道因 Browser CDP `Page.captureScreenshot` / `Runtime.evaluate` 连续超时未完成，未使用外部截图工具。
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交`（下一步提交本批 Phase 3）
+
+**给对方的提示**：
+- 没有改课程 data 文本、quiz/exam 题目、schema 或 `types.ts`。
+- Phase 4 仍是内容图解补齐；如要扩 `DiagramKind` 我会另开 LOCK。

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, Compass, ListChecks } from "lucide-react";
 import { Section } from "@/components/section";
 import { LessonRenderer } from "@/components/lesson-renderer";
 import { Quiz } from "@/components/quiz";
@@ -52,6 +52,8 @@ export default async function LessonPage({ params }: { params: Params }) {
   const { lesson, moduleTitle, moduleIndex, prev, next } = found;
   const flatLessons = listLessonsFlat(course);
   const lessonPosition = flatLessons.findIndex((x) => x.lesson.slug === lesson.slug) + 1;
+  const progressPct = Math.max(4, (lessonPosition / flatLessons.length) * 100);
+  const remainingLessons = Math.max(0, flatLessons.length - lessonPosition);
 
   return (
     <>
@@ -122,7 +124,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               <div
                 className="h-full bg-sea-deep"
                 style={{
-                  width: `${Math.max(4, (lessonPosition / flatLessons.length) * 100)}%`,
+                  width: `${progressPct}%`,
                 }}
               />
             </div>
@@ -132,9 +134,84 @@ export default async function LessonPage({ params }: { params: Params }) {
 
       {/* ===== Body ===== */}
       <Section className="border-b border-line/60 bg-paper">
-        <article className="mx-auto max-w-3xl">
-          <LessonRenderer blocks={lesson.body} />
-        </article>
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
+          <article className="min-w-0 max-w-3xl">
+            <LessonRenderer blocks={lesson.body} />
+          </article>
+
+          <aside className="space-y-4 lg:sticky lg:top-28">
+            <div className="wh-instrument-panel rounded-sm p-5">
+              <p className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sea-deep">
+                <Compass className="h-3.5 w-3.5" />
+                Lesson chart
+              </p>
+              <dl className="mt-5 space-y-4 text-[0.88rem] leading-[1.65]">
+                <LessonStat label="当前位置" value={`${lessonPosition} / ${flatLessons.length}`} />
+                <LessonStat label="本模块" value={`模块 ${String(moduleIndex).padStart(2, "0")}`} />
+                <LessonStat label="剩余课时" value={`${remainingLessons} 课`} />
+              </dl>
+              <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-line/70">
+                <div className="h-full bg-sea-deep" style={{ width: `${progressPct}%` }} />
+              </div>
+            </div>
+
+            <div className="rounded-sm border border-line/70 bg-paper-soft/45 p-5">
+              <p className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-mist">
+                <ListChecks className="h-3.5 w-3.5" />
+                学习动作
+              </p>
+              <ol className="mt-4 space-y-3 text-[0.84rem] leading-[1.65] text-ink-soft">
+                <li className="grid grid-cols-[1.6rem_1fr] gap-2">
+                  <span className="font-mono text-sea-deep">01</span>
+                  <span>先读正文，遇到图解停下来操作一次。</span>
+                </li>
+                <li className="grid grid-cols-[1.6rem_1fr] gap-2">
+                  <span className="font-mono text-sea-deep">02</span>
+                  <span>把练习块当成船长口头复盘，不跳过。</span>
+                </li>
+                <li className="grid grid-cols-[1.6rem_1fr] gap-2">
+                  <span className="font-mono text-sea-deep">03</span>
+                  <span>最后做小测，错题回到对应段落重读。</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="rounded-sm border border-line/70 bg-paper p-5">
+              <p className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-mist">
+                <BookOpen className="h-3.5 w-3.5" />
+                快速导航
+              </p>
+              <div className="mt-4 grid gap-2">
+                {prev ? (
+                  <Link
+                    href={`/courses/${course.slug}/${prev.lesson.slug}`}
+                    className="inline-flex items-center justify-between gap-3 rounded-sm border border-line bg-paper-soft/40 px-3 py-2 text-[0.82rem] text-ink transition-colors hover:bg-paper-soft"
+                  >
+                    上一课
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                  </Link>
+                ) : null}
+                {next ? (
+                  <Link
+                    href={`/courses/${course.slug}/${next.lesson.slug}`}
+                    className="inline-flex items-center justify-between gap-3 rounded-sm bg-ink px-3 py-2 text-[0.82rem] text-paper transition-colors hover:bg-sea-deep"
+                  >
+                    下一课
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                ) : course.exam ? (
+                  <Link
+                    href={`/courses/${course.slug}/exam`}
+                    className="inline-flex items-center justify-between gap-3 rounded-sm bg-ink px-3 py-2 text-[0.82rem] text-paper transition-colors hover:bg-sea-deep"
+                  >
+                    去模拟考
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                ) : null}
+              </div>
+            </div>
+          </aside>
+        </div>
       </Section>
 
       {/* ===== Quiz ===== */}
@@ -221,5 +298,16 @@ export default async function LessonPage({ params }: { params: Params }) {
         </nav>
       </Section>
     </>
+  );
+}
+
+function LessonStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid grid-cols-[4.2rem_1fr] gap-3">
+      <dt className="font-mono text-[0.66rem] uppercase tracking-[0.1em] text-mist">
+        {label}
+      </dt>
+      <dd className="text-ink">{value}</dd>
+    </div>
   );
 }

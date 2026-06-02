@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Anchor, ArrowLeft, ArrowRight, BookOpen, Clock, ExternalLink, GraduationCap } from "lucide-react";
+import {
+  Anchor,
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  Clock,
+  ExternalLink,
+  GraduationCap,
+  ListChecks,
+  Map,
+} from "lucide-react";
 import { Section } from "@/components/section";
 import {
   getCourseBySlug,
+  listLessonsFlat,
   listCourseSlugs,
 } from "@/lib/courses";
 import { getMapping } from "@/lib/certifications/mappings";
@@ -60,6 +71,13 @@ export default async function CourseDetailPage({
     { name: "课程", url: "/courses" },
     { name: course.title, url: `/courses/${course.slug}` },
   ]);
+  const flatLessons = listLessonsFlat(course);
+  const totalLessons = flatLessons.length;
+  const firstLesson = flatLessons[0]?.lesson;
+  const examDrawCount =
+    course.exam?.drawCount && course.exam.drawCount < course.exam.questions.length
+      ? course.exam.drawCount
+      : course.exam?.questions.length;
 
   return (
     <>
@@ -107,9 +125,7 @@ export default async function CourseDetailPage({
             <div className="wh-status-strip mt-8">
               <span>Pathway · {course.level}</span>
               <span>{course.modules.length} modules</span>
-              <span>
-                {course.modules.reduce((s, m) => s + m.lessons.length, 0)} lessons
-              </span>
+              <span>{totalLessons} lessons</span>
             </div>
           </div>
 
@@ -137,6 +153,26 @@ export default async function CourseDetailPage({
                 icon={BookOpen}
               />
             </dl>
+            <div className="mt-6 grid gap-2">
+              {firstLesson ? (
+                <Link
+                  href={`/courses/${course.slug}/${firstLesson.slug}`}
+                  className="inline-flex items-center justify-between gap-3 rounded-sm bg-ink px-4 py-3 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-paper transition-colors hover:bg-sea-deep"
+                >
+                  开始第一课
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              ) : null}
+              {course.exam ? (
+                <Link
+                  href={`/courses/${course.slug}/exam`}
+                  className="inline-flex items-center justify-between gap-3 rounded-sm border border-line bg-paper/70 px-4 py-3 font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink transition-colors hover:bg-paper-soft"
+                >
+                  查看模拟考
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              ) : null}
+            </div>
           </aside>
         </div>
       </Section>
@@ -173,6 +209,77 @@ export default async function CourseDetailPage({
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* ===== 学习路径 ===== */}
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div>
+            <p className="eyebrow">学习路径</p>
+            <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
+              像排一条航线一样，把这门课跑完。
+            </h2>
+            <p className="mt-5 max-w-md text-[0.96rem] leading-[1.85] text-ink-soft">
+              先按模块顺序完成课时，再用小测校准理解；有期末模拟考的课程，最后进考场模式做一次闭环。
+            </p>
+            <dl className="mt-7 grid gap-3 font-mono text-[0.78rem] sm:grid-cols-3 lg:grid-cols-1">
+              <PathMeta icon={Map} label="阶段" value={course.level} />
+              <PathMeta icon={BookOpen} label="课时" value={`${totalLessons} 课时`} />
+              <PathMeta
+                icon={ListChecks}
+                label="评估"
+                value={course.exam ? `抽 ${examDrawCount} 题` : "线下完成"}
+              />
+            </dl>
+          </div>
+
+          <div className="grid gap-px bg-line/70 md:grid-cols-2">
+            {course.modules.map((module) => {
+              const first = module.lessons[0];
+              return (
+                <article key={module.slug} className="bg-paper p-6 md:p-7">
+                  <div className="flex items-baseline justify-between gap-4 font-mono text-[0.7rem] tracking-[0.14em] text-sea-deep">
+                    <span>模块 {String(module.index).padStart(2, "0")}</span>
+                    <span className="text-mist">{module.lessons.length} lessons</span>
+                  </div>
+                  <h3 className="display mt-3 text-xl text-ink">{module.title}</h3>
+                  <p className="mt-3 text-[0.9rem] leading-[1.75] text-ink-soft">
+                    {module.summary}
+                  </p>
+                  {first ? (
+                    <Link
+                      href={`/courses/${course.slug}/${first.slug}`}
+                      className="mt-5 inline-flex items-center gap-2 text-[0.82rem] text-sea-deep transition-colors hover:text-ink"
+                    >
+                      从 {first.index} 开始
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                  ) : null}
+                </article>
+              );
+            })}
+            {course.exam ? (
+              <Link
+                href={`/courses/${course.slug}/exam`}
+                className="group flex flex-col justify-between bg-ink p-6 text-paper transition-colors hover:bg-sea-deep md:p-7"
+              >
+                <div>
+                  <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sun-soft">
+                    Final check
+                  </p>
+                  <h3 className="display mt-3 text-xl">期末模拟考</h3>
+                  <p className="mt-3 text-[0.88rem] leading-[1.75] text-paper-soft">
+                    {course.exam.durationMinutes} 分钟 · 通过线 {course.exam.passMark}% · 抽题后一次交卷。
+                  </p>
+                </div>
+                <span className="mt-6 inline-flex items-center gap-2 text-[0.82rem] text-sun-soft">
+                  进入考场
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            ) : null}
           </div>
         </div>
       </Section>
@@ -467,6 +574,26 @@ function Meta({
         {label}
       </dt>
       <dd className="mt-2 text-[0.96rem] text-ink">{value}</dd>
+    </div>
+  );
+}
+
+function PathMeta({
+  label,
+  value,
+  icon: Icon,
+}: {
+  label: string;
+  value: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div className="rounded-sm border border-line/70 bg-paper/70 p-4">
+      <dt className="flex items-center gap-2 text-[0.68rem] uppercase tracking-[0.14em] text-mist">
+        <Icon className="h-3.5 w-3.5" />
+        {label}
+      </dt>
+      <dd className="mt-2 text-[0.94rem] text-ink">{value}</dd>
     </div>
   );
 }
