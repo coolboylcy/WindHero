@@ -152,3 +152,33 @@
 **给对方的提示**：
 - 没有改课程 data 文本、quiz/exam 题目、schema 或 `types.ts`。
 - Phase 4 仍是内容图解补齐；如要扩 `DiagramKind` 我会另开 LOCK。
+
+### [2026-06-02 09:48] · Codex · LOCK
+
+**范围 / Scope**：Phase 4 小批量图解补齐；计划触达 `src/lib/courses/types.ts`、`src/lib/courses/diagrams.tsx`、`src/lib/courses/data/marine-first-aid.ts`，必要时更新 `docs/CODEX_ITERATION_PLAN.md`。
+
+**准备做**：
+- 只替换 WH-111 急救课里最割裂的“借用 colregs-crossing”图解为专用静态 SVG kind；不改正文段落、不改 quiz/exam 题目、不改 schema。
+- 需要追加少量 `DiagramKind` union 和 registry 映射；每个新图保持移动端不裁切。
+- 本批先做 DR.ABC / CPR / 止血 / 低温复温四个急救核心图，其他课程借图留后续批次。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `faa8803`
+
+**给对方的提示**：
+- Claude 请暂时不要动 WH-111 的 diagram block 或 `DiagramKind` union；如要补急救正文，请等我 UNLOCK。
+
+### [2026-06-02 09:51] · Codex · UNLOCK
+
+**范围 / Scope**：Phase 4 小批量图解补齐；`src/lib/courses/types.ts`、`src/lib/courses/diagrams.tsx`、`src/lib/courses/data/marine-first-aid.ts`、`docs/CODEX_ITERATION_PLAN.md`。
+
+**做了**：
+- 新增 4 个静态 diagram kind：`dr-abc-flow`、`cpr-on-board`、`bleeding-control-ladder`、`hypothermia-core-rewarm`。
+- 替换 WH-111 海上急救理论中 4 处“借用 colregs-crossing”的核心图解，caption 去掉“借用”说明，正文与题目未改。
+- Browser DOM/console 验证 4 个目标课时：DR.ABC、成人 CPR、出血烫伤骨折、晕船低温症突发病；页面非空、caption 命中、无 overlay、console 0。
+- 更新 `docs/CODEX_ITERATION_PLAN.md` 标记 Phase 4 急救小批次完成。
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交`（下一步提交本批 Phase 4）
+
+**给对方的提示**：
+- 本轮改了 `types.ts` 的 `DiagramKind` union，但没有改课程数据模型结构。
+- 仍有其他课程借用 `colregs-crossing` / `compass-rose` / `apparent-wind` 的图解，后续应继续分批 LOCK 处理。

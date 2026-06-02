@@ -940,6 +940,176 @@ function VhfCallFormat({ className }: DiagramProps) {
   );
 }
 
+function DrAbcFlow({ className }: DiagramProps) {
+  const steps = [
+    ["D", "Danger", "先稳现场"],
+    ["R", "Response", "AVPU 反应"],
+    ["A", "Airway", "开放气道"],
+    ["B", "Breathing", "10 秒判断"],
+    ["C", "Circulation", "立即 CPR"],
+  ];
+  return (
+    <svg viewBox="0 0 560 270" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={36} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        DR.ABC 60 秒初级评估
+      </text>
+      {steps.map((step, i) => {
+        const x = 34 + i * 106;
+        return (
+          <g key={step[0]}>
+            <rect x={x} y={80} width={82} height={94} rx="2" className={i === 0 ? "fill-coral/10 stroke-coral" : "fill-paper stroke-line"} />
+            <text x={x + 41} y={112} textAnchor="middle" className={i === 0 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="22">
+              {step[0]}
+            </text>
+            <text x={x + 41} y={137} textAnchor="middle" className="fill-ink" fontSize="11">
+              {step[1]}
+            </text>
+            <text x={x + 41} y={158} textAnchor="middle" className="fill-mist" fontSize="9">
+              {step[2]}
+            </text>
+            {i < steps.length - 1 ? (
+              <>
+                <path d={`M${x + 86} 127 H${x + 102}`} className="stroke-sea-deep" />
+                <polygon points={`${x + 103},127 ${x + 96},123 ${x + 96},131`} className="fill-sea-deep stroke-sea-deep" />
+              </>
+            ) : null}
+          </g>
+        );
+      })}
+      <path d="M70 202 H490" className="stroke-line" strokeDasharray="3 5" />
+      <text x={280} y={224} textAnchor="middle" className="fill-mist" fontSize="10">
+        任一步不通过，就停在该节点处理，不跳到下一步。
+      </text>
+    </svg>
+  );
+}
+
+function CprOnBoard({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 560 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={36} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        颠簸船上 CPR 姿态
+      </text>
+      <rect x={86} y={78} width={388} height={152} rx="3" className="fill-paper-soft stroke-line" />
+      <path d="M92 230 C160 250 400 250 468 230" className="stroke-sea-deep/60" />
+      <text x={280} y={252} textAnchor="middle" className="fill-mist" fontSize="10">
+        最低、最稳的位置：驾驶舱地板或主舱地板
+      </text>
+      <g>
+        <ellipse cx={278} cy={150} rx={78} ry={18} className="fill-paper stroke-ink" />
+        <circle cx={190} cy={150} r={15} className="fill-paper stroke-ink" />
+        <line x1={236} y1={150} x2={324} y2={150} className="stroke-ink" strokeWidth={2} />
+        <text x={280} y={192} textAnchor="middle" className="fill-mist" fontSize="9">
+          患者平躺，硬平面承托
+        </text>
+      </g>
+      <g className="stroke-coral fill-coral">
+        <circle cx={282} cy={95} r={11} />
+        <path d="M282 106 V132" />
+        <path d="M262 126 L282 132 L302 126" />
+        <path d="M258 162 C270 144 292 144 306 162" />
+        <path d="M238 176 C260 166 300 166 324 176" />
+      </g>
+      <path d="M282 112 V144" className="stroke-coral" strokeWidth={3} />
+      <polygon points="282,150 274,136 290,136" className="fill-coral stroke-coral" />
+      <text x={406} y={116} className="fill-coral font-mono" fontSize="10">
+        肘锁直
+      </text>
+      <path d="M366 120 H332" className="stroke-coral" />
+      <text x={98} y={104} className="fill-sea-deep font-mono" fontSize="10">
+        船头转入风浪
+      </text>
+    </svg>
+  );
+}
+
+function BleedingControlLadder({ className }: DiagramProps) {
+  const steps = [
+    ["01", "直接压迫", "第一选择"],
+    ["02", "抬高肢体", "配合压迫"],
+    ["03", "加压敷料", "持续控制"],
+    ["04", "止血带", "最后手段"],
+  ];
+  return (
+    <svg viewBox="0 0 560 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={36} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        出血处置阶梯
+      </text>
+      {steps.map((step, i) => {
+        const x = 64 + i * 118;
+        const h = 54 + i * 18;
+        const y = 196 - h;
+        return (
+          <g key={step[0]}>
+            <rect x={x} y={y} width={92} height={h} rx="2" className={i === 3 ? "fill-coral/10 stroke-coral" : "fill-paper stroke-line"} />
+            <text x={x + 14} y={y + 24} className={i === 3 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="10">
+              {step[0]}
+            </text>
+            <text x={x + 46} y={y + h - 28} textAnchor="middle" className="fill-ink" fontSize="12">
+              {step[1]}
+            </text>
+            <text x={x + 46} y={y + h - 10} textAnchor="middle" className="fill-mist" fontSize="9">
+              {step[2]}
+            </text>
+          </g>
+        );
+      })}
+      <path d="M72 218 H492" className="stroke-line" />
+      <text x={280} y={246} textAnchor="middle" className="fill-mist" fontSize="10">
+        能用低风险方法解决，就不要升级到高风险方法。
+      </text>
+    </svg>
+  );
+}
+
+function HypothermiaCoreRewarm({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 560 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={36} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        低温症复温：核心优先
+      </text>
+      <g transform="translate(280 150)">
+        <circle cx={0} cy={-62} r={22} className="fill-paper stroke-ink" />
+        <path d="M0 -40 V54" className="stroke-ink" strokeWidth={2} />
+        <path d="M-66 -14 H66" className="stroke-ink" />
+        <path d="M0 54 L-44 104" className="stroke-ink" />
+        <path d="M0 54 L44 104" className="stroke-ink" />
+        {[
+          [0, -36, "颈部"],
+          [-38, -10, "腋下"],
+          [38, -10, "腋下"],
+          [-20, 50, "腹股沟"],
+          [20, 50, "腹股沟"],
+        ].map(([x, y, label]) => (
+          <g key={`${x}-${y}`}>
+            <circle cx={Number(x)} cy={Number(y)} r={10} className="fill-sun-soft stroke-sun-deep" />
+            <text x={Number(x)} y={Number(y) + 24} textAnchor="middle" className="fill-sun-deep" fontSize="8">
+              {label}
+            </text>
+          </g>
+        ))}
+      </g>
+      <g className="stroke-coral fill-coral">
+        <path d="M86 88 L156 158" />
+        <path d="M156 88 L86 158" />
+      </g>
+      <text x={121} y={181} textAnchor="middle" className="fill-coral" fontSize="10">
+        不先热四肢
+      </text>
+      <g className="stroke-coral fill-coral">
+        <path d="M404 88 L474 158" />
+        <path d="M474 88 L404 158" />
+      </g>
+      <text x={439} y={181} textAnchor="middle" className="fill-coral" fontSize="10">
+        避免 after-drop
+      </text>
+      <text x={280} y={274} textAnchor="middle" className="fill-mist" fontSize="10">
+        温敷核心区，干衣保温，温和复温，持续监测意识与呼吸。
+      </text>
+    </svg>
+  );
+}
+
 /* —— 入口 —— */
 
 const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
@@ -969,6 +1139,10 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "dsc-distress-timeline": DscDistressTimeline,
   "mayday-message-structure": MaydayMessageStructure,
   "vhf-call-format": VhfCallFormat,
+  "dr-abc-flow": DrAbcFlow,
+  "cpr-on-board": CprOnBoard,
+  "bleeding-control-ladder": BleedingControlLadder,
+  "hypothermia-core-rewarm": HypothermiaCoreRewarm,
 };
 
 /** 这些 kind 是交互式的——使用更宽容器、紧凑内边距，让滑块与 SVG 能并排展示。 */
