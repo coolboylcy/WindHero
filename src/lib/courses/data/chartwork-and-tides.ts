@@ -769,13 +769,8 @@ export const chartworkAndTides: Course = {
             },
             {
               type: "diagram",
-              kind: "apparent-wind",
-              caption: "图 2.2 · 借「真风+船速→视风」的合成三角形示意 CTS 的向量加法逻辑：把「真风」换成「潮流」、把「船速向量」换到 T 点出发——几何完全同构。真实 CTS 三角形要在海图上手画",
-            },
-            {
-              type: "diagram",
               kind: "cts-plotter",
-              caption: "图 2.2b · 交互式 CTS 向量三角形：拖动潮流方向/流速、船速、目标方位线——实时看 CTS、SMG、ETA 如何变化",
+              caption: "图 2.2 · 交互式 CTS 向量三角形：拖动潮流方向/流速、船速、目标方位线——实时看 CTS、SMG、ETA 如何变化",
             },
             {
               type: "callout",
@@ -1732,13 +1727,8 @@ export const chartworkAndTides: Course = {
             },
             {
               type: "diagram",
-              kind: "apparent-wind",
-              caption: "图 4.2 · 借向量合成三角形示意「船速 + 潮流 = 真实位移」每小时的叠加；多小时 EP 是把这种三角形一段段串成 Z 字形，要在海图上手画",
-            },
-            {
-              type: "diagram",
               kind: "cts-plotter",
-              caption: "图 4.2b · 同一个 CTS plotter 也用来理解潮流向量——把潮流当主导力调到 2–3 节、船速调到 5–6 节，看 SMG 如何被推快/拖慢",
+              caption: "图 4.2 · 同一个 CTS plotter 也用来理解潮流向量——把潮流当主导力调到 2–3 节、船速调到 5–6 节，看 SMG 如何被推快/拖慢",
             },
             {
               type: "callout",

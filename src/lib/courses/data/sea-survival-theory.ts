@@ -183,8 +183,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
-              caption: "图 1.1 · 救生衣穿戴检查示意（借用人-船相对位置图）：领口托在锁骨上方、crotch strap 扣紧、tether 扣在中线 jackline 上",
+              kind: "lifejacket-fit-check",
+              caption: "图 1.1 · 救生衣穿戴检查示意：领口托在锁骨上方、crotch strap 扣紧、tether 扣在中线 jackline 上",
             },
             {
               type: "quote",
@@ -369,8 +369,8 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
-              caption: "图 1.2 · 发射策略示意（借用相对距离图）：远距离（>3 海里）救援船一侧用降落伞 + 烟雾，近距离改用手持指示精确位置",
+              kind: "flare-signal-range",
+              caption: "图 1.2 · 发射策略示意：远距离（>3 海里）用降落伞吸引注意，近距离改用烟雾/手持精确指示位置",
             },
             {
               type: "heading",
@@ -606,7 +606,7 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "liferaft-anatomy",
               caption: "图 2.1 · 救生筏与船的相对位置示意：HRU 装在支架与船之间、painter line 通向船的下风一侧",
             },
             {
@@ -771,7 +771,7 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "liferaft-first-actions",
               caption: "图 2.2 · 入筏后 6 件事的顺序与空间布置（示意流程图）：cut painter → sea anchor → 伤员 → 清点 → 篷顶 → 信号",
             },
             {
@@ -1016,7 +1016,7 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "help-huddle-posture",
               caption: "图 3.1 · HELP 姿势（单人）与 Huddle 姿势（多人）的水中相对位置示意：高失温部位（胸、腋、腹股沟）被压紧或被互相覆盖",
             },
             {
@@ -1257,7 +1257,7 @@ export const seaSurvivalTheory: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "sea-survival-abc",
               caption: "图 3.2 · ABC 优先级与处置决策树",
             },
             {

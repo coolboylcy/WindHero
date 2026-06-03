@@ -480,7 +480,7 @@ export const radarAndElectronics: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "radar-rml-plot",
               caption: "图 2.1 · 相对运动模式下的雷达 plotting：对方多次扫描位置连成一线，该线指向自船则碰撞风险高",
             },
             {
@@ -1094,8 +1094,8 @@ export const radarAndElectronics: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
-              caption: "图 3.2 · 借用避碰示意图比喻 AIS 与雷达的互补关系（示意）：AIS 给你身份和远距离感知，雷达给你近距离物理回波——两个数据源在不同区段彼此补盲",
+              kind: "ais-radar-overlap",
+              caption: "图 3.2 · AIS 与雷达的互补关系：AIS 给你身份和远距离感知，雷达给你近距离物理回波——两个数据源在不同区段彼此补盲",
             },
             {
               type: "definition",

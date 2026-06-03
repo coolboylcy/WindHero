@@ -874,9 +874,9 @@ export const lightsShapesSounds: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "sound-signal-negotiation",
               caption:
-                "图 3.1 · 窄水道超越协商示意（借用动力船相遇插画表达「两船协调」）：— · — · 请求右舷超越 → 前船同意（— · — ·）或拒绝（5 短）",
+                "图 3.1 · 窄水道超越协商示意：— · — · 请求右舷超越 → 前船同意（— · — ·）或拒绝（5 短）",
             },
             {
               type: "paragraph",

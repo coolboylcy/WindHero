@@ -1110,6 +1110,546 @@ function HypothermiaCoreRewarm({ className }: DiagramProps) {
   );
 }
 
+function DieselFourStroke({ className }: DiagramProps) {
+  const frames = [
+    ["进气", "阀开", "活塞下行", "空气进入"],
+    ["压缩", "阀关", "活塞上行", "温度升高"],
+    ["做功", "喷油", "活塞下行", "唯一输出"],
+    ["排气", "排阀开", "活塞上行", "废气排出"],
+  ];
+  return (
+    <svg viewBox="0 0 620 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        四冲程柴油机循环
+      </text>
+      {frames.map((frame, i) => {
+        const x = 46 + i * 142;
+        const pistonY = i % 2 === 0 ? 154 : 104;
+        const hot = i === 2;
+        return (
+          <g key={frame[0]}>
+            <rect x={x} y={70} width={108} height={142} rx="2" className="fill-paper stroke-line" />
+            <rect x={x + 34} y={90} width={40} height={84} className="fill-paper-soft stroke-ink" />
+            <rect x={x + 39} y={pistonY} width={30} height={18} className={hot ? "fill-coral/20 stroke-coral" : "fill-paper stroke-ink"} />
+            <line x1={x + 54} y1={pistonY + 18} x2={x + 54} y2={194} className="stroke-ink" />
+            <circle cx={x + 54} cy={194} r={10} className="stroke-mist" />
+            <line x1={x + 42} y1={84} x2={x + 48} y2={96} className={i === 0 ? "stroke-sea-deep" : "stroke-mist"} strokeWidth={i === 0 ? 2 : 1.2} />
+            <line x1={x + 66} y1={84} x2={x + 60} y2={96} className={i === 3 ? "stroke-coral" : "stroke-mist"} strokeWidth={i === 3 ? 2 : 1.2} />
+            {i === 2 ? (
+              <g className="stroke-coral fill-coral">
+                <path d={`M${x + 54} 82 V104`} />
+                <polygon points={`${x + 54},108 ${x + 48},96 ${x + 60},96`} />
+              </g>
+            ) : null}
+            <text x={x + 54} y={232} textAnchor="middle" className="fill-ink" fontSize="12">
+              {frame[0]}
+            </text>
+            <text x={x + 54} y={250} textAnchor="middle" className="fill-mist" fontSize="9">
+              {frame[1]} · {frame[2]}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function DieselFaultTree({ className }: DiagramProps) {
+  const nodes = [
+    [310, 58, "启动失败", "先听起动机"],
+    [128, 138, "燃料", "油位 / Racor / 进气"],
+    [268, 138, "空气", "滤芯 / 进气 / 排气"],
+    [408, 138, "电气", "电瓶 / 起动机"],
+    [310, 222, "压缩与时机", "喷油 / 气阀 / 内部机械"],
+  ] as const;
+  return (
+    <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={30} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        柴油机故障排查顺序
+      </text>
+      <path d="M280 72 L160 116" className="stroke-line" />
+      <path d="M304 84 L276 112" className="stroke-line" />
+      <path d="M336 84 L400 112" className="stroke-line" />
+      <path d="M310 162 V196" className="stroke-line" />
+      {nodes.map(([x, y, title, sub], i) => (
+        <g key={title}>
+          <rect x={x - 68} y={y - 28} width={136} height={56} rx="2" className={i === 0 ? "fill-coral/10 stroke-coral" : "fill-paper stroke-line"} />
+          <text x={x} y={y - 4} textAnchor="middle" className={i === 0 ? "fill-coral" : "fill-ink"} fontSize="12">
+            {title}
+          </text>
+          <text x={x} y={y + 15} textAnchor="middle" className="fill-mist" fontSize="9">
+            {sub}
+          </text>
+        </g>
+      ))}
+      <text x={310} y={278} textAnchor="middle" className="fill-mist" fontSize="10">
+        先查概率最高、可在海上处理的项目；再进入内部机械判断。
+      </text>
+    </svg>
+  );
+}
+
+function FuelBleedPath({ className }: DiagramProps) {
+  const items = [
+    ["油箱", "低压源"],
+    ["主滤★", "放水/换芯"],
+    ["输油泵", "手摇泵"],
+    ["细滤★", "排气螺丝"],
+    ["喷油泵★", "高压前"],
+    ["喷油嘴", "雾化"],
+  ];
+  return (
+    <svg viewBox="0 0 680 260" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={340} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        燃料系统与 bleed 路径
+      </text>
+      {items.map((it, i) => {
+        const x = 42 + i * 106;
+        const bleed = it[0].includes("★");
+        return (
+          <g key={it[0]}>
+            <rect x={x} y={92} width={82} height={72} rx="2" className={bleed ? "fill-sun-soft/50 stroke-sun-deep" : "fill-paper stroke-line"} />
+            <text x={x + 41} y={122} textAnchor="middle" className={bleed ? "fill-sun-deep" : "fill-ink"} fontSize="12">
+              {it[0]}
+            </text>
+            <text x={x + 41} y={144} textAnchor="middle" className="fill-mist" fontSize="9">
+              {it[1]}
+            </text>
+            {i < items.length - 1 ? (
+              <g className="stroke-sea-deep fill-sea-deep">
+                <path d={`M${x + 86} 128 H${x + 102}`} />
+                <polygon points={`${x + 103},128 ${x + 96},124 ${x + 96},132`} />
+              </g>
+            ) : null}
+          </g>
+        );
+      })}
+      <path d="M76 196 H604" className="stroke-line" strokeDasharray="3 5" />
+      <text x={340} y={222} textAnchor="middle" className="fill-mist" fontSize="10">
+        bleed 时按油流方向逐点排气：低压端先稳定，高压端最后确认。
+      </text>
+    </svg>
+  );
+}
+
+function EngineCoolingLoops({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        间接冷却：海水开环 + 淡水闭环
+      </text>
+      <rect x={242} y={110} width={136} height={74} rx="3" className="fill-paper stroke-ink" />
+      <text x={310} y={142} textAnchor="middle" className="fill-ink" fontSize="13">热交换器</text>
+      <text x={310} y={162} textAnchor="middle" className="fill-mist" fontSize="9">两路相遇但不混合</text>
+      <path d="M54 184 C126 226 210 210 242 166" className="stroke-sea-deep" strokeWidth={1.8} />
+      <path d="M378 166 C438 210 514 226 570 184" className="stroke-sea-deep" strokeWidth={1.8} />
+      <polygon points="242,166 230,167 235,178" className="fill-sea-deep stroke-sea-deep" />
+      <text x={84} y={214} className="fill-sea-deep font-mono" fontSize="10">海水进水口</text>
+      <text x={482} y={214} className="fill-sea-deep font-mono" fontSize="10">随排气排出</text>
+      <path d="M310 110 C226 54 126 76 126 142 C126 226 236 238 310 184" className="stroke-coral" strokeWidth={1.8} />
+      <path d="M310 184 C388 238 498 226 498 142 C498 76 394 54 310 110" className="stroke-coral" strokeWidth={1.8} />
+      <polygon points="310,110 298,105 300,118" className="fill-coral stroke-coral" />
+      <rect x={102} y={122} width={74} height={40} rx="2" className="fill-paper stroke-line" />
+      <text x={139} y={146} textAnchor="middle" className="fill-coral" fontSize="10">发动机水套</text>
+      <rect x={448} y={122} width={88} height={40} rx="2" className="fill-paper stroke-line" />
+      <text x={492} y={146} textAnchor="middle" className="fill-coral" fontSize="10">节温器</text>
+      <text x={310} y={266} textAnchor="middle" className="fill-mist" fontSize="10">
+        海水带走热量；淡水带走发动机本体热量，循环使用。
+      </text>
+    </svg>
+  );
+}
+
+function LifejacketFitCheck({ className }: DiagramProps) {
+  const checks = [
+    ["领口", "托住锁骨"],
+    ["裆带", "必须扣紧"],
+    ["挂点", "中线 tether"],
+  ];
+  return (
+    <svg viewBox="0 0 560 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        救生衣穿戴三点检查
+      </text>
+      <g transform="translate(280 152)">
+        <circle cx={0} cy={-74} r={22} className="fill-paper stroke-ink" />
+        <path d="M-44 -48 C-66 -10 -56 56 -26 98" className="fill-sun-soft/50 stroke-sun-deep" />
+        <path d="M44 -48 C66 -10 56 56 26 98" className="fill-sun-soft/50 stroke-sun-deep" />
+        <path d="M-26 -52 C-14 -34 14 -34 26 -52" className="stroke-coral" strokeWidth={2} />
+        <path d="M0 -28 V82" className="stroke-ink" />
+        <path d="M-24 68 L0 92 L24 68" className="stroke-coral" strokeWidth={2} />
+        <path d="M-68 4 H68" className="stroke-ink" />
+        <circle cx={0} cy={4} r={6} className="fill-sea-deep stroke-sea-deep" />
+      </g>
+      {checks.map((c, i) => {
+        const x = 82 + i * 198;
+        return (
+          <g key={c[0]}>
+            <rect x={x - 56} y={228} width={112} height={44} rx="2" className="fill-paper stroke-line" />
+            <text x={x} y={246} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">{c[0]}</text>
+            <text x={x} y={264} textAnchor="middle" className="fill-ink" fontSize="10">{c[1]}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function FlareSignalRange({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 620 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        信号弹按距离分层使用
+      </text>
+      <circle cx={150} cy={170} r={40} className="stroke-sea-deep fill-sea-soft/30" />
+      <circle cx={150} cy={170} r={92} className="stroke-mist" strokeDasharray="4 5" />
+      <circle cx={150} cy={170} r={132} className="stroke-mist/60" strokeDasharray="4 5" />
+      <path d="M150 170 L260 86" className="stroke-coral" strokeWidth={1.8} />
+      <polygon points="260,86 248,89 255,98" className="fill-coral stroke-coral" />
+      <text x={272} y={84} className="fill-coral font-mono" fontSize="10">降落伞火箭</text>
+      <path d="M150 170 L228 170" className="stroke-sun-deep" strokeWidth={1.8} />
+      <polygon points="228,170 216,165 216,175" className="fill-sun-deep stroke-sun-deep" />
+      <text x={238} y={174} className="fill-sun-deep font-mono" fontSize="10">橙烟 / 手持</text>
+      <g transform="translate(430 158)">
+        <path d="M-46 20 H46 L32 36 H-32 Z" className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1="-52" x2={0} y2={20} className="stroke-ink" />
+        <path d="M0 -52 L24 16 L0 8 Z" className="fill-paper stroke-ink" />
+      </g>
+      <text x={310} y={246} textAnchor="middle" className="fill-mist" fontSize="10">
+        远距离先吸引注意；近距离再精确指示位置，避免过早浪费手持信号。
+      </text>
+    </svg>
+  );
+}
+
+function LiferaftAnatomy({ className }: DiagramProps) {
+  const labels = [
+    [154, 84, "篷顶"],
+    [250, 120, "浮力管"],
+    [388, 118, "登筏坡道"],
+    [186, 194, "绝热底板"],
+    [414, 206, "海锚"],
+    [92, 210, "painter / HRU"],
+  ] as const;
+  return (
+    <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        救生筏关键部件
+      </text>
+      <ellipse cx={310} cy={176} rx={168} ry={54} className="fill-sea-soft/30 stroke-sea-deep" />
+      <ellipse cx={310} cy={176} rx={112} ry={30} className="fill-paper stroke-line" />
+      <path d="M172 170 C218 82 404 82 448 170" className="fill-paper-soft/70 stroke-ink" />
+      <path d="M450 184 L518 206 L466 224" className="fill-paper-soft stroke-ink" />
+      <path d="M478 208 C528 206 550 218 570 238" className="stroke-sea-deep" strokeDasharray="4 4" />
+      <path d="M142 186 C94 198 74 216 58 246" className="stroke-coral" />
+      {labels.map(([x, y, label]) => (
+        <g key={label}>
+          <circle cx={x} cy={y} r={3.5} className="fill-coral stroke-coral" />
+          <text x={x + 8} y={y + 4} className="fill-ink" fontSize="10">{label}</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+function LiferaftFirstActions({ className }: DiagramProps) {
+  const steps = ["割 painter", "下海锚", "伤员靠中", "清点人数", "封篷顶", "准备信号"];
+  return (
+    <svg viewBox="0 0 680 260" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={340} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        入筏后 6 件事
+      </text>
+      {steps.map((step, i) => {
+        const x = 46 + i * 104;
+        return (
+          <g key={step}>
+            <circle cx={x + 34} cy={116} r={30} className={i < 2 ? "fill-coral/10 stroke-coral" : "fill-paper stroke-line"} />
+            <text x={x + 34} y={121} textAnchor="middle" className={i < 2 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="11">
+              {String(i + 1).padStart(2, "0")}
+            </text>
+            <text x={x + 34} y={174} textAnchor="middle" className="fill-ink" fontSize="11">{step}</text>
+            {i < steps.length - 1 ? <path d={`M${x + 68} 116 H${x + 94}`} className="stroke-line" /> : null}
+          </g>
+        );
+      })}
+      <text x={340} y={222} textAnchor="middle" className="fill-mist" fontSize="10">
+        先防漂离，再保温、清点、发信号；顺序比速度更重要。
+      </text>
+    </svg>
+  );
+}
+
+function HelpHuddlePosture({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        HELP 与 Huddle 保温姿势
+      </text>
+      <rect x={46} y={72} width={226} height={170} rx="2" className="fill-sea-soft/25 stroke-line" />
+      <text x={159} y={98} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">HELP 单人</text>
+      <circle cx={159} cy={128} r={14} className="fill-paper stroke-ink" />
+      <path d="M159 142 C132 162 132 198 159 214 C186 198 186 162 159 142 Z" className="fill-sun-soft/60 stroke-sun-deep" />
+      <path d="M132 170 L159 188 L186 170" className="stroke-ink" />
+      <path d="M142 214 L159 188 L176 214" className="stroke-ink" />
+      <rect x={348} y={72} width={226} height={170} rx="2" className="fill-sea-soft/25 stroke-line" />
+      <text x={461} y={98} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">Huddle 多人</text>
+      {[0, 72, 144, 216].map((deg, i) => {
+        const a = (deg * Math.PI) / 180;
+        const x = 461 + Math.cos(a) * 38;
+        const y = 168 + Math.sin(a) * 28;
+        return (
+          <g key={i}>
+            <circle cx={x} cy={y - 20} r={10} className="fill-paper stroke-ink" />
+            <path d={`M${x - 16} ${y - 8} C${x - 22} ${y + 18} ${x + 22} ${y + 18} ${x + 16} ${y - 8}`} className="fill-sun-soft/60 stroke-sun-deep" />
+          </g>
+        );
+      })}
+      <text x={310} y={270} textAnchor="middle" className="fill-mist" fontSize="10">
+        抱紧胸、腋、腹股沟这些高散热区，减少水流带走核心热量。
+      </text>
+    </svg>
+  );
+}
+
+function SeaSurvivalAbc({ className }: DiagramProps) {
+  const branches = [
+    ["A", "Airway", "气道不通先开放"],
+    ["B", "Breathing", "无呼吸立即通报"],
+    ["C", "Circulation", "出血 / CPR / 保温"],
+  ];
+  return (
+    <svg viewBox="0 0 620 260" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        生存场景 ABC 优先级
+      </text>
+      {branches.map((b, i) => {
+        const x = 86 + i * 180;
+        return (
+          <g key={b[0]}>
+            <rect x={x} y={82} width={128} height={92} rx="2" className={i === 0 ? "fill-coral/10 stroke-coral" : "fill-paper stroke-line"} />
+            <text x={x + 64} y={112} textAnchor="middle" className={i === 0 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="22">{b[0]}</text>
+            <text x={x + 64} y={136} textAnchor="middle" className="fill-ink" fontSize="12">{b[1]}</text>
+            <text x={x + 64} y={156} textAnchor="middle" className="fill-mist" fontSize="9">{b[2]}</text>
+            {i < branches.length - 1 ? <path d={`M${x + 132} 128 H${x + 172}`} className="stroke-line" /> : null}
+          </g>
+        );
+      })}
+      <text x={310} y={218} textAnchor="middle" className="fill-mist" fontSize="10">
+        任何环境下都先保气道与呼吸，再处理循环、低温和撤离。
+      </text>
+    </svg>
+  );
+}
+
+function PatientAssessmentStation({ className }: DiagramProps) {
+  const checks = ["气道", "呼吸", "脉搏", "出血", "体温"];
+  return (
+    <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        船上患者评估站位
+      </text>
+      <rect x={126} y={86} width={368} height={126} rx="3" className="fill-paper-soft stroke-line" />
+      <text x={310} y={232} textAnchor="middle" className="fill-mist" fontSize="10">驾驶舱地板或主舱地板，低、平、硬、可固定</text>
+      <ellipse cx={310} cy={150} rx={86} ry={18} className="fill-paper stroke-ink" />
+      <circle cx={212} cy={150} r={16} className="fill-paper stroke-ink" />
+      <g className="stroke-coral fill-coral">
+        <circle cx={190} cy={106} r={10} />
+        <path d="M190 116 V146" />
+        <path d="M170 140 L190 148 L210 140" />
+      </g>
+      <text x={120} y={112} className="fill-coral font-mono" fontSize="10">救援者：开放气道</text>
+      <g className="stroke-sea-deep fill-sea-deep">
+        <circle cx={430} cy={106} r={10} />
+        <path d="M430 116 V148" />
+        <path d="M410 142 L430 148 L450 142" />
+      </g>
+      <text x={446} y={112} className="fill-sea-deep font-mono" fontSize="10">同伴：记录生命体征</text>
+      {checks.map((c, i) => (
+        <text key={c} x={206 + i * 52} y={270} textAnchor="middle" className="fill-ink" fontSize="10">{c}</text>
+      ))}
+    </svg>
+  );
+}
+
+function ChokingActionMap({ className }: DiagramProps) {
+  const cases = [
+    ["成人", "腹冲"],
+    ["婴儿", "背拍 + 胸冲"],
+    ["孕妇", "胸冲"],
+  ];
+  return (
+    <svg viewBox="0 0 620 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        气道阻塞按对象选手法
+      </text>
+      {cases.map((c, i) => {
+        const x = 96 + i * 176;
+        return (
+          <g key={c[0]}>
+            <rect x={x} y={78} width={132} height={128} rx="2" className="fill-paper stroke-line" />
+            <circle cx={x + 66} cy={108} r={14} className="fill-paper stroke-ink" />
+            <path d="M66 122 V176" transform={`translate(${x} 0)`} className="stroke-ink" />
+            <path d="M44 144 H88" transform={`translate(${x} 0)`} className="stroke-ink" />
+            <circle cx={x + 66} cy={150} r={i === 1 ? 7 : 10} className={i === 0 ? "fill-coral/20 stroke-coral" : "fill-sun-soft stroke-sun-deep"} />
+            <text x={x + 66} y={224} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">{c[0]}</text>
+            <text x={x + 66} y={244} textAnchor="middle" className="fill-ink" fontSize="11">{c[1]}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function MobDistanceTimeline({ className }: DiagramProps) {
+  const marks = [
+    ["0s", 0, "落水"],
+    ["10s", 36, "36m"],
+    ["30s", 108, "108m"],
+    ["90s", 320, "320m+"],
+  ];
+  return (
+    <svg viewBox="0 0 680 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={340} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        MOB 黄金 90 秒距离拉开
+      </text>
+      <path d="M70 178 H610" className="stroke-line" />
+      {marks.map((m, i) => {
+        const x = 80 + (Number(m[1]) / 320) * 520;
+        return (
+          <g key={m[0]}>
+            <line x1={x} y1={86} x2={x} y2={208} className={i === 0 ? "stroke-coral" : "stroke-mist"} strokeDasharray="3 4" />
+            <circle cx={x} cy={178} r={i === 0 ? 7 : 4} className={i === 0 ? "fill-coral stroke-coral" : "fill-sea-deep stroke-sea-deep"} />
+            <text x={x} y={72} textAnchor="middle" className="fill-ink font-mono" fontSize="10">{m[0]}</text>
+            <text x={x} y={230} textAnchor="middle" className="fill-mist" fontSize="10">{m[2]}</text>
+          </g>
+        );
+      })}
+      <g transform="translate(80 178) rotate(90)">
+        <ellipse cx={0} cy={6} rx={18} ry={5} className="fill-paper stroke-ink" />
+        <line x1={0} y1="-28" x2={0} y2={2} className="stroke-ink" />
+        <path d="M0 -28 L16 2 L0 -2 Z" className="fill-paper stroke-ink" />
+      </g>
+      <text x={340} y={258} textAnchor="middle" className="fill-mist" fontSize="10">
+        7 节船速下，90 秒已经超过多数人的稳定目视范围。
+      </text>
+    </svg>
+  );
+}
+
+function MobRecoveryPatterns({ className }: DiagramProps) {
+  const panels = [
+    ["Quick Stop", "小圈停船"],
+    ["Figure-8", "远离后回接"],
+    ["Williamson", "动力船掉头"],
+  ];
+  return (
+    <svg viewBox="0 0 680 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={340} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        MOB 回收路线对比
+      </text>
+      {panels.map((p, i) => {
+        const x = 46 + i * 214;
+        return (
+          <g key={p[0]}>
+            <rect x={x} y={64} width={170} height={174} rx="2" className="fill-paper stroke-line" />
+            <circle cx={x + 86} cy={148} r={7} className="fill-coral stroke-coral" />
+            <text x={x + 86} y={256} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="10">{p[0]}</text>
+            <text x={x + 86} y={272} textAnchor="middle" className="fill-mist" fontSize="9">{p[1]}</text>
+            {i === 0 ? (
+              <path d={`M${x + 72} 198 C${x + 28} 132 ${x + 104} 82 ${x + 122} 142 C${x + 134} 188 ${x + 100} 204 ${x + 86} 148`} className="stroke-sea-deep" strokeWidth={1.8} />
+            ) : i === 1 ? (
+              <path d={`M${x + 36} 204 C${x + 150} 214 ${x + 152} 78 ${x + 58} 102 C${x + 20} 114 ${x + 40} 170 ${x + 86} 148`} className="stroke-sea-deep" strokeWidth={1.8} />
+            ) : (
+              <path d={`M${x + 44} 204 C${x + 120} 160 ${x + 136} 118 ${x + 94} 82 C${x + 166} 132 ${x + 150} 190 ${x + 86} 148`} className="stroke-sea-deep" strokeWidth={1.8} />
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function SoundSignalNegotiation({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 620 260" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        窄水道超越声号协商
+      </text>
+      <path d="M60 128 C190 86 430 86 560 128" className="stroke-sea-deep/70" />
+      <path d="M60 170 C190 212 430 212 560 170" className="stroke-sea-deep/70" />
+      <g transform="translate(210 158) rotate(82)">
+        <ellipse cx={0} cy={6} rx={24} ry={7} className="fill-paper stroke-ink" />
+        <line x1={0} y1="-34" x2={0} y2={2} className="stroke-ink" />
+        <path d="M0 -34 L18 2 L0 -2 Z" className="fill-paper stroke-ink" />
+      </g>
+      <g transform="translate(390 134) rotate(78)">
+        <ellipse cx={0} cy={6} rx={28} ry={8} className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1="-40" x2={0} y2={2} className="stroke-ink" />
+      </g>
+      <path d="M230 130 C270 92 326 84 366 106" className="stroke-coral" strokeWidth={1.8} />
+      <polygon points="366,106 354,105 360,116" className="fill-coral stroke-coral" />
+      <text x={278} y={80} className="fill-coral font-mono" fontSize="10">— · — · 请求右舷超越</text>
+      <text x={310} y={226} textAnchor="middle" className="fill-mist" fontSize="10">
+        前船同意重复同声号；不同意或有疑问，立即 5 短声。
+      </text>
+    </svg>
+  );
+}
+
+function RadarRmlPlot({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 560 320" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={280} y={30} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        雷达相对运动线 RML
+      </text>
+      <circle cx={210} cy={166} r={118} className="fill-paper stroke-line" />
+      <circle cx={210} cy={166} r={72} className="stroke-mist/40" strokeDasharray="3 4" />
+      <circle cx={210} cy={166} r={26} className="stroke-mist/30" strokeDasharray="3 4" />
+      <circle cx={210} cy={166} r={5} className="fill-coral stroke-coral" />
+      <text x={222} y={170} className="fill-coral font-mono" fontSize="9">自船</text>
+      {[
+        [128, 84, "O1"],
+        [154, 112, "O2"],
+        [182, 142, "O3"],
+      ].map(([x, y, label]) => (
+        <g key={label}>
+          <circle cx={Number(x)} cy={Number(y)} r={4} className="fill-sea-deep stroke-sea-deep" />
+          <text x={Number(x) - 18} y={Number(y)} className="fill-sea-deep font-mono" fontSize="9">{label}</text>
+        </g>
+      ))}
+      <path d="M118 74 L222 180" className="stroke-sea-deep" strokeWidth={1.8} />
+      <text x={76} y={222} className="fill-sea-deep font-mono" fontSize="10">RML 指向自船 = CPA 很小</text>
+      <g transform="translate(420 156)">
+        <path d="M-42 58 H42 L30 72 H-30 Z" className="fill-paper-soft stroke-ink" />
+        <line x1={0} y1="-56" x2={0} y2={58} className="stroke-ink" />
+        <path d="M0 -56 L28 50 L0 38 Z" className="fill-paper stroke-ink" />
+      </g>
+      <path d="M368 112 L452 78" className="stroke-coral" strokeWidth={1.5} />
+      <text x={390} y={70} className="fill-coral font-mono" fontSize="10">对方真航向需 vector plot</text>
+    </svg>
+  );
+}
+
+function AisRadarOverlap({ className }: DiagramProps) {
+  return (
+    <svg viewBox="0 0 620 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={310} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        AIS 与雷达互补区域
+      </text>
+      <circle cx={266} cy={146} r={86} className="fill-sea-soft/35 stroke-sea-deep" />
+      <circle cx={354} cy={146} r={86} className="fill-sun-soft/45 stroke-sun-deep" />
+      <text x={232} y={126} textAnchor="middle" className="fill-sea-deep font-mono" fontSize="11">雷达</text>
+      <text x={388} y={126} textAnchor="middle" className="fill-sun-deep font-mono" fontSize="11">AIS</text>
+      <text x={310} y={150} textAnchor="middle" className="fill-ink" fontSize="12">交叉确认</text>
+      <text x={188} y={196} textAnchor="middle" className="fill-mist" fontSize="9">近距离物理回波</text>
+      <text x={432} y={196} textAnchor="middle" className="fill-mist" fontSize="9">身份 / CPA / 远距</text>
+      <text x={310} y={246} textAnchor="middle" className="fill-mist" fontSize="10">
+        玻璃钢小艇、关 AIS 渔船、雨杂波目标都需要多源核对。
+      </text>
+    </svg>
+  );
+}
+
 /* —— 入口 —— */
 
 const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
@@ -1143,6 +1683,23 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "cpr-on-board": CprOnBoard,
   "bleeding-control-ladder": BleedingControlLadder,
   "hypothermia-core-rewarm": HypothermiaCoreRewarm,
+  "diesel-four-stroke": DieselFourStroke,
+  "diesel-fault-tree": DieselFaultTree,
+  "fuel-bleed-path": FuelBleedPath,
+  "engine-cooling-loops": EngineCoolingLoops,
+  "lifejacket-fit-check": LifejacketFitCheck,
+  "flare-signal-range": FlareSignalRange,
+  "liferaft-anatomy": LiferaftAnatomy,
+  "liferaft-first-actions": LiferaftFirstActions,
+  "help-huddle-posture": HelpHuddlePosture,
+  "sea-survival-abc": SeaSurvivalAbc,
+  "patient-assessment-station": PatientAssessmentStation,
+  "choking-action-map": ChokingActionMap,
+  "mob-distance-timeline": MobDistanceTimeline,
+  "mob-recovery-patterns": MobRecoveryPatterns,
+  "sound-signal-negotiation": SoundSignalNegotiation,
+  "radar-rml-plot": RadarRmlPlot,
+  "ais-radar-overlap": AisRadarOverlap,
 };
 
 /** 这些 kind 是交互式的——使用更宽容器、紧凑内边距，让滑块与 SVG 能并排展示。 */
@@ -1167,11 +1724,27 @@ export function CourseDiagram({
 }) {
   const Cmp = registry[kind];
   const interactive = INTERACTIVE_KINDS.has(kind);
+  const title =
+    caption?.split("·").at(1)?.trim().split("：").at(0) ??
+    kind.replaceAll("-", " ");
 
   if (interactive) {
     return (
       <figure className="my-8">
         <div className="wh-instrument-panel rounded-sm p-4 sm:p-5 md:p-6">
+          <div className="mb-4 flex flex-col gap-2 border-b border-line/70 pb-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-sea-deep">
+                Interactive Diagram
+              </p>
+              <p className="mt-1 text-[0.95rem] font-medium text-ink">{title}</p>
+            </div>
+            <div className="wh-status-strip">
+              <span>可拖动参数</span>
+              <span>即时读数</span>
+              <span>训练模式</span>
+            </div>
+          </div>
           <Cmp className="text-ink" />
         </div>
         {caption ? (
@@ -1186,6 +1759,19 @@ export function CourseDiagram({
   return (
     <figure className="my-8">
       <div className="wh-instrument-panel rounded-sm p-4 sm:p-6 md:p-8">
+        <div className="mb-4 flex flex-col gap-2 border-b border-line/70 pb-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-sea-deep">
+              Field Diagram
+            </p>
+            <p className="mt-1 text-[0.95rem] font-medium text-ink">{title}</p>
+          </div>
+          <div className="wh-status-strip">
+            <span>核心结构</span>
+            <span>可打印</span>
+            <span>移动端适配</span>
+          </div>
+        </div>
         <Cmp className="mx-auto block h-auto w-full max-w-2xl max-h-[55vh] text-ink" />
       </div>
       {caption ? (

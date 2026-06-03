@@ -407,9 +407,9 @@ export const seamanshipAndSafety: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "mob-distance-timeline",
               caption:
-                "图 2.1 · 落水后船每 10 秒拉开的距离（示意，借用相对位置图）：90 秒后超过 320 米，能见度急剧下降",
+                "图 2.1 · 落水后船每 10 秒拉开的距离：90 秒后超过 320 米，能见度急剧下降",
             },
             {
               type: "heading",
@@ -565,7 +565,7 @@ export const seamanshipAndSafety: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
+              kind: "mob-recovery-patterns",
               caption:
                 "图 2.2 · Quick Stop（紧凑圈）vs Figure-8（大 8 字）：两种回转路径对比",
             },

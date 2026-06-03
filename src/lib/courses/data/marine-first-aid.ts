@@ -402,8 +402,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
-              caption: "图 1.2 · 借用避碰示意图比喻患者评估流程（示意）：把患者放在驾驶舱地板上，救援者一侧 head-tilt chin-lift、同伴另一侧监测 5 个生命体征",
+              kind: "patient-assessment-station",
+              caption: "图 1.2 · 患者评估站位：把患者放在驾驶舱地板上，救援者一侧 head-tilt chin-lift、同伴另一侧监测 5 个生命体征",
             },
             {
               type: "definition",
@@ -828,8 +828,8 @@ export const marineFirstAid: Course = {
             },
             {
               type: "diagram",
-              kind: "colregs-crossing",
-              caption: "图 2.2 · 借用避碰示意图比喻三种气道阻塞手法（示意）：成人用腹冲、婴儿用胸冲（食指中指）、孕妇用胸冲（CPR 按压点）——按对象选手法",
+              kind: "choking-action-map",
+              caption: "图 2.2 · 三种气道阻塞手法：成人用腹冲、婴儿用背拍 + 胸冲、孕妇用胸冲——按对象选手法",
             },
             {
               type: "definition",

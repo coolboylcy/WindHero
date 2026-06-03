@@ -86,9 +86,9 @@ export const dieselEngine: Course = {
             },
             {
               type: "diagram",
-              kind: "pressure-gradient",
+              kind: "diesel-four-stroke",
               caption:
-                "图 1.1 · 借用气压等势图来比喻四冲程的缸内压力变化：压缩末端最高压、做功冲程压力急剧释放——发动机的工作就是把这条压力曲线反复画出来",
+                "图 1.1 · 四冲程活塞、阀门与喷油时机：压缩末端最高压，做功冲程释放能量",
             },
             {
               type: "heading",
@@ -301,9 +301,9 @@ export const dieselEngine: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
+              kind: "diesel-fault-tree",
               caption:
-                "图 1.2 · 借用罗经盘比喻四要素决策树：每次启动故障，依次按燃料 → 空气 → 压缩 → 点火时机四个「方位」排查——这是排查故障时最重要的「指北针」",
+                "图 1.2 · 四要素故障决策树：每次启动故障，依次按燃料 → 空气 → 压缩 → 点火时机排查",
             },
             {
               type: "callout",
@@ -501,9 +501,9 @@ export const dieselEngine: Course = {
             },
             {
               type: "diagram",
-              kind: "pressure-gradient",
+              kind: "fuel-bleed-path",
               caption:
-                "图 2.1 · 借用气压等势图比喻燃料系统的压力降：油箱低压 → 输油泵 → 主滤 → 细滤 → 喷油泵升压 → 喷油嘴高压雾化。任何一段「压力沟通中断」都会让发动机熄火",
+                "图 2.1 · 燃料系统与 bleed 路径：油箱 → 主滤 → 输油泵 → 细滤 → 喷油泵 → 喷油嘴",
             },
             {
               type: "heading",
@@ -742,9 +742,9 @@ export const dieselEngine: Course = {
             },
             {
               type: "diagram",
-              kind: "pressure-gradient",
+              kind: "engine-cooling-loops",
               caption:
-                "图 2.2 · 借用气压等势图比喻间接冷却的两条回路（示意）：一边是海水（开放、单向、带走热）；一边是淡水（封闭、循环、绕引擎），两条回路在热交换器里相遇但不混合",
+                "图 2.2 · 间接冷却两条回路：海水开放单向带走热，淡水封闭循环绕发动机",
             },
             {
               type: "definition",
@@ -999,7 +999,7 @@ export const dieselEngine: Course = {
             },
             {
               type: "diagram",
-              kind: "compass-rose",
+              kind: "diesel-fault-tree",
               caption:
                 "图 3.1 · 「启动失败」决策树：12 点方向先看燃料（主滤、油位）；3 点方向看空气与冷却；6 点方向看电气（电瓶、起动机）；9 点方向看 timing / 内部机械——按概率从 12 点开始顺时针走",
             },

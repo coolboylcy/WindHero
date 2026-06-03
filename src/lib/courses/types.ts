@@ -60,7 +60,24 @@ export type LessonBlock =
         | "gmdss-alert-loop"
         | "dsc-distress-timeline"
         | "mayday-message-structure"
-        | "vhf-call-format";
+        | "vhf-call-format"
+        | "diesel-four-stroke"
+        | "diesel-fault-tree"
+        | "fuel-bleed-path"
+        | "engine-cooling-loops"
+        | "lifejacket-fit-check"
+        | "flare-signal-range"
+        | "liferaft-anatomy"
+        | "liferaft-first-actions"
+        | "help-huddle-posture"
+        | "sea-survival-abc"
+        | "patient-assessment-station"
+        | "choking-action-map"
+        | "mob-distance-timeline"
+        | "mob-recovery-patterns"
+        | "sound-signal-negotiation"
+        | "radar-rml-plot"
+        | "ais-radar-overlap";
       caption?: string;
     }
   | { type: "quote"; text: string; attribution?: string }
