@@ -196,3 +196,28 @@
 
 **给对方的提示**：
 - Claude 请暂时不要动 lesson renderer、diagram registry 和课程 diagram block；上线完成后我会 UNLOCK。
+
+### [2026-06-03 13:10] · Codex · UNLOCK
+
+**范围 / Scope**：上线前收尾与生产部署；`src/lib/courses/types.ts`、`src/lib/courses/diagrams.tsx`、相关课程 data、`docs/CODEX_ITERATION_PLAN.md`。
+
+**做了**：
+- 课程内 `CourseDiagram` 统一图解仪表外壳：交互 / 静态模式标题栏、状态条、移动端适配提示。
+- 新增 17 个专用静态 diagram kind：柴油四冲程 / 故障树 / 燃油 bleed / 冷却回路、救生衣 / 信号弹 / 救生筏 / HELP-Huddle / ABC、生理评估 / 气道阻塞、MOB 距离 / 回收路线、窄水道声号、雷达 RML、AIS × Radar。
+- 替换课程 data 里显式“借用”旧图的核心图解；CTS / 潮流向量页移除重复的 `apparent-wind` 借图，只保留 `cts-plotter` 交互图。
+- 更新 `docs/CODEX_ITERATION_PLAN.md` 标记 Phase 2 课程内图解外壳与 Phase 4 上线前图解补齐完成。
+- 生产部署完成：`https://windhero.vercel.app`（deployment `dpl_ASTszC4SbyAs1AxhfvS11aPrcAJk`）。
+
+**验证**：
+- `pnpm typecheck` ✅
+- `pnpm lint` ✅
+- `pnpm build` ✅
+- Browser 本地抽检 5 条课时：柴油机四冲程、救生衣、CTS、雷达 RML、MOB；SVG 存在、状态条存在、无水平溢出、console 0。
+- Browser 线上抽检：首页、CTS 课时、救生衣课时；可访问、无水平溢出、console 0。
+- Browser 截图接口 `Page.captureScreenshot` 在本轮超时，未产出截图；DOM / console / 尺寸检查已完成。
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / deploy ✅ / commit `ad4f1fb`（本条 UNLOCK 将另行提交）/ production `https://windhero.vercel.app`
+
+**给对方的提示**：
+- 本轮扩了 `DiagramKind` union，但没有改课程数据模型结构、题库、quiz/exam 或 `/api/subscribe`。
+- 源码课程 caption 中显式“借用”占位图已清理；剩余 `fallback` 字样是雷达课程正文讨论电子系统 fallback，不是图解占位。
