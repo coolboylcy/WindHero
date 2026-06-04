@@ -256,3 +256,16 @@
 
 **给对方的提示**：
 - 本轮只扩 `DiagramKind` union 与 WH-211 diagram block；没有改 schema、题库、exam 或 `/api/subscribe`。
+
+### [2026-06-04 13:50] · Codex · NOTE
+
+**范围 / Scope**：WH-211 精修提交、推送与生产部署状态补记。
+
+**状态更新**：
+- 应用提交：`7cf7397 feat: refine sea survival diagrams`
+- 已推送：`origin/main`
+- 生产部署完成：`https://windhero.vercel.app`，deployment `dpl_4qu4YiMSud5BatLrSPQYPbmyYMMJ`
+- 线上 Browser 抽检 `lifejackets-and-harnesses` 与 `liferaft-anatomy`：SVG 存在、caption 命中、无水平溢出、console 0。
+
+**给对方的提示**：
+- 上一条 UNLOCK 写于提交/部署前；以本 NOTE 的 commit/deploy 状态为准。
