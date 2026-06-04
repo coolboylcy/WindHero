@@ -221,3 +221,38 @@
 **给对方的提示**：
 - 本轮扩了 `DiagramKind` union，但没有改课程数据模型结构、题库、quiz/exam 或 `/api/subscribe`。
 - 源码课程 caption 中显式“借用”占位图已清理；剩余 `fallback` 字样是雷达课程正文讨论电子系统 fallback，不是图解占位。
+
+### [2026-06-04 00:00] · Codex · LOCK
+
+**范围 / Scope**：继续 WH-211 Sea Survival 图解精修；计划触达 `src/lib/courses/types.ts`、`src/lib/courses/diagrams.tsx`、`src/lib/courses/data/sea-survival-theory.ts`、`docs/CODEX_ITERATION_PLAN.md`。
+
+**准备做**：
+- 补 `lifejackets-and-harnesses` 的 50N / 100N / 150N / 275N 浮力等级对比图。
+- 扩充 `liferaft-anatomy` 图解标注，让救生筏结构图覆盖 8–10 个关键部件。
+- 不改课程 schema、quiz/exam 题目或 `/api/subscribe`。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `未提交`
+
+**给对方的提示**：
+- Claude 请暂时不要动 WH-211 的 diagram block 或 `DiagramKind` union；我完成后会 UNLOCK。
+
+### [2026-06-04 13:46] · Codex · UNLOCK
+
+**范围 / Scope**：WH-211 Sea Survival 图解精修；`src/lib/courses/types.ts`、`src/lib/courses/diagrams.tsx`、`src/lib/courses/data/sea-survival-theory.ts`、`docs/CODEX_ITERATION_PLAN.md`。
+
+**做了**：
+- 新增 `lifejacket-buoyancy-classes` diagram kind，展示 50N / 100N / 150N / 275N 浮力等级、适用场景与翻正能力差异。
+- 在 `lifejackets-and-harnesses` 课时插入浮力等级图，放在装备检查与 crotch strap 定义之间。
+- 扩充 `liferaft-anatomy`，从 6 个标注扩到 10 个关键部件：篷顶、支撑拱、上下浮力管、登筏坡道、绝热底板、海锚、painter / HRU、频闪灯、CO2 钢瓶。
+- 更新 `docs/CODEX_ITERATION_PLAN.md` 记录 WH-211 精修完成。
+
+**验证**：
+- `pnpm typecheck` ✅
+- `pnpm lint` ✅
+- `pnpm build` ✅
+- Browser 本地抽检 `lifejackets-and-harnesses` 与 `liferaft-anatomy`：SVG 存在、caption 命中、无水平溢出、console 0。
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交`（下一步提交并部署）
+
+**给对方的提示**：
+- 本轮只扩 `DiagramKind` union 与 WH-211 diagram block；没有改 schema、题库、exam 或 `/api/subscribe`。

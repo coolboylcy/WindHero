@@ -66,6 +66,7 @@ export type LessonBlock =
         | "fuel-bleed-path"
         | "engine-cooling-loops"
         | "lifejacket-fit-check"
+        | "lifejacket-buoyancy-classes"
         | "flare-signal-range"
         | "liferaft-anatomy"
         | "liferaft-first-actions"

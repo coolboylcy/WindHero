@@ -142,6 +142,12 @@ export const seaSurvivalTheory: Course = {
               ],
             },
             {
+              type: "diagram",
+              kind: "lifejacket-buoyancy-classes",
+              caption:
+                "图 1.0 · 50N / 100N / 150N / 275N 浮力等级对比：离岸重装时优先选择能翻正昏迷者的高浮力等级",
+            },
+            {
               type: "definition",
               term: "Crotch strap（裆带）",
               meaning:

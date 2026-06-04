@@ -1295,6 +1295,50 @@ function LifejacketFitCheck({ className }: DiagramProps) {
   );
 }
 
+function LifejacketBuoyancyClasses({ className }: DiagramProps) {
+  const classes = [
+    ["50N", "助浮", "近岸 / 会游泳", 24, "fill-mist/20 stroke-mist"],
+    ["100N", "基础救生", "平静水域", 38, "fill-sea-soft/45 stroke-sea-deep"],
+    ["150N", "巡航标准", "多数离岸巡航", 54, "fill-sun-soft/60 stroke-sun-deep"],
+    ["275N", "重装离岸", "oilskin / 工具 / 恶劣海况", 72, "fill-coral/12 stroke-coral"],
+  ];
+  return (
+    <svg viewBox="0 0 680 320" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
+      <text x={340} y={34} textAnchor="middle" className="fill-ink font-mono" fontSize="10" letterSpacing="0.1em">
+        ISO 12402 浮力等级对比
+      </text>
+      <path d="M54 236 C160 258 520 258 626 236" className="stroke-sea-deep/60" />
+      {classes.map((item, i) => {
+        const x = 74 + i * 156;
+        const collar = Number(item[3]);
+        return (
+          <g key={item[0]}>
+            <rect x={x - 14} y={80} width={116} height={168} rx="2" className="fill-paper stroke-line" />
+            <path
+              d={`M${x + 44} ${178 - collar * 0.48} C${x + 18} ${196 - collar * 0.2} ${x + 16} 224 ${x + 42} 238 C${x + 70} 224 ${x + 72} 196 ${x + 44} ${178 - collar * 0.48} Z`}
+              className={String(item[4])}
+            />
+            <circle cx={x + 44} cy={160 - collar * 0.52} r={13} className="fill-paper stroke-ink" />
+            <path d={`M${x + 30} ${174 - collar * 0.45} H${x + 58}`} className="stroke-ink" />
+            <text x={x + 44} y={110} textAnchor="middle" className={i === 3 ? "fill-coral font-mono" : "fill-sea-deep font-mono"} fontSize="16">
+              {item[0]}
+            </text>
+            <text x={x + 44} y={132} textAnchor="middle" className="fill-ink" fontSize="11">
+              {item[1]}
+            </text>
+            <text x={x + 44} y={268} textAnchor="middle" className="fill-mist" fontSize="8.5">
+              {item[2]}
+            </text>
+          </g>
+        );
+      })}
+      <text x={340} y={298} textAnchor="middle" className="fill-mist" fontSize="10">
+        浮力越高，越能在重装和昏迷状态下把脸转离水面；代价是体积与舒适度。
+      </text>
+    </svg>
+  );
+}
+
 function FlareSignalRange({ className }: DiagramProps) {
   return (
     <svg viewBox="0 0 620 280" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
@@ -1325,11 +1369,15 @@ function FlareSignalRange({ className }: DiagramProps) {
 function LiferaftAnatomy({ className }: DiagramProps) {
   const labels = [
     [154, 84, "篷顶"],
-    [250, 120, "浮力管"],
+    [238, 104, "支撑拱"],
+    [250, 120, "上浮力管"],
+    [314, 196, "下浮力管"],
     [388, 118, "登筏坡道"],
     [186, 194, "绝热底板"],
-    [414, 206, "海锚"],
+    [428, 214, "海锚"],
     [92, 210, "painter / HRU"],
+    [458, 84, "频闪灯"],
+    [342, 238, "CO2 钢瓶"],
   ] as const;
   return (
     <svg viewBox="0 0 620 300" className={className} fill="none" stroke="currentColor" strokeWidth={1.2}>
@@ -1339,9 +1387,12 @@ function LiferaftAnatomy({ className }: DiagramProps) {
       <ellipse cx={310} cy={176} rx={168} ry={54} className="fill-sea-soft/30 stroke-sea-deep" />
       <ellipse cx={310} cy={176} rx={112} ry={30} className="fill-paper stroke-line" />
       <path d="M172 170 C218 82 404 82 448 170" className="fill-paper-soft/70 stroke-ink" />
+      <path d="M218 166 C242 102 378 102 402 166" className="stroke-mist" strokeDasharray="3 4" />
       <path d="M450 184 L518 206 L466 224" className="fill-paper-soft stroke-ink" />
       <path d="M478 208 C528 206 550 218 570 238" className="stroke-sea-deep" strokeDasharray="4 4" />
       <path d="M142 186 C94 198 74 216 58 246" className="stroke-coral" />
+      <circle cx={458} cy={84} r={6} className="fill-sun-soft stroke-sun-deep" />
+      <rect x={324} y={224} width={36} height={22} rx="2" className="fill-paper stroke-ink" />
       {labels.map(([x, y, label]) => (
         <g key={label}>
           <circle cx={x} cy={y} r={3.5} className="fill-coral stroke-coral" />
@@ -1688,6 +1739,7 @@ const registry: Record<DiagramKind, (p: DiagramProps) => ReactNode> = {
   "fuel-bleed-path": FuelBleedPath,
   "engine-cooling-loops": EngineCoolingLoops,
   "lifejacket-fit-check": LifejacketFitCheck,
+  "lifejacket-buoyancy-classes": LifejacketBuoyancyClasses,
   "flare-signal-range": FlareSignalRange,
   "liferaft-anatomy": LiferaftAnatomy,
   "liferaft-first-actions": LiferaftFirstActions,
