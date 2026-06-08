@@ -3,9 +3,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { SchoolsDirectory } from "./directory";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "全球帆船认证学校目录 | WindHero",
+export const metadata: Metadata = createPageMetadata({
+  title: "全球帆船认证学校目录",
   description:
     "WindHero 精选的全球 RYA / ASA / IYT 认证学校列表——可按地区、认证体系、阶段筛选。完成线上理论后，去这些学校做实操考核与发证。",
   keywords: [
@@ -22,7 +23,8 @@ export const metadata: Metadata = {
     "Phuket 帆船",
     "WindHero",
   ],
-};
+  path: "/schools",
+});
 
 export default function SchoolsPage() {
   return (

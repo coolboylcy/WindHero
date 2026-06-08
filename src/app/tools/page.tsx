@@ -2,12 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind, Map } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "工具",
   description:
     "WindHero 的开源航海工具集：全球风带查询、天气图读图沙盒，以及更多。",
-};
+  path: "/tools",
+  keywords: [
+    "航海工具",
+    "全球风带查询",
+    "天气图读图",
+    "帆船工具",
+    "WindHero 工具",
+  ],
+});
 
 const tools = [
   {

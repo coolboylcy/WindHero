@@ -4,8 +4,10 @@ import { ArrowRight, Wind } from "lucide-react";
 import { Section } from "@/components/section";
 import { regions, cellInfo } from "@/lib/tools/wind-belts-data";
 import { WindBeltsExplorer } from "./explorer";
+import { createPageMetadata } from "@/lib/seo/metadata";
+import { jsonLdScript, softwareApplicationLd } from "@/lib/seo/jsonld";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "全球风带查询 · Wind Belts by Region",
   description:
     "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。基于三圈环流 + 季风模型——出航前的第一份功课。",
@@ -24,17 +26,25 @@ export const metadata: Metadata = {
     "飓风季",
     "WindHero",
   ],
-  openGraph: {
-    title: "全球风带查询 · WindHero",
-    description:
-      "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。",
-    type: "website",
-  },
-};
+  path: "/tools/wind-belts",
+  image: "/images/generated/synoptic-chart-texture-v1.png",
+});
 
 export default function WindBeltsPage() {
+  const toolSchema = softwareApplicationLd({
+    name: "全球风带查询",
+    description:
+      "查询全球主要海域的主导风向、最佳出航月份、季风与热带气旋风险窗口。",
+    url: "/tools/wind-belts",
+    keywords: ["全球风带", "信风", "季风", "出航季节", "航海工具"],
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(toolSchema) }}
+      />
       {/* ==================== Hero + Tool（首屏） ==================== */}
       <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
         <div

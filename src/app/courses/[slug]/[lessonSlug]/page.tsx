@@ -11,6 +11,8 @@ import {
   listCourseSlugs,
   listLessonsFlat,
 } from "@/lib/courses";
+import { breadcrumbLd, jsonLdScript, lessonLd } from "@/lib/seo/jsonld";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 type Params = Promise<{ slug: string; lessonSlug: string }>;
 
@@ -36,10 +38,20 @@ export async function generateMetadata({
   if (!course) return { title: "未找到" };
   const found = findLesson(course, lessonSlug);
   if (!found) return { title: course.title };
-  return {
+  return createPageMetadata({
     title: `${found.lesson.title} · ${course.title}`,
     description: found.lesson.summary,
-  };
+    path: `/courses/${course.slug}/${found.lesson.slug}`,
+    keywords: [
+      found.lesson.title,
+      course.title,
+      course.code,
+      "航海课时",
+      "帆船理论",
+      "WindHero",
+    ],
+    image: "/images/generated/course-chart-desk-v1.png",
+  });
 }
 
 export default async function LessonPage({ params }: { params: Params }) {
@@ -54,9 +66,25 @@ export default async function LessonPage({ params }: { params: Params }) {
   const lessonPosition = flatLessons.findIndex((x) => x.lesson.slug === lesson.slug) + 1;
   const progressPct = Math.max(4, (lessonPosition / flatLessons.length) * 100);
   const remainingLessons = Math.max(0, flatLessons.length - lessonPosition);
+  const breadcrumb = breadcrumbLd([
+    { name: "首页", url: "/" },
+    { name: "课程", url: "/courses" },
+    { name: course.title, url: `/courses/${course.slug}` },
+    { name: lesson.title, url: `/courses/${course.slug}/${lesson.slug}` },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdScript(lessonLd(course, lesson, moduleTitle)),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumb) }}
+      />
       {/* ===== Lesson Hero ===== */}
       <Section className="relative overflow-hidden border-b border-line/60 pt-36">
         <div

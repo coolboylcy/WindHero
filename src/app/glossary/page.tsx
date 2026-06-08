@@ -9,8 +9,9 @@ import {
   type GlossaryCategory,
 } from "@/lib/glossary/data";
 import { GlossarySearch } from "./search";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "航海词典 · 120+ 术语中英对照",
   description:
     "WindHero 航海词典：120+ 帆船术语中英文对照，按风与天气、船体索具、操船动作、导航、安全、通信、动力 7 大类组织。每个术语解释\"为什么这个概念存在\"。",
@@ -29,7 +30,8 @@ export const metadata: Metadata = {
     "海图基准",
     "WindHero 词典",
   ],
-};
+  path: "/glossary",
+});
 
 const categoryOrder: GlossaryCategory[] = [
   "wind-weather",

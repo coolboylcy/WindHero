@@ -20,9 +20,10 @@ import {
   courseStages,
 } from "@/lib/certifications/stages";
 import { getCourseBySlug } from "@/lib/courses";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "RYA vs ASA vs IYT 认证体系对比 | WindHero",
+export const metadata: Metadata = createPageMetadata({
+  title: "RYA vs ASA vs IYT 认证体系对比",
   description:
     "RYA、ASA、IYT 三大民用帆船认证体系完整对比：学习曲线、覆盖国家、考试方式、笔试 vs 实操。WindHero 13 门课如何对应三体系的所有笔试要求。",
   keywords: [
@@ -39,7 +40,8 @@ export const metadata: Metadata = {
     "认证体系对比",
     "WindHero",
   ],
-};
+  path: "/certifications",
+});
 
 const certBodies: CertBody[] = ["rya", "asa", "iyt"];
 
@@ -268,7 +270,7 @@ export default function CertificationsPage() {
       </Section>
 
       {/* ====================== 6. WindHero 路径承诺 ====================== */}
-      <Section className="border-b border-line/60">
+      <Section id="path" className="border-b border-line/60 scroll-mt-28">
         <p className="eyebrow">WindHero 路径承诺</p>
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2rem]">
           按 WindHero 的 6 阶段学下来——

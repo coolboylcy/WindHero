@@ -3,8 +3,10 @@ import Link from "next/link";
 import { ArrowRight, Wind } from "lucide-react";
 import { Section } from "@/components/section";
 import { SynopticExplorer } from "./explorer";
+import { createPageMetadata } from "@/lib/seo/metadata";
+import { jsonLdScript, softwareApplicationLd } from "@/lib/seo/jsonld";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "天气图读图工具 · Synoptic Chart Reader",
   description:
     "学会读地面气压图：等压线、低压、高压、锋面、风向风强——船长每天该看的第一张图。",
@@ -20,16 +22,25 @@ export const metadata: Metadata = {
     "天气图怎么看",
     "WindHero",
   ],
-  openGraph: {
-    title: "天气图读图工具 · WindHero",
-    description: "学会读地面气压图——船长每天该看的第一张图。",
-    type: "website",
-  },
-};
+  path: "/tools/synoptic",
+  image: "/images/generated/synoptic-chart-texture-v1.png",
+});
 
 export default function SynopticPage() {
+  const toolSchema = softwareApplicationLd({
+    name: "天气图读图工具",
+    description:
+      "通过等压线、半球和气压梯度互动演示，学习地面天气图上的风向和风强判断。",
+    url: "/tools/synoptic",
+    keywords: ["天气图", "synoptic chart", "等压线", "Buys-Ballot", "航海工具"],
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(toolSchema) }}
+      />
       {/* ==================== Hero + Tool（首屏） ==================== */}
       <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
         <div

@@ -26,6 +26,7 @@ import {
 } from "@/lib/certifications/stages";
 import { bodyInfo, type CertBody } from "@/lib/certifications/comparison";
 import { breadcrumbLd, courseLd, jsonLdScript } from "@/lib/seo/jsonld";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 type Params = Promise<{ slug: string }>;
 
@@ -41,10 +42,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = getCourseBySlug(slug);
   if (!course) return { title: "未找到课程" };
-  return {
+  return createPageMetadata({
     title: `${course.title} · ${course.code}`,
     description: course.summary,
-  };
+    path: `/courses/${course.slug}`,
+    keywords: [
+      course.title,
+      course.code,
+      "航海课程",
+      "帆船理论",
+      "RYA 笔试",
+      "WindHero",
+    ],
+    image: "/images/generated/course-chart-desk-v1.png",
+  });
 }
 
 const resourceLabel: Record<string, string> = {

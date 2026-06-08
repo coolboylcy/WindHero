@@ -5,6 +5,7 @@ import { ArrowLeft, Clock, ListChecks, ShieldCheck } from "lucide-react";
 import { Section } from "@/components/section";
 import { Quiz } from "@/components/quiz";
 import { getCourseBySlug, listCourseSlugs } from "@/lib/courses";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
 type Params = Promise<{ slug: string }>;
 
@@ -22,10 +23,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = getCourseBySlug(slug);
   if (!course || !course.exam) return { title: "未找到考试" };
-  return {
+  return createPageMetadata({
     title: `期末模拟考 · ${course.title}`,
     description: course.exam.brief,
-  };
+    path: `/courses/${course.slug}/exam`,
+    keywords: [
+      course.title,
+      course.code,
+      "航海模拟考",
+      "帆船理论考试",
+      "RYA 笔试",
+      "WindHero",
+    ],
+    image: "/images/generated/course-chart-desk-v1.png",
+  });
 }
 
 export default async function ExamPage({ params }: { params: Params }) {

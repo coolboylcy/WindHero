@@ -8,7 +8,7 @@
  * - BreadcrumbList
  */
 
-import type { Course } from "@/lib/courses/types";
+import type { Course, Lesson } from "@/lib/courses/types";
 
 const BASE_URL = "https://windhero.vercel.app";
 
@@ -37,6 +37,11 @@ export const websiteLd = {
   name: "WindHero 逐风人",
   inLanguage: "zh-CN",
   description: "驾驭风的方向 · Master the Wind",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${BASE_URL}/glossary?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export function courseLd(course: Course) {
@@ -76,14 +81,62 @@ export function courseLd(course: Course) {
       timeRequired: `PT${m.lessons.length * 60}M`,
     })),
     numberOfCredits: lessonCount,
-    aggregateRating: course.exam
-      ? {
-          "@type": "AggregateRating",
-          ratingValue: "5",
-          ratingCount: "1",
-          bestRating: "5",
-        }
-      : undefined,
+  };
+}
+
+export function lessonLd(course: Course, lesson: Lesson, moduleTitle: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name: lesson.title,
+    description: lesson.summary,
+    url: `${BASE_URL}/courses/${course.slug}/${lesson.slug}`,
+    inLanguage: "zh-CN",
+    isPartOf: {
+      "@type": "Course",
+      name: course.title,
+      url: `${BASE_URL}/courses/${course.slug}`,
+      courseCode: course.code,
+    },
+    learningResourceType: "Lesson",
+    educationalLevel: course.level,
+    teaches: lesson.outcomes,
+    timeRequired: lesson.duration,
+    about: moduleTitle,
+    provider: {
+      "@type": "EducationalOrganization",
+      name: "WindHero 逐风人",
+      sameAs: BASE_URL,
+    },
+  };
+}
+
+export function softwareApplicationLd(input: {
+  name: string;
+  description: string;
+  url: string;
+  keywords?: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: input.name,
+    description: input.description,
+    url: `${BASE_URL}${input.url}`,
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web browser",
+    inLanguage: "zh-CN",
+    keywords: input.keywords,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    publisher: {
+      "@type": "EducationalOrganization",
+      name: "WindHero 逐风人",
+      url: BASE_URL,
+    },
   };
 }
 

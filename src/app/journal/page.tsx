@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Section, SectionHeading } from "@/components/section";
 import { journal } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "航海日志",
   description:
     "WindHero 船员写的现场笔记、船长日志，以及关于课程的散文。",
-};
+  path: "/journal",
+});
 
 const longform: Record<string, string[]> = {
   "what-the-wind-actually-is": [

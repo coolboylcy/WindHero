@@ -3,8 +3,9 @@ import Link from "next/link";
 import { ArrowRight, Anchor } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { cases, categoryInfo } from "@/lib/cases/data";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "真实案例库 · 从海难学习",
   description:
     "WindHero 真实案例库：Fastnet 1979、Sydney-Hobart 1998、El Faro 2015、Tony Bullimore 求生、Knox-Johnston 环球、Costa Concordia——基于 MAIB / ATSB / NTSB 调查报告与当事人著作的 6 个航海事件。每个案例配时间线 + 经验 + 课程映射。",
@@ -22,7 +23,8 @@ export const metadata: Metadata = {
     "船长决策案例",
     "WindHero 案例库",
   ],
-};
+  path: "/cases",
+});
 
 const categoryColor: Record<string, string> = {
   "weather-catastrophe": "border-coral/40 bg-coral/5",

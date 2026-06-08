@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Section } from "@/components/section";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "宣言",
   description:
     "WindHero 的宣言——我们为什么航海、我们教什么，以及我们希望帮你成为什么样的人。",
-};
+  path: "/manifesto",
+});
 
 const articles: { n: string; t: string; body: string }[] = [
   {

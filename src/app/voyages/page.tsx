@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ArrowRight, MapPin, Wind } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { voyages } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "航线",
   description:
     "由在役船长带队的开放航段。挑一段海，飞到港口，登船起航。",
-};
+  path: "/voyages",
+});
 
 const marinas = [
   { name: "香港仔游艇会", coord: "22°14′N · 114°09′E", city: "香港" },

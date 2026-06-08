@@ -85,9 +85,6 @@ export const metadata: Metadata = {
     description: "为「从零开始的船长」搭建的现代航海学院。",
     creator: "@windhero",
   },
-  alternates: {
-    canonical: "https://windhero.vercel.app",
-  },
   robots: {
     index: true,
     follow: true,

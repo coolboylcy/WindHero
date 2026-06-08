@@ -19,6 +19,7 @@ import {
 } from "@/lib/cases/data";
 import { getCourseBySlug } from "@/lib/courses";
 import { breadcrumbLd, jsonLdScript } from "@/lib/seo/jsonld";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo/metadata";
 
 type Params = Promise<{ slug: string }>;
 
@@ -34,11 +35,13 @@ export async function generateMetadata({
   const { slug } = await params;
   const c = getCase(slug);
   if (!c) return { title: "未找到案例" };
-  return {
+  return createPageMetadata({
     title: c.title,
     description: c.hook,
     keywords: [c.title, c.titleEn, c.location, "航海事故", "海难案例", "WindHero"],
-  };
+    path: `/cases/${c.slug}`,
+    type: "article",
+  });
 }
 
 export default async function CasePage({ params }: { params: Params }) {
@@ -69,6 +72,8 @@ export default async function CasePage({ params }: { params: Params }) {
     headline: c.title,
     alternativeHeadline: c.titleEn,
     description: c.hook,
+    mainEntityOfPage: absoluteUrl(`/cases/${c.slug}`),
+    url: absoluteUrl(`/cases/${c.slug}`),
     datePublished: c.date,
     locationCreated: c.location,
     inLanguage: "zh-CN",

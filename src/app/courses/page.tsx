@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { detailedCourses, getCourseBySlug } from "@/lib/courses";
+import { createPageMetadata } from "@/lib/seo/metadata";
 import {
   courseStages,
   stageInfo,
@@ -10,11 +11,20 @@ import {
   type Stage,
 } from "@/lib/certifications/stages";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "课程 · 13 门覆盖三体系笔试",
   description:
     "WindHero 按 6 阶段组织课程：入门 / 船员 / 日间船长 / 夜间近岸 / 远海远航 / 跨洋。13 门课对应 RYA、ASA、IYT 三大体系的所有笔试要求。",
-};
+  path: "/courses",
+  keywords: [
+    "中文航海课程",
+    "帆船理论课程",
+    "RYA Day Skipper Theory",
+    "ASA Bareboat",
+    "IYT Yachtmaster",
+    "WindHero 课程",
+  ],
+});
 
 export default function CoursesPage() {
   /* 按主阶段分组：每门课只显示在其第一个（主）阶段下 */

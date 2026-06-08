@@ -1,8 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Anchor, Compass, Waves, Wind } from "lucide-react";
 import { Hero } from "@/components/hero";
 import { Section, SectionHeading, Eyebrow } from "@/components/section";
 import { courses, journal, voyages } from "@/lib/content";
+import { createPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "中文航海理论课程与工具",
+  description:
+    "WindHero 逐风人是一所面向从零开始船长的中文航海学院，覆盖 RYA / ASA / IYT 认证理论、帆船课程、航海词典、真实案例与免费互动工具。",
+  path: "/",
+  keywords: [
+    "WindHero",
+    "逐风人",
+    "中文航海课程",
+    "帆船课程",
+    "RYA 认证",
+    "ASA 认证",
+    "IYT 认证",
+    "航海理论",
+  ],
+});
 
 export default function HomePage() {
   return (
@@ -69,7 +88,7 @@ export default function HomePage() {
           {courses.slice(0, 6).map((c) => (
             <Link
               key={c.slug}
-              href={`/courses#${c.slug}`}
+              href={`/courses/${c.slug}`}
               className="group relative flex flex-col justify-between gap-10 bg-paper p-8 transition-colors hover:bg-paper-soft/70"
             >
               <div>

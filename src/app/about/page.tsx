@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ArrowRight, Mail } from "lucide-react";
 import { Section, SectionHeading, Eyebrow } from "@/components/section";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { createPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "关于",
   description:
     "WindHero 由站长良辰主理——一个从零开始的船长。这里写下他为什么办这所学校。",
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

@@ -269,3 +269,43 @@
 
 **给对方的提示**：
 - 上一条 UNLOCK 写于提交/部署前；以本 NOTE 的 commit/deploy 状态为准。
+
+### [2026-06-08 10:37] · Codex · LOCK
+
+**范围 / Scope**：SEO-first P0 重构起步；计划触达 `src/app/layout.tsx`、各主要 `page.tsx` metadata、`src/lib/seo/jsonld.ts`、`src/lib/seo/metadata.ts`（如新增）、`src/app/sitemap.ts`、首页/页脚链接。
+
+**准备做**：
+- 修正全站 canonical / Open Graph 继承问题，让课程、课时、案例、词典、工具等页面输出自己的 canonical 与社交元数据。
+- 修复首页课程卡和页脚认证路线图坏锚点。
+- 清理结构化数据：补 WebSite SearchAction，移除不真实 aggregateRating，给课时/工具等补基础 JSON-LD（视范围而定）。
+- 改 sitemap lastmod 生成方式，避免每次构建全站同一更新时间。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `未提交`
+
+**给对方的提示**：
+- 本轮不改课程正文、quiz/exam 题目、不改课程数据模型结构；如需要新增字段会另行说明。
+
+### [2026-06-08 10:45] · Codex · UNLOCK
+
+**范围 / Scope**：SEO-first P0 重构起步；`src/app/layout.tsx`、主要页面 metadata、动态详情页 metadata、`src/lib/seo/jsonld.ts`、`src/lib/seo/metadata.ts`、`src/app/sitemap.ts`、首页链接与认证页锚点。
+
+**做了**：
+- 新增统一 metadata helper，为首页、栏目页、动态课程/课时/考试/案例/词典、工具页输出页面级 canonical、Open Graph、Twitter metadata。
+- 移除 root layout 的首页 canonical，修复子页面 canonical 全部指向首页的问题。
+- 修复首页课程卡 `/courses#slug` 坏锚点，改为直达课程详情；为 `/certifications#path` 增加有效锚点。
+- JSON-LD 补 WebSite SearchAction，移除不真实的 Course aggregateRating；新增课时 LearningResource 与工具 SoftwareApplication 结构化数据。
+- sitemap 改用稳定的内容批次 lastmod，避免每次构建全站 200 URL 同一更新时间。
+
+**验证**：
+- `pnpm typecheck` ✅
+- `pnpm lint` ✅
+- `pnpm build` ✅
+- 本地生产 HTML 抽查课程页、课时页、案例页 canonical / OG URL ✅
+- 本地 sitemap 抽查：200 URL，4 组稳定 lastmod ✅
+- Playwright 本地抽检课程详情页与 Wind Belts 工具页 DOM 快照 ✅（in-app Browser 当前未暴露可用连接，已 fallback Playwright）
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交（准备提交）`
+
+**给对方的提示**：
+- 本轮没有改课程正文、课程数据模型、quiz/exam 题目或 `/api/subscribe`。
+- `.playwright-cli/` 是本地 Playwright 临时目录，未纳入提交。

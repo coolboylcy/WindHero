@@ -10,6 +10,7 @@ import {
 } from "@/lib/glossary/data";
 import { getCourseBySlug } from "@/lib/courses";
 import { breadcrumbLd, jsonLdScript } from "@/lib/seo/jsonld";
+import { absoluteUrl, createPageMetadata } from "@/lib/seo/metadata";
 
 type Params = Promise<{ slug: string }>;
 
@@ -26,11 +27,12 @@ export async function generateMetadata({
   const term = getTerm(slug);
   if (!term) return { title: "未找到术语" };
 
-  return {
+  return createPageMetadata({
     title: `${term.zh}（${term.en}）· 航海词典`,
     description: term.short + " · " + term.long.slice(0, 80),
     keywords: [term.zh, term.en, ...(term.aliases ?? []), "航海术语", "帆船词典"],
-  };
+    path: `/glossary/${term.slug}`,
+  });
 }
 
 export default async function TermPage({ params }: { params: Params }) {
@@ -56,7 +58,8 @@ export default async function TermPage({ params }: { params: Params }) {
     name: term.zh,
     alternateName: [term.en, ...(term.aliases ?? [])],
     description: term.long,
-    inDefinedTermSet: "https://windhero.vercel.app/glossary",
+    url: absoluteUrl(`/glossary/${term.slug}`),
+    inDefinedTermSet: absoluteUrl("/glossary"),
     inLanguage: "zh-CN",
   };
 
