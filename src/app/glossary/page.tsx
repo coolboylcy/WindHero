@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { GlossaryAtlasVisual } from "@/components/content-visuals";
 import {
   categoryInfo,
   termsByCategory,
@@ -63,6 +64,23 @@ export default function GlossaryPage() {
 
         <div className="mt-10">
           <GlossarySearch />
+        </div>
+      </Section>
+
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-16">
+          <SectionHeading
+            eyebrow="术语地图"
+            title={
+              <>
+                先看关系，
+                <br />
+                再记名字。
+              </>
+            }
+            lead="航海术语最难的地方不是英文，而是它们互相牵连：风影响帆，海图影响航线，安全动作又反过来约束每个判断。"
+          />
+          <GlossaryAtlasVisual />
         </div>
       </Section>
 

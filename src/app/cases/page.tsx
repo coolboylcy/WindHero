@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Anchor } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { CaseLearningLoopVisual } from "@/components/content-visuals";
 import { cases, categoryInfo } from "@/lib/cases/data";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
@@ -38,20 +39,25 @@ export default function CasesIndexPage() {
   return (
     <>
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
-        <SectionHeading
-          eyebrow="真实案例库"
-          title={
-            <>
-              别人犯过的错，
-              <br />
-              你不必再犯一次。
-            </>
-          }
-          lead="6 个有据可查的著名航海事件——基于 MAIB、ATSB、NTSB 等官方调查报告与当事人著作整理。每个案例都给到时间线、调查结论、以及「我们能学到什么」——并映射到对应的 WindHero 课程。"
-        />
-        <p className="mt-6 max-w-2xl text-[0.86rem] leading-[1.7] text-mist">
-          说明：本库不渲染戏剧化情节、不揣测当事人心理。所有事实陈述基于公开调查报告与传记。每个案例底部列出参考资料。
-        </p>
+        <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-16">
+          <div>
+            <SectionHeading
+              eyebrow="真实案例库"
+              title={
+                <>
+                  别人犯过的错，
+                  <br />
+                  你不必再犯一次。
+                </>
+              }
+              lead="6 个有据可查的著名航海事件——基于 MAIB、ATSB、NTSB 等官方调查报告与当事人著作整理。每个案例都给到时间线、调查结论、以及「我们能学到什么」。"
+            />
+            <p className="mt-6 max-w-2xl text-[0.86rem] leading-[1.7] text-mist">
+              说明：本库不渲染戏剧化情节、不揣测当事人心理。所有事实陈述基于公开调查报告与传记。每个案例底部列出参考资料。
+            </p>
+          </div>
+          <CaseLearningLoopVisual />
+        </div>
       </Section>
 
       <Section>

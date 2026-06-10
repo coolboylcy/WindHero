@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { CourseSystemMap, LearningRouteChart } from "@/components/content-visuals";
 import { detailedCourses, getCourseBySlug } from "@/lib/courses";
 import { createPageMetadata } from "@/lib/seo/metadata";
 import {
@@ -37,6 +38,12 @@ export default function CoursesPage() {
       byStage.get(primary)!.push(course);
     }
   }
+  const routeStages = stageOrder.map((stage) => ({
+    id: stage,
+    label: stageInfo[stage].label,
+    sub: stageInfo[stage].sub,
+    count: byStage.get(stage)?.length ?? 0,
+  }));
 
   return (
     <>
@@ -68,6 +75,26 @@ export default function CoursesPage() {
             全球认证学校目录
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
+        </div>
+      </Section>
+
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-16">
+          <SectionHeading
+            eyebrow="课程地图"
+            title={
+              <>
+                先看整张图，
+                <br />
+                再选下一课。
+              </>
+            }
+            lead="课程总览不应该像货架。它应该像航海图：你能看到自己从哪里出发、下一段水域是什么、最后会抵达哪种船长能力。"
+          />
+          <CourseSystemMap stages={routeStages} />
+        </div>
+        <div className="mt-10">
+          <LearningRouteChart stages={routeStages} />
         </div>
       </Section>
 

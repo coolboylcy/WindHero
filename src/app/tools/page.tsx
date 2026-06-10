@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind, Map } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { ToolDeckVisual } from "@/components/content-visuals";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -37,20 +38,50 @@ export default function ToolsIndexPage() {
   return (
     <>
       <Section className="border-b border-line/60 pt-36">
-        <SectionHeading
-          eyebrow="工具"
-          title={
-            <>
-              把课堂上学的，
-              <br />
-              直接拿来用。
-            </>
-          }
-          lead="WindHero 的几个免费工具——不要登录、不要付费。打开浏览器就能用。"
-        />
+        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
+          <SectionHeading
+            eyebrow="工具"
+            title={
+              <>
+                把课堂上学的，
+                <br />
+                直接拿来用。
+              </>
+            }
+            lead="工具不是附录。它们是 WindHero 的练习台：把风带、天气图、航线窗口这些抽象概念，变成可以拖动、比较、复盘的判断。"
+          />
+          <ToolDeckVisual />
+        </div>
       </Section>
 
       <Section>
+        <div className="mb-10 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+          <div>
+            <p className="eyebrow">判断流程</p>
+            <h2 className="display mt-4 text-3xl text-ink md:text-[2.2rem]">
+              先看季节底图，
+              <br />
+              再看具体天气。
+            </h2>
+          </div>
+          <ol className="grid gap-px bg-line/70 md:grid-cols-3">
+            {["海域", "月份", "天气窗"].map((step, i) => (
+              <li key={step} className="bg-paper p-5">
+                <span className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sea-deep">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="display mt-3 text-xl text-ink">{step}</h3>
+                <p className="mt-2 text-[0.84rem] leading-[1.7] text-ink-soft">
+                  {i === 0
+                    ? "确定你要去的是信风带、季风海，还是西风带。"
+                    : i === 1
+                      ? "避开热带气旋和冬季风暴，找到基础窗口。"
+                      : "用天气图确认出发前 72 小时的真实局势。"}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </div>
         <div className="grid gap-px bg-line/70 md:grid-cols-2">
           {tools.map((t) => {
             const Icon = t.icon;

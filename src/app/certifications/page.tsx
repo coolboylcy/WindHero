@@ -8,6 +8,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
+import { CertificationChannelsVisual } from "@/components/content-visuals";
 import {
   bodyInfo,
   ladder,
@@ -61,6 +62,23 @@ export default function CertificationsPage() {
           }
           lead="全世界三大民用帆船认证体系——英国 RYA、美国 ASA、国际 IYT——的学习曲线、考试方式、覆盖范围一次讲清楚。无论你考哪一个，WindHero 都能让你笔试部分一次通过。"
         />
+      </Section>
+
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-16">
+          <SectionHeading
+            eyebrow="三条航道"
+            title={
+              <>
+                不是谁更高级，
+                <br />
+                是你要去哪片海。
+              </>
+            }
+            lead="RYA 像英式海试路线，ASA 像租船友好路线，IYT 更靠近国际商业/超级游艇语境。先选使用场景，再选证书。"
+          />
+          <CertificationChannelsVisual />
+        </div>
       </Section>
 
       {/* ====================== 2. 三体系一句话简介 ====================== */}

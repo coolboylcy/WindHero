@@ -3,6 +3,11 @@ import Link from "next/link";
 import { ArrowRight, Anchor, Compass, Waves, Wind } from "lucide-react";
 import { Hero } from "@/components/hero";
 import { Section, SectionHeading, Eyebrow } from "@/components/section";
+import {
+  ContentCompassVisual,
+  LearningRouteChart,
+  ToolDeckVisual,
+} from "@/components/content-visuals";
 import { courses, journal, voyages } from "@/lib/content";
 import { createPageMetadata } from "@/lib/seo/metadata";
 
@@ -29,36 +34,37 @@ export default function HomePage() {
       <Hero />
 
       <Section className="border-b border-line/60">
-        <div className="grid gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-24">
-          <SectionHeading
-            eyebrow="我们为什么存在"
-            title={
-              <>
-                我们不教你玩船，
-                <br />
-                我们教你读懂海。
-              </>
-            }
-            lead="多数帆船学校给你一张证书和一晚的酒。WindHero 为那种想要真功夫的人而建——能力、判断力、和那份在第四夜凌晨两点依然能稳住的镇定。"
-          />
-
-          <div className="grid grid-cols-1 gap-px bg-line/70 sm:grid-cols-2">
-            {pillars.map((p) => (
-              <article
-                key={p.title}
-                className="flex flex-col gap-4 bg-paper p-8 transition-colors hover:bg-paper-soft/70"
-              >
-                <p.icon
-                  className="h-6 w-6 text-sea"
-                  strokeWidth={1.2}
-                />
-                <h3 className="display text-[1.6rem] text-ink">{p.title}</h3>
-                <p className="text-[0.95rem] leading-[1.9] text-ink-soft">
-                  {p.body}
-                </p>
-              </article>
-            ))}
+        <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-16">
+          <div>
+            <SectionHeading
+              eyebrow="内容系统"
+              title={
+                <>
+                  不再是一堆文章，
+                  <br />
+                  而是一张训练海图。
+                </>
+              }
+              lead="WindHero 的内容被拆成四个互相咬合的层次：课程负责主线，词典负责术语，案例负责记忆，工具负责把判断变成手感。"
+            />
+            <div className="mt-8 grid gap-3">
+              {pillars.map((p) => (
+                <div
+                  key={p.title}
+                  className="grid grid-cols-[2.2rem_1fr] gap-4 border-t border-line/70 pt-4 first:border-t-0 first:pt-0"
+                >
+                  <p.icon className="mt-1 h-5 w-5 text-sea-deep" strokeWidth={1.4} />
+                  <div>
+                    <h3 className="display text-xl text-ink">{p.title}</h3>
+                    <p className="mt-1 text-[0.9rem] leading-[1.75] text-ink-soft">
+                      {p.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+          <ContentCompassVisual />
         </div>
       </Section>
 
@@ -73,7 +79,7 @@ export default function HomePage() {
                 亲手编写的课程。
               </>
             }
-            lead="从第一次抢风到一千海里的远洋航段——每一门课都由在役船长与气象人主讲，不是网红，不是代课。"
+            lead="从第一次抢风到一千海里的远洋航段——先建立海感，再建立航法，最后建立船长的取舍。"
           />
           <Link
             href="/courses"
@@ -82,6 +88,10 @@ export default function HomePage() {
             全部课程
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </Link>
+        </div>
+
+        <div className="mt-12">
+          <LearningRouteChart stages={homeStages} />
         </div>
 
         <div className="mt-14 grid gap-px bg-line/70 md:grid-cols-2 lg:grid-cols-3">
@@ -113,6 +123,23 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
+        </div>
+      </Section>
+
+      <Section className="border-b border-line/60 bg-paper-soft/30">
+        <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end lg:gap-16">
+          <SectionHeading
+            eyebrow="互动工具"
+            title={
+              <>
+                不是看懂就完，
+                <br />
+                要能上手判断。
+              </>
+            }
+            lead="工具页会继续扩成真正的训练台：先看全球风带决定出航月份，再看天气图判断具体窗口。"
+          />
+          <ToolDeckVisual />
         </div>
       </Section>
 
@@ -253,4 +280,13 @@ const pillars = [
     title: "掌舵全局。",
     body: "领导力、简报与放弃的勇气。船长的思维会跟你下船，带进你生活的每一个房间。",
   },
+];
+
+const homeStages = [
+  { id: "intro", label: "入门", sub: "风、帆、船的基本语言", count: 2 },
+  { id: "crew", label: "船员", sub: "值班、安全、通信", count: 3 },
+  { id: "day-skipper", label: "日间船长", sub: "海图、潮汐、避碰", count: 3 },
+  { id: "night-coastal", label: "夜间近岸", sub: "雷达、夜航、近岸风险", count: 2 },
+  { id: "offshore", label: "远海", sub: "天气、航路、船长判断", count: 2 },
+  { id: "ocean", label: "跨洋", sub: "天文导航与远洋思维", count: 1 },
 ];
