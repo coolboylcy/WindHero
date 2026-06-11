@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, BookOpen, Compass, ListChecks } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { Section } from "@/components/section";
 import { LessonRenderer } from "@/components/lesson-renderer";
 import { Quiz } from "@/components/quiz";
@@ -87,14 +88,9 @@ export default async function LessonPage({ params }: { params: Params }) {
       />
       {/* ===== Lesson Hero ===== */}
       <Section className="relative overflow-hidden border-b border-line/60 pt-36">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-[0.11]"
-          style={{
-            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/course-chart-desk-v1.png"
+          className="-z-10 opacity-[0.11]"
         />
         <div aria-hidden className="wh-chart-wash -z-10" />
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.72rem] tracking-[0.14em]">

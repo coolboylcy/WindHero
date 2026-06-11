@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { Compass, Gauge, RotateCcw, Waves } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 
 type Hemisphere = "N" | "S";
 type FrontMode = "cold" | "warm" | "occluded";
@@ -41,14 +42,11 @@ export function SynopticExplorer() {
 
   return (
     <div className="wh-tool-shell rounded-sm p-4 sm:p-5 md:p-6">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.20]"
-        style={{
-          backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <ImageBackdrop
+        src="/images/generated/synoptic-chart-texture-v1.png"
+        className="opacity-[0.20]"
+        loading="eager"
+        fetchPriority="high"
       />
       <div className="relative grid gap-5 lg:grid-cols-[0.72fr_1.2fr_0.68fr]">
         <div className="wh-instrument-panel rounded-sm p-4 sm:p-5">

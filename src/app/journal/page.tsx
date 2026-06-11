@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Section, SectionHeading } from "@/components/section";
 import { journal } from "@/lib/content";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "航海日志",
   description:
-    "WindHero 船员写的现场笔记、船长日志，以及关于课程的散文。",
+    "WindHero 的航海笔记、值班记录和课程外的小文章。",
   path: "/journal",
 });
 
@@ -29,19 +30,44 @@ const longform: Record<string, string[]> = {
 };
 
 export default function JournalPage() {
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 航海日志",
+    description: "船员现场笔记、船长日志和航海课程散文。",
+    url: "/journal",
+  });
+  const journalListSchema = itemListLd({
+    name: "WindHero 航海日志列表",
+    url: "/journal",
+    items: journal.map((entry) => ({
+      name: entry.title,
+      description: entry.excerpt,
+      url: `/journal#${entry.slug}`,
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(journalListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-36">
         <SectionHeading
+          level={1}
           eyebrow="航海日志"
           title={
             <>
-              一所在海上上课的学校
+              课程之外，
               <br />
-              留下的现场笔记。
+              还有一些零散笔记。
             </>
           }
-          lead="长文、值班日志，以及关于如何更清醒地生活的小经验。我们在有真话可说的时候发表，从不为填日历而写。"
+          lead="有些内容不适合放进课程：一次值班、一本书、一张天气图，或者某个把我难住的小问题。它们先放在这里。"
         />
       </Section>
 

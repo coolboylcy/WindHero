@@ -12,6 +12,7 @@ import {
   ListChecks,
   Map,
 } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { Section } from "@/components/section";
 import {
   getCourseBySlug,
@@ -102,14 +103,9 @@ export default async function CourseDetailPage({
       />
       {/* ===== Hero ===== */}
       <Section className="relative overflow-hidden border-b border-line/60 pt-36">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-[0.12]"
-          style={{
-            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/course-chart-desk-v1.png"
+          className="-z-10 opacity-[0.12]"
         />
         <div aria-hidden className="wh-chart-wash -z-10" />
         <Link
@@ -141,13 +137,12 @@ export default async function CourseDetailPage({
           </div>
 
           <aside className="wh-instrument-panel rounded-sm p-5">
-            <div
-              aria-hidden
-              className="min-h-[210px] rounded-sm border border-line/60 bg-cover bg-center"
-              style={{
-                backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-              }}
-            />
+            <div className="relative min-h-[210px] overflow-hidden rounded-sm border border-line/60">
+              <ImageBackdrop
+                src="/images/generated/course-chart-desk-v1.png"
+                sizes="(min-width: 1024px) 28vw, 100vw"
+              />
+            </div>
             <dl className="mt-5 grid gap-5 font-mono text-[0.84rem] sm:grid-cols-3 lg:grid-cols-1">
               <Meta label="时长" value={course.duration} icon={Clock} />
               <Meta
@@ -355,7 +350,7 @@ export default async function CourseDetailPage({
             <div>
               <p className="eyebrow">期末模拟考</p>
               <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-                真正测一遍你的判断力。
+                做一遍题，看看哪里还没稳。
               </h2>
             </div>
             <div className="space-y-6 border-l border-line/70 pl-8">
@@ -413,10 +408,10 @@ export default async function CourseDetailPage({
           <Section className="border-b border-line/60 bg-paper-soft/30">
             <p className="eyebrow">对应认证体系</p>
             <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-              这门课能让你过哪些笔试。
+              这门课对应哪些笔试内容。
             </h2>
             <p className="mt-4 max-w-2xl text-[0.95rem] leading-[1.85] text-ink-soft">
-              本课覆盖的 RYA / ASA / IYT 大纲条目。看不到对应的体系——说明那个体系把这部分知识融在了别的课里，你只要全跑通 WindHero 13 门，三体系都不缺。
+              这里列的是本课能对上的 RYA / ASA / IYT 大纲条目。某个体系没有单列，不代表不用学，可能只是放在别的课程里。
             </p>
 
             <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-3">
@@ -491,7 +486,7 @@ export default async function CourseDetailPage({
                   下一步去认证学校。
                 </h2>
                 <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
-                  按 {course.ryaEquivalent} 等级，本课对应的实操考核、海上里程、湿训部分必须在 RYA / ASA / IYT 认证学校完成。WindHero 让你登船时已经站得稳，但发证仍由认证学校。
+                  按 {course.ryaEquivalent} 等级，本课对应的实操考核、海上里程、湿训部分必须在 RYA / ASA / IYT 认证学校完成。WindHero 只负责理论准备，发证仍由认证学校。
                 </p>
                 <ul className="mt-6 space-y-2.5 text-[0.9rem] leading-[1.75] text-ink-soft">
                   {stages.slice(0, 3).map((s) => (

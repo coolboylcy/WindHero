@@ -50,12 +50,16 @@ export function SectionHeading({
   title,
   lead,
   align = "left",
+  level = 2,
 }: {
   eyebrow?: string;
   title: React.ReactNode;
   lead?: React.ReactNode;
   align?: "left" | "center";
+  level?: 1 | 2;
 }) {
+  const HeadingTag = level === 1 ? "h1" : "h2";
+
   return (
     <header
       className={cn(
@@ -64,9 +68,9 @@ export function SectionHeading({
       )}
     >
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-      <h2 className="display mt-4 text-balance text-4xl text-ink md:text-5xl lg:text-[3.4rem]">
+      <HeadingTag className="display mt-4 text-balance text-4xl text-ink md:text-5xl lg:text-[3.4rem]">
         {title}
-      </h2>
+      </HeadingTag>
       {lead ? (
         <p className="mt-5 max-w-2xl text-[1rem] leading-[1.9] text-ink-soft md:text-[1.05rem]">
           {lead}

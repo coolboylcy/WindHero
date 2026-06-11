@@ -11,11 +11,12 @@ import {
 } from "@/lib/glossary/data";
 import { GlossarySearch } from "./search";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "航海词典 · 120+ 术语中英对照",
   description:
-    "WindHero 航海词典：120+ 帆船术语中英文对照，按风与天气、船体索具、操船动作、导航、安全、通信、动力 7 大类组织。每个术语解释\"为什么这个概念存在\"。",
+    "WindHero 航海词典：120+ 帆船术语中英文对照，按天气、导航、索具、操船、安全、通信和动力系统分类。",
   keywords: [
     "航海术语",
     "帆船词典",
@@ -46,20 +47,44 @@ const categoryOrder: GlossaryCategory[] = [
 
 export default function GlossaryPage() {
   const byCat = termsByCategory();
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 航海词典",
+    description: `${terms.length} 个帆船与航海术语的中英对照词典。`,
+    url: "/glossary",
+  });
+  const glossaryListSchema = itemListLd({
+    name: "WindHero 航海术语列表",
+    url: "/glossary",
+    items: terms.map((term) => ({
+      name: `${term.zh} · ${term.en}`,
+      description: term.short,
+      url: `/glossary/${term.slug}`,
+    })),
+  });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(glossaryListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <SectionHeading
+          level={1}
           eyebrow="航海词典"
           title={
             <>
-              新手最大的卡点不是技术，
+              很多时候卡住，
               <br />
-              是术语。
+              是因为词没对上。
             </>
           }
-          lead={`这里是 ${terms.length} 个航海术语的中英对照——按 7 大类组织，每个不仅给定义，还解释"为什么这个概念存在"。课程正文里嵌入了链接，碰到不熟的词点进来。`}
+          lead={`这里收了 ${terms.length} 个常见航海词，按 7 类放好。遇到 sheet、isobar、MOB 这类词，不用先装懂，点进来查一下就行。`}
         />
 
         <div className="mt-10">
@@ -73,12 +98,12 @@ export default function GlossaryPage() {
             eyebrow="术语地图"
             title={
               <>
-                先看关系，
+                按分类看，
                 <br />
-                再记名字。
+                比硬背轻松一点。
               </>
             }
-            lead="航海术语最难的地方不是英文，而是它们互相牵连：风影响帆，海图影响航线，安全动作又反过来约束每个判断。"
+            lead="风、帆、海图、安全和通信经常缠在一起。把词按场景放，比按字母表背更接近船上的实际用法。"
           />
           <GlossaryAtlasVisual />
         </div>
@@ -141,10 +166,10 @@ export default function GlossaryPage() {
             <h2 className="display mt-5 text-3xl text-ink md:text-4xl">
               不会的词，
               <br />
-              立刻就该查。
+              当场查。
             </h2>
             <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
-              新手最常见的错误是「假装懂」——船长喊「ease the sheet」，你点头说「好」，其实根本不知道哪根绳叫 sheet。海上没人会嘲笑你问「那是什么」，但海会嘲笑装懂。
+              船长说「ease the sheet」，你如果不知道 sheet 是哪根绳，就该问。海上问一句不丢人，听错了才麻烦。
             </p>
           </div>
           <Link
@@ -155,7 +180,7 @@ export default function GlossaryPage() {
               下一步
             </p>
             <h3 className="display mt-4 text-2xl text-ink">
-              从一门课开始系统学。
+              从一门课开始补。
             </h3>
             <p className="mt-3 text-[0.92rem] leading-[1.8] text-ink-soft">
               13 门课对应 RYA / ASA / IYT 三体系全部笔试。WH-101《读懂风》是最适合从零开始的起点。

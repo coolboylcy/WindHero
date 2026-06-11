@@ -4,11 +4,12 @@ import { ArrowRight, MapPin, Wind } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { voyages } from "@/lib/content";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "航线",
   description:
-    "由在役船长带队的开放航段。挑一段海，飞到港口，登船起航。",
+    "WindHero 计划中的开放航段、季节、里程和集合港口。",
   path: "/voyages",
 });
 
@@ -22,19 +23,44 @@ const marinas = [
 ];
 
 export default function VoyagesPage() {
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 开放航线",
+    description: "计划中的开放航段与集合港口。",
+    url: "/voyages",
+  });
+  const voyageListSchema = itemListLd({
+    name: "WindHero 开放航段列表",
+    url: "/voyages",
+    items: voyages.map((voyage) => ({
+      name: voyage.name,
+      description: voyage.brief,
+      url: `/voyages#${voyage.slug}`,
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(voyageListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-36">
         <SectionHeading
+          level={1}
           eyebrow="航线"
           title={
             <>
-              世界是一张
+              这些航段，
               <br />
-              由航段拼成的海图。
+              目前还在排期。
             </>
           }
-          lead="每段航程都由跑过这段海若干次的船长亲自带队，船员人数严格限定，让海员素养始终在线、值班始终清醒。"
+          lead="先把想跑的路线放在这里：季节、距离、难度和集合港口。开放报名时，会再补船、船长、费用和安全要求。"
         />
       </Section>
 
@@ -99,11 +125,10 @@ export default function VoyagesPage() {
           <div>
             <p className="eyebrow">港口</p>
             <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-              我们的母港。
+              常用集合港。
             </h2>
             <p className="mt-4 max-w-md text-[0.98rem] leading-[1.9] text-ink-soft">
-              船员在这里集合、船在这里停泊；第一次简报，
-              通常是在码头边的咖啡桌上完成的。
+              这些是航段常用的出发港。具体码头和登船时间，会以每次航段通知为准。
             </p>
           </div>
           <ul className="grid grid-cols-1 gap-px bg-line/70 sm:grid-cols-2">

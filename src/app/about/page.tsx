@@ -4,28 +4,41 @@ import { ArrowRight, Mail } from "lucide-react";
 import { Section, SectionHeading, Eyebrow } from "@/components/section";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "关于",
   description:
-    "WindHero 由站长良辰主理——一个从零开始的船长。这里写下他为什么办这所学校。",
+    "WindHero 由良辰主理。这里写下这个中文航海理论站为什么开始。",
   path: "/about",
 });
 
 export default function AboutPage() {
+  const pageSchema = webPageLd({
+    type: "AboutPage",
+    name: "关于 WindHero 逐风人",
+    description: "WindHero 站长良辰为什么搭建这所中文航海学院。",
+    url: "/about",
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
       <Section className="border-b border-line/60 pt-36">
         <SectionHeading
+          level={1}
           eyebrow="关于"
           title={
             <>
-              我办这所学校，
+              我只是把自己学航海时，
               <br />
-              是因为我自己想上的那一所并不存在。
+              最想有人讲清楚的东西写下来。
             </>
           }
-          lead="WindHero 是一个由一名「从零开始的船长」搭建的学校——也是一份公开的学习笔记。它的每一节课都是站长良辰自己在学的那一节；写出来既是为了让下一个想学航海的人不必再独自摸索，也是为了让自己学得更扎实。"
+          lead="我从零开始学船长。读教材、查规则、做题、上船之后，发现很多知识并不是难，而是没人用初学者听得懂的顺序讲。所以我把它们整理成这个站。"
         />
       </Section>
 
@@ -45,8 +58,8 @@ export default function AboutPage() {
               三十岁这一年，我决定从零开始学航海。
             </p>
             <p className="mt-5 max-w-md text-[0.96rem] leading-[1.9] text-ink-soft">
-              WindHero 是这段学习的副产品。每读懂一个概念、跑通一次操作，我就把它整理成一节课——
-              用一个「初学者」的视角写给「初学者」。如果你也站在岸边、看着远方的桅杆想着「我能学会吗」——这门课就是给你的。
+              WindHero 是这段学习的副产品。每读懂一个概念、跑通一次操作，我就把它整理成一节课。
+              如果你也刚开始学，里面应该会有几处正好替你省下时间。
             </p>
           </div>
 
@@ -57,9 +70,9 @@ export default function AboutPage() {
                 这个站是我一个人写的。每一门课、每一道题、每一张图，都是我自己先读懂、再写出来。
               </p>
               <p>
-                所以这不是一所有「全明星师资」的学校。它更像一个开放的学习笔记——
-                我在前面踩着别人踩过的浪，把自己摔倒的地方画成图，
-                让走在我后面的人不必再摔同样一次。
+                所以这不是一所有「全明星师资」的学校。它更像一份公开笔记：
+                我把自己查资料、算海图、做错题时卡住的地方记下来，
+                也把后来想明白的那一步补上。
               </p>
               <p>
                 我对标的是 RYA（英国皇家游艇协会）的笔试体系：
@@ -69,7 +82,7 @@ export default function AboutPage() {
               </p>
               <p>
                 但 RYA 证书 WindHero 不发——按规定，那必须由 RYA 认证学校在认证海图与认证海上时间里完成。
-                WindHero 能做的是：让你在登上认证学校的甲板之前，已经站得稳。
+                WindHero 能做的是：让你登上认证学校的甲板之前，少一点慌。
               </p>
               <p>
                 如果你也是从零开始的航海者，欢迎写信给我。我读每一封。
@@ -90,11 +103,11 @@ export default function AboutPage() {
               01 · 一手原创
             </p>
             <h3 className="display mt-4 text-2xl text-ink">
-              不抄教材，只解释原理。
+              尽量讲清楚来龙去脉。
             </h3>
             <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
-              所有正文、题目、案例都由我亲笔写。对标 RYA 笔试大纲，
-              但用我作为初学者最不能接受「死记硬背」的那种态度，把每一个为什么讲到底。
+              正文、题目、案例都自己写。会对照 RYA 笔试大纲，
+              但不照搬教材话术，尽量把公式和规则背后的原因讲出来。
             </p>
           </div>
           <div>
@@ -102,11 +115,11 @@ export default function AboutPage() {
               02 · 严格考试
             </p>
             <h3 className="display mt-4 text-2xl text-ink">
-              真的考你。
+              题目不会太客气。
             </h3>
             <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
-              每门课配真实考场体验——倒计时不可暂停、随机抽题、错题汇总。
-              重做必抽新题。能稳过的人是真懂的人。
+              每门课配倒计时、随机抽题和错题汇总。重做会重新抽题，
+              目的不是为难人，是避免只记住上一轮答案。
             </p>
           </div>
           <div>
@@ -179,11 +192,11 @@ export default function AboutPage() {
           <aside className="border border-line/70 bg-paper-soft/30 p-8 md:p-10">
             <Eyebrow>船长信</Eyebrow>
             <h3 className="display mt-4 text-[1.8rem] text-ink">
-              这是最方便走进 WindHero 的路。
+              想跟着更新，可以订这封信。
             </h3>
             <p className="mt-3 text-[0.95rem] leading-[1.9] text-ink-soft">
-              每月一封——新写完的课、读过的一篇好天气分析、
-              以及我作为初学者最近又被打脸的地方。
+              每月一封：新写完的课、最近读到的好资料，
+              还有我自己学航海时又踩到的小坑。
             </p>
             <div className="mt-7">
               <NewsletterForm source="about" />

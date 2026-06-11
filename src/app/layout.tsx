@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     template: "%s · WindHero 逐风人",
   },
   description:
-    "由一名从零开始的船长搭建的现代航海学院。13 门原创课程对应 RYA / ASA / IYT 三大民用帆船认证体系的全部笔试——学风、学海图、学船长的判断力。",
+    "WindHero 逐风人整理中文航海理论课、RYA / ASA / IYT 认证对照、航海词典、案例复盘和出航前工具。",
   keywords: [
     "WindHero",
     "逐风人",
@@ -72,18 +72,27 @@ export const metadata: Metadata = {
   openGraph: {
     title: "WindHero 逐风人 — 驾驭风的方向",
     description:
-      "由一名从零开始的船长搭建的现代航海学院。13 门原创课程覆盖 RYA / ASA / IYT 三体系全部笔试。",
+      "中文航海理论课、认证对照、航海词典、案例复盘和出航前工具。",
     siteName: "WindHero 逐风人",
     type: "website",
     locale: "zh_CN",
     alternateLocale: ["en_US"],
     url: "https://windhero.vercel.app",
+    images: [
+      {
+        url: "/images/generated/hero-ocean-training-v1.png",
+        width: 1200,
+        height: 630,
+        alt: "WindHero 逐风人中文航海学院",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "WindHero 逐风人 — Master the Wind",
-    description: "为「从零开始的船长」搭建的现代航海学院。",
+    description: "中文航海理论课、认证对照和出航前工具。",
     creator: "@windhero",
+    images: ["/images/generated/hero-ocean-training-v1.png"],
   },
   robots: {
     index: true,
@@ -102,6 +111,12 @@ export default function RootLayout({
       className={`${interTight.variable} ${fraunces.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="bg-paper text-ink min-h-full flex flex-col">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-3 focus:text-sm focus:text-paper"
+        >
+          跳到正文
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationLd) }}
@@ -111,7 +126,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: jsonLdScript(websiteLd) }}
         />
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

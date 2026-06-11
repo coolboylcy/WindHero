@@ -5,11 +5,12 @@ import { Section, SectionHeading } from "@/components/section";
 import { CaseLearningLoopVisual } from "@/components/content-visuals";
 import { cases, categoryInfo } from "@/lib/cases/data";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "真实案例库 · 从海难学习",
   description:
-    "WindHero 真实案例库：Fastnet 1979、Sydney-Hobart 1998、El Faro 2015、Tony Bullimore 求生、Knox-Johnston 环球、Costa Concordia——基于 MAIB / ATSB / NTSB 调查报告与当事人著作的 6 个航海事件。每个案例配时间线 + 经验 + 课程映射。",
+    "WindHero 真实案例库：基于公开调查报告和当事人著作整理 Fastnet、Sydney-Hobart、El Faro 等航海事件，附时间线和课程映射。",
   keywords: [
     "Fastnet 1979",
     "Sydney Hobart 1998",
@@ -36,24 +37,49 @@ const categoryColor: Record<string, string> = {
 };
 
 export default function CasesIndexPage() {
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 真实案例库",
+    description: "基于公开调查报告和当事人著作整理的航海事故与船长决策案例。",
+    url: "/cases",
+  });
+  const caseListSchema = itemListLd({
+    name: "WindHero 航海案例列表",
+    url: "/cases",
+    items: cases.map((item) => ({
+      name: item.title,
+      description: item.hook,
+      url: `/cases/${item.slug}`,
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(caseListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-16">
           <div>
             <SectionHeading
+              level={1}
               eyebrow="真实案例库"
               title={
                 <>
-                  别人犯过的错，
+                  事故报告不好读，
                   <br />
-                  你不必再犯一次。
+                  但很值得读。
                 </>
               }
-              lead="6 个有据可查的著名航海事件——基于 MAIB、ATSB、NTSB 等官方调查报告与当事人著作整理。每个案例都给到时间线、调查结论、以及「我们能学到什么」。"
+              lead="这里先收 6 个有公开资料可查的航海事件。每篇都尽量按时间线写清楚：发生了什么，哪里开始转坏，回到课程里该补哪一课。"
             />
             <p className="mt-6 max-w-2xl text-[0.86rem] leading-[1.7] text-mist">
-              说明：本库不渲染戏剧化情节、不揣测当事人心理。所有事实陈述基于公开调查报告与传记。每个案例底部列出参考资料。
+              说明：这里不补戏剧化细节，也不揣测当事人心理。事实部分尽量回到调查报告、公开资料和当事人著作。
             </p>
           </div>
           <CaseLearningLoopVisual />
@@ -118,11 +144,11 @@ export default function CasesIndexPage() {
           <div>
             <Anchor className="h-6 w-6 text-sun" />
             <h2 className="display mt-5 text-3xl text-ink md:text-4xl">
-              案例 + 课程 = 真正学到。
+              看完案例，回去补那一课。
             </h2>
             <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
-              抽象的判断很难学会——但「Schettino 偏航致 32 人罹难」和「Bullimore 在翻船下活了 5 天」是具体的、有名字的、被调查过的事件。
-              WindHero 把每个课程的关键判断点都与真实案例对应——课堂的理论与海上的现实之间，至少有一座桥。
+              单独讲「风险管理」很空。把它放进 Fastnet、El Faro 或 Costa Concordia 这样的事件里，
+              你会更容易看出一个小决定怎么把后面一串事推倒。
             </p>
           </div>
           <Link
@@ -133,10 +159,10 @@ export default function CasesIndexPage() {
               系统学习
             </p>
             <h3 className="display mt-4 text-2xl text-ink">
-              13 门课，按阶段。
+              13 门课，慢慢补。
             </h3>
             <p className="mt-3 text-[0.92rem] leading-[1.8] text-ink-soft">
-              入门 → 船员 → 日间船长 → 夜间近岸 → 远海远航 → 跨洋。每门课对应 RYA / ASA / IYT 笔试，每节课的判断点链回案例库。
+              从风、帆、海图、潮汐开始，再到天气、通信和远航。读案例时缺哪块，就回去补哪块。
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-[0.84rem] text-sea-deep transition-colors group-hover:text-ink">
               进入课程

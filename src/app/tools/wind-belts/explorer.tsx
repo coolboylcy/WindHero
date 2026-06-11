@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AlertTriangle, CalendarDays, ListChecks, MapPin, Navigation } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import {
   regions,
   cellInfo,
@@ -87,14 +88,11 @@ export function WindBeltsExplorer() {
 
   return (
     <div className="wh-tool-shell rounded-sm p-4 sm:p-5 lg:p-6">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <ImageBackdrop
+        src="/images/generated/synoptic-chart-texture-v1.png"
+        className="opacity-[0.18]"
+        loading="eager"
+        fetchPriority="high"
       />
       <div className="relative grid gap-5 lg:grid-cols-[0.8fr_1.25fr_0.85fr] lg:gap-6 lg:items-stretch">
       {/* ===== 左：输入 + 结果 ===== */}

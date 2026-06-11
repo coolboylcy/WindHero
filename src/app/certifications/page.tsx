@@ -22,11 +22,12 @@ import {
 } from "@/lib/certifications/stages";
 import { getCourseBySlug } from "@/lib/courses";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "RYA vs ASA vs IYT 认证体系对比",
   description:
-    "RYA、ASA、IYT 三大民用帆船认证体系完整对比：学习曲线、覆盖国家、考试方式、笔试 vs 实操。WindHero 13 门课如何对应三体系的所有笔试要求。",
+    "RYA、ASA、IYT 三大民用帆船认证体系对比：适用地区、学习路径、考试方式，以及 WindHero 课程如何对应笔试内容。",
   keywords: [
     "RYA vs ASA",
     "RYA vs IYT",
@@ -47,20 +48,45 @@ export const metadata: Metadata = createPageMetadata({
 const certBodies: CertBody[] = ["rya", "asa", "iyt"];
 
 export default function CertificationsPage() {
+  const pageSchema = webPageLd({
+    type: "WebPage",
+    name: "RYA vs ASA vs IYT 认证体系对比",
+    description: "三大民用帆船认证体系的学习曲线、覆盖范围、考试方式与 WindHero 课程映射。",
+    url: "/certifications",
+  });
+  const certListSchema = itemListLd({
+    name: "三大民用帆船认证体系",
+    url: "/certifications",
+    items: certBodies.map((body) => ({
+      name: bodyInfo[body].name,
+      description: bodyInfo[body].bestFor,
+      url: "/certifications",
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(certListSchema) }}
+      />
       {/* ====================== 1. Hero ====================== */}
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <SectionHeading
+          level={1}
           eyebrow="对比 · RYA · ASA · IYT"
           title={
             <>
-              三个体系，
+              先别问哪张证最好，
               <br />
-              一条 WindHero 课程线。
+              先问你要去哪用。
             </>
           }
-          lead="全世界三大民用帆船认证体系——英国 RYA、美国 ASA、国际 IYT——的学习曲线、考试方式、覆盖范围一次讲清楚。无论你考哪一个，WindHero 都能让你笔试部分一次通过。"
+          lead="RYA、ASA、IYT 都能带你上船，但它们的语境不同。这里把地区、用途、考试方式和课程对应关系放在一起，帮你少走一点弯路。"
         />
       </Section>
 
@@ -70,12 +96,12 @@ export default function CertificationsPage() {
             eyebrow="三条航道"
             title={
               <>
-                不是谁更高级，
+                三条路线，
                 <br />
-                是你要去哪片海。
+                适合不同用法。
               </>
             }
-            lead="RYA 像英式海试路线，ASA 像租船友好路线，IYT 更靠近国际商业/超级游艇语境。先选使用场景，再选证书。"
+            lead="RYA 在英联邦和欧洲认知度高，ASA 对美国和加勒比租船很友好，IYT 更常出现在国际商业和超级游艇语境里。"
           />
           <CertificationChannelsVisual />
         </div>
@@ -85,7 +111,7 @@ export default function CertificationsPage() {
       <Section className="border-b border-line/60">
         <p className="eyebrow">三体系 · 一句话</p>
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2rem]">
-          先选你要去哪片海。
+          先选你主要在哪里用证。
         </h2>
         <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-3">
           {certBodies.map((b) => {
@@ -124,7 +150,7 @@ export default function CertificationsPage() {
       <Section className="border-b border-line/60 bg-paper-soft/30">
         <p className="eyebrow">详细对照 · 三体系优劣</p>
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2rem]">
-          每一个体系的优势与代价。
+          每个体系都有方便的地方，也有麻烦的地方。
         </h2>
 
         <div className="mt-10 space-y-6">
@@ -380,7 +406,7 @@ export default function CertificationsPage() {
               WindHero 不能替代认证学校。
             </h2>
             <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
-              三体系都规定：所有实操考核、海上里程、湿训部分必须在认证学校完成。WindHero 做的是「让你登上认证学校甲板时已经站得稳」——但发证仍由认证学校。
+              三体系都要求实操考核、海上里程和部分手法训练在线下完成。WindHero 只能帮你补理论，发证仍由认证学校处理。
             </p>
             <ul className="mt-6 space-y-3 text-[0.92rem] leading-[1.8] text-ink-soft">
               <li className="grid grid-cols-[1.4rem_1fr] items-baseline gap-2">

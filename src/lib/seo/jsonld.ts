@@ -12,6 +12,10 @@ import type { Course, Lesson } from "@/lib/courses/types";
 
 const BASE_URL = "https://windhero.vercel.app";
 
+function schemaUrl(url: string): string {
+  return /^https?:\/\//.test(url) ? url : `${BASE_URL}${url}`;
+}
+
 export const organizationLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
@@ -122,7 +126,7 @@ export function softwareApplicationLd(input: {
     "@type": "SoftwareApplication",
     name: input.name,
     description: input.description,
-    url: `${BASE_URL}${input.url}`,
+    url: schemaUrl(input.url),
     applicationCategory: "EducationalApplication",
     operatingSystem: "Web browser",
     inLanguage: "zh-CN",
@@ -137,6 +141,61 @@ export function softwareApplicationLd(input: {
       name: "WindHero 逐风人",
       url: BASE_URL,
     },
+  };
+}
+
+export function webPageLd(input: {
+  name: string;
+  description: string;
+  url: string;
+  type?: "WebPage" | "CollectionPage" | "AboutPage";
+  primaryImage?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": input.type ?? "WebPage",
+    name: input.name,
+    description: input.description,
+    url: `${BASE_URL}${input.url}`,
+    inLanguage: "zh-CN",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "WindHero 逐风人",
+      url: BASE_URL,
+    },
+    primaryImageOfPage: input.primaryImage
+      ? {
+          "@type": "ImageObject",
+          url: `${BASE_URL}${input.primaryImage}`,
+        }
+      : undefined,
+    publisher: {
+      "@type": "EducationalOrganization",
+      name: "WindHero 逐风人",
+      url: BASE_URL,
+    },
+  };
+}
+
+export function itemListLd(input: {
+  name: string;
+  description?: string;
+  url: string;
+  items: { name: string; url: string; description?: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    description: input.description,
+    url: `${BASE_URL}${input.url}`,
+    itemListElement: input.items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      description: item.description,
+      url: schemaUrl(item.url),
+    })),
   };
 }
 

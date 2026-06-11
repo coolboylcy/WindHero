@@ -4,11 +4,13 @@ import { ArrowRight } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { SchoolsDirectory } from "./directory";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { schools } from "@/lib/certifications/schools";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "全球帆船认证学校目录",
   description:
-    "WindHero 精选的全球 RYA / ASA / IYT 认证学校列表——可按地区、认证体系、阶段筛选。完成线上理论后，去这些学校做实操考核与发证。",
+    "全球 RYA / ASA / IYT 认证学校目录，可按地区、认证体系、阶段和中文支持筛选。",
   keywords: [
     "RYA 学校",
     "ASA 学校",
@@ -27,19 +29,44 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function SchoolsPage() {
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "全球帆船认证学校目录",
+    description: "按地区、认证体系、学习阶段和中文支持筛选 RYA / ASA / IYT 认证学校。",
+    url: "/schools",
+  });
+  const schoolListSchema = itemListLd({
+    name: "WindHero 全球认证学校列表",
+    url: "/schools",
+    items: schools.map((school) => ({
+      name: school.name,
+      description: `${school.country} · ${school.city} · ${school.notes}`,
+      url: school.url,
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(schoolListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <SectionHeading
+          level={1}
           eyebrow="目录 · 全球认证学校"
           title={
             <>
-              WindHero 教你过笔试，
+              理论可以先在这里补，
               <br />
-              这些学校发证书。
+              证书还得去学校拿。
             </>
           }
-          lead="WindHero 编辑精选的 24 所 RYA / ASA / IYT 认证学校——覆盖英国、地中海、加勒比、美国、亚太、澳新。可按地区、认证体系、阶段、中文支持筛选。"
+          lead="这里整理了 24 所 RYA / ASA / IYT 认证学校，覆盖英国、地中海、加勒比、美国、亚太和澳新。先筛地区和体系，再去学校官网核对最新排期。"
         />
         <p className="mt-6 text-[0.84rem] text-mist">
           数据来源：各机构官网公开的认证学校列表。联系学校前请通过其官网二次确认当前课程时间与价格。
@@ -55,7 +82,7 @@ export default function SchoolsPage() {
           <div>
             <p className="eyebrow">如何选学校</p>
             <h2 className="display mt-4 text-3xl text-ink md:text-[2rem]">
-              三个先决问题。
+              先问三个问题。
             </h2>
             <ol className="mt-8 space-y-5 text-[0.96rem] leading-[1.85] text-ink-soft">
               <li className="grid grid-cols-[2.4rem_1fr] items-baseline gap-3">
@@ -82,7 +109,7 @@ export default function SchoolsPage() {
                 </span>
                 <span>
                   <strong className="text-ink">你的语言舒适区？</strong>
-                  全英文笔试有困难——优先挑选中文友好学校（目录里有标注）。
+                  全英文笔试有困难，就优先看中文友好学校，目录里已经标出来。
                 </span>
               </li>
             </ol>
@@ -99,7 +126,7 @@ export default function SchoolsPage() {
               不确定自己要考哪一个？
             </h3>
             <p className="mt-3 text-[0.94rem] leading-[1.85] text-ink-soft">
-              先看 RYA / ASA / IYT 三体系的完整对比与学习曲线，再决定方向。
+              先看 RYA / ASA / IYT 的适用地区、考试方式和学习曲线，再决定方向。
             </p>
             <span className="mt-5 inline-flex items-center gap-2 text-[0.84rem] text-sea-deep transition-colors group-hover:text-ink">
               进入三体系对比

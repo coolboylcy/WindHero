@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen, Compass, Map, Radio, Waves, Wind } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { cn } from "@/lib/utils";
 
 type RouteStage = {
@@ -34,35 +35,31 @@ export function ContentCompassVisual() {
 
   return (
     <div className="relative overflow-hidden border border-line/70 bg-paper p-5 shadow-[0_28px_70px_rgba(13,39,66,0.08)] md:p-7">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.18]"
-        style={{
-          backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <ImageBackdrop
+        src="/images/generated/course-chart-desk-v1.png"
+        className="opacity-[0.18]"
+        sizes="(min-width: 1024px) 46vw, 100vw"
       />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-br from-paper via-paper/88 to-sea-soft/55" />
 
       <div className="relative grid gap-5 lg:grid-cols-[1fr_1.15fr] lg:items-center">
         <div className="wh-dark-panel rounded-sm p-6 text-paper">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sun-soft">
-            WindHero content system
+            WindHero map
           </p>
           <h3 className="display mt-4 text-3xl text-paper md:text-4xl">
-            不是文章库，
+            四个入口，
             <br />
-            是一张训练海图。
+            各管一件事。
           </h3>
           <p className="mt-5 text-[0.92rem] leading-[1.85] text-paper-soft">
-            每一个概念都有位置：课程给主线，词典解释术语，案例负责记忆，工具把判断变成手感。
+            课程负责顺序，词典负责查词，案例负责复盘，工具负责把抽象规则放到手边试一试。
           </p>
           <div className="mt-6 grid grid-cols-2 gap-2 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-mist">
-            <span>Course route</span>
-            <span>Term atlas</span>
-            <span>Case log</span>
-            <span>Tool bench</span>
+            <span>Courses</span>
+            <span>Glossary</span>
+            <span>Cases</span>
+            <span>Tools</span>
           </div>
         </div>
 
@@ -89,7 +86,7 @@ export function ContentCompassVisual() {
             <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist">
               skipper
             </span>
-            <strong className="display -mt-5 text-2xl text-ink">判断力</strong>
+            <strong className="display -mt-5 text-2xl text-ink">会判断</strong>
           </div>
 
           {items.map((item, i) => {
@@ -163,7 +160,7 @@ export function CourseSystemMap({ stages }: { stages: RouteStage[] }) {
       <div className="grid gap-7 lg:grid-cols-[0.9fr_1.35fr] lg:items-center">
         <div>
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sea-deep">
-            system map
+            course map
           </p>
           <h3 className="display mt-4 text-3xl text-ink md:text-4xl">
             6 个阶段，
@@ -171,7 +168,7 @@ export function CourseSystemMap({ stages }: { stages: RouteStage[] }) {
             {total} 门理论课。
           </h3>
           <p className="mt-5 text-[0.94rem] leading-[1.85] text-ink-soft">
-            先建立海感，再建立航法，最后建立船长的取舍。课程不是平铺列表，而是一条逐步加压的训练航线。
+            从风和帆开始，到海图、潮汐、天气、通信和远航。你可以按阶段学，也可以只补自己缺的那一块。
           </p>
         </div>
 
@@ -294,14 +291,14 @@ export function ToolDeckVisual() {
       <ToolPanel
         title="全球风带"
         label="Season window"
-        body="先判断一片海一年里的底色：信风、季风、西风带、热带气旋窗口。"
+        body="先看一年里的大方向：信风、季风、西风带、热带气旋月份。它只回答粗问题。"
         href="/tools/wind-belts"
         tone="sea"
       />
       <ToolPanel
         title="天气图读图"
         label="Synoptic reader"
-        body="再看具体那一周：等压线密度、低压位置、锋面与半球风向。"
+        body="再看这一周的天气图：等压线有多密，低压在哪，锋面从哪边过来。"
         href="/tools/synoptic"
         tone="sun"
       />
@@ -345,7 +342,7 @@ export function GlossaryAtlasVisual() {
         <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-sea-deep">
           term atlas
         </p>
-        <h3 className="display mt-2 text-2xl text-ink">术语不是背单词，是找到概念之间的连线。</h3>
+        <h3 className="display mt-2 text-2xl text-ink">术语放在一起看，会比单独背好懂一点。</h3>
       </div>
     </div>
   );
@@ -355,8 +352,8 @@ export function CaseLearningLoopVisual() {
   const steps = [
     ["事实", "发生了什么"],
     ["时间线", "何时转坏"],
-    ["决策点", "哪里能停手"],
-    ["课程", "回到训练"],
+    ["决策点", "哪一步还能改"],
+    ["课程", "回去补课"],
   ];
 
   return (

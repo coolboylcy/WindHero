@@ -51,11 +51,11 @@ export function SiteFooter() {
           <h3 className="display mt-4 text-[1.85rem] leading-[1.15] text-ink">
             每月一封，
             <br />
-            从海上寄出。
+            写给还在学的人。
           </h3>
           <p className="mt-4 text-[0.92rem] leading-[1.85] text-ink-soft">
-            新写完的一门课 · 上一次出海学到的事 · 推荐你读的一本书。
-            不卖东西，不打扰你。
+            新写完的课程、值得读的资料、以及我最近又搞错过的一件事。
+            频率不高，不刷存在感。
           </p>
           <div className="mt-7">
             <NewsletterForm />
@@ -86,7 +86,7 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
           <div className="flex flex-col items-baseline gap-3 sm:flex-row sm:items-end sm:justify-between">
             <blockquote className="display-italic max-w-2xl text-balance text-[1.15rem] leading-[1.55] text-ink md:text-[1.3rem]">
-              「我们借的不是风的力，是风的方向。」
+              「先把问题问清楚，再把帆升起来。」
             </blockquote>
             <p className="font-mono text-[0.72rem] tracking-[0.16em] text-mist">
               —— 站长良辰，从零开始的船长

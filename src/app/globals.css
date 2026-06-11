@@ -65,6 +65,11 @@ body {
   color: var(--color-ink);
 }
 
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-sea-deep) 72%, white);
+  outline-offset: 4px;
+}
+
 /* —— 排版基类 —— */
 
 .eyebrow {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { Section } from "@/components/section";
 import { SynopticExplorer } from "./explorer";
 import { createPageMetadata } from "@/lib/seo/metadata";
@@ -9,7 +10,7 @@ import { jsonLdScript, softwareApplicationLd } from "@/lib/seo/jsonld";
 export const metadata: Metadata = createPageMetadata({
   title: "天气图读图工具 · Synoptic Chart Reader",
   description:
-    "学会读地面气压图：等压线、低压、高压、锋面、风向风强——船长每天该看的第一张图。",
+    "用简化的地面气压图练习等压线、低压、高压、锋面、风向和风强。",
   keywords: [
     "天气图",
     "synoptic chart",
@@ -43,23 +44,20 @@ export default function SynopticPage() {
       />
       {/* ==================== Hero + Tool（首屏） ==================== */}
       <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-[0.16]"
-          style={{
-            backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/synoptic-chart-texture-v1.png"
+          className="-z-10 opacity-[0.16]"
+          loading="eager"
+          fetchPriority="high"
         />
         <div aria-hidden className="wh-chart-wash -z-10" />
         <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
           <p className="eyebrow">工具 · 天气图读图</p>
           <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
-            一张地面气压图，比天气 App 多说一万字。
+            先把等压线看明白。
           </h1>
           <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
-            拖动滑块改变等压线密度、切换半球——看风向风强如何同步改变。下方有完整原理。
+            拖动滑块改变等压线间距，再切换半球。你会看到风强、低压方向和环流方向一起变。
           </p>
           <div className="wh-status-strip mt-5">
             <span>Isobars</span>
@@ -228,17 +226,17 @@ export default function SynopticPage() {
         <div className="mx-auto max-w-3xl text-center">
           <Wind className="mx-auto h-7 w-7 text-sea-deep" />
           <h2 className="display mt-6 text-3xl text-ink md:text-4xl">
-            读图是技能，不是天赋。
+            真图还得多看。
           </h2>
           <p className="mt-5 text-[1rem] leading-[1.9] text-ink-soft">
-            真正掌握天气图，要把这页的概念吃透 + 反复看真图练手感。
+            这个工具只讲基本关系。出海前，还要反复看官方天气图、GRIB 和本地预报。
             <Link
               href="/courses/weather-and-routing"
               className="text-sea-deep underline-offset-4 hover:underline"
             >
               WH-204 天气与航路
             </Link>{" "}
-            有完整的低压系统生命周期、锋面识别、GRIB 模型对比——天气图读图的进阶部分都在那里。
+            会继续讲低压生命周期、锋面识别和 GRIB 模型对比。
           </p>
         </div>
       </Section>

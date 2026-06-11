@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
@@ -20,6 +20,15 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-40 border-b border-line/60 bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
@@ -32,7 +41,7 @@ export function SiteHeader() {
           <Logo size="md" showTagline />
         </Link>
 
-        <nav className="hidden items-center gap-9 md:flex">
+        <nav aria-label="主导航" className="hidden items-center gap-9 md:flex">
           {navItems.map((item) => {
             const active =
               pathname === item.href ||
@@ -70,6 +79,8 @@ export function SiteHeader() {
         <button
           type="button"
           aria-label="切换导航菜单"
+          aria-controls="mobile-navigation"
+          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
           className="grid h-9 w-9 place-items-center border border-line text-ink md:hidden"
         >
@@ -78,8 +89,8 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <div className="border-t border-line bg-paper md:hidden">
-          <nav className="flex flex-col px-6 py-4">
+        <div id="mobile-navigation" className="border-t border-line bg-paper md:hidden">
+          <nav aria-label="移动导航" className="flex flex-col px-6 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}

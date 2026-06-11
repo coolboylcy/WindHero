@@ -2,6 +2,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
+const quickStarts = [
+  {
+    href: "/courses/reading-the-wind",
+    label: "第一门课",
+    title: "WH-101 读懂风",
+  },
+  {
+    href: "/courses",
+    label: "完整路径",
+    title: "6 阶段课程地图",
+  },
+  {
+    href: "/tools/wind-belts",
+    label: "出发前",
+    title: "全球风带查询",
+  },
+  {
+    href: "/glossary",
+    label: "查术语",
+    title: "航海词典",
+  },
+];
+
 /**
  * Hero —— Mediterranean Editorial · 赤子之心
  *
@@ -30,7 +53,7 @@ export function Hero() {
         <div className="max-w-3xl animate-fade-up">
           <p className="horizon-mark">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-sun-deep">
-              现代航海学院 · 自 2026 起
+              中文航海理论笔记 · 自 2026 起
             </span>
           </p>
 
@@ -43,16 +66,16 @@ export function Hero() {
           </p>
 
           <p className="mt-11 max-w-xl text-balance text-[1.06rem] leading-[1.92] text-ink-soft md:text-[1.14rem]">
-            一所由「<span className="sun-note">从零开始的船长</span>」搭建的航海学院——
-            学风、学海图、学船长的判断力。13 门课覆盖 RYA、ASA、IYT 三体系全部笔试。
+            我把自己从零学船长时最卡的地方整理出来：风怎么看，海图怎么算，
+            证书怎么选。先学明白，再去学校上船实操。
           </p>
 
           <div className="mt-11 flex flex-wrap items-center gap-3">
             <Link
-              href="/courses"
+              href="/courses/reading-the-wind"
               className="group inline-flex h-12 items-center gap-2 bg-ink px-7 text-[0.88rem] text-paper transition-colors hover:bg-sea-deep"
             >
-              开始第一门课
+              从 WH-101 开始
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
             <Link
@@ -64,11 +87,29 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="wh-instrument-panel mt-12 max-w-2xl px-5 py-4">
+          <div className="mt-8 grid max-w-3xl grid-cols-2 gap-px bg-line/70 sm:grid-cols-4">
+            {quickStarts.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group bg-paper/82 px-4 py-3 backdrop-blur-sm transition-colors hover:bg-paper"
+              >
+                <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-mist">
+                  {item.label}
+                </span>
+                <span className="mt-1 flex items-center justify-between gap-2 text-[0.86rem] text-ink">
+                  {item.title}
+                  <ArrowRight className="h-3 w-3 shrink-0 text-sea-deep transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <div className="wh-instrument-panel mt-7 max-w-2xl px-5 py-4">
             <div className="wh-status-strip">
-              <span>13 门原创课程</span>
+              <span>13 门理论课</span>
               <span>RYA / ASA / IYT 对照</span>
-              <span>工具 · 图解 · 模拟考</span>
+              <span>词典 · 案例 · 工具</span>
             </div>
           </div>
         </div>

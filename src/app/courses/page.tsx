@@ -11,11 +11,12 @@ import {
   stageOrder,
   type Stage,
 } from "@/lib/certifications/stages";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "课程 · 13 门覆盖三体系笔试",
   description:
-    "WindHero 按 6 阶段组织课程：入门 / 船员 / 日间船长 / 夜间近岸 / 远海远航 / 跨洋。13 门课对应 RYA、ASA、IYT 三大体系的所有笔试要求。",
+    "WindHero 把航海理论整理成 6 个阶段、13 门课，用来对照 RYA、ASA、IYT 的笔试要求。",
   path: "/courses",
   keywords: [
     "中文航海课程",
@@ -44,20 +45,46 @@ export default function CoursesPage() {
     sub: stageInfo[stage].sub,
     count: byStage.get(stage)?.length ?? 0,
   }));
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 课程",
+    description: "13 门中文航海理论课程，按 6 阶段覆盖 RYA / ASA / IYT 笔试路径。",
+    url: "/courses",
+    primaryImage: "/images/generated/course-chart-desk-v1.png",
+  });
+  const courseListSchema = itemListLd({
+    name: "WindHero 13 门课程",
+    description: "入门、船员、日间船长、夜间近岸、远海远航与跨洋阶段课程。",
+    url: "/courses",
+    items: detailedCourses.map((course) => ({
+      name: `${course.code} · ${course.title}`,
+      description: course.summary,
+      url: `/courses/${course.slug}`,
+    })),
+  });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(courseListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-32 lg:pt-36">
         <SectionHeading
+          level={1}
           eyebrow="课程"
           title={
             <>
-              从「我能不能上船」
+              先把该补的理论，
               <br />
-              到「我能不能跨太平洋」。
+              按顺序补上。
             </>
           }
-          lead="WindHero 13 门课按 6 阶段组织：入门 → 船员 → 日间船长 → 夜间近岸 → 远海远航 → 跨洋。每个阶段对应 RYA / ASA / IYT 三体系的等级——按这条路径学完，三体系的笔试你都能过。"
+          lead="这 13 门课按学习顺序排：先读风和帆，再到海图、潮汐、避碰、天气、通信和远航。旁边保留 RYA / ASA / IYT 对照，方便你知道自己是在补哪一块。"
         />
         <div className="mt-8 flex flex-wrap gap-3 text-[0.86rem]">
           <Link
@@ -84,12 +111,12 @@ export default function CoursesPage() {
             eyebrow="课程地图"
             title={
               <>
-                先看整张图，
+                先看目录，
                 <br />
-                再选下一课。
+                再进某一门课。
               </>
             }
-            lead="课程总览不应该像货架。它应该像航海图：你能看到自己从哪里出发、下一段水域是什么、最后会抵达哪种船长能力。"
+            lead="如果你只是想补潮汐、VHF 或天气，可以直接跳过去。如果你从零开始，按阶段往下读会省很多返工。"
           />
           <CourseSystemMap stages={routeStages} />
         </div>
@@ -223,10 +250,10 @@ export default function CoursesPage() {
           <div>
             <p className="eyebrow">学完之后</p>
             <h2 className="display mt-4 text-3xl text-ink md:text-4xl">
-              然后去 RYA / ASA / IYT 学校做实操。
+              线上学理论，实操还要去学校。
             </h2>
             <p className="mt-5 text-[0.96rem] leading-[1.9] text-ink-soft">
-              WindHero 教你过笔试。所有实操考核、海上里程、湿训部分必须在认证学校完成——这是三体系的硬规定。WindHero 的责任是让你登船时已经站得稳。
+              WindHero 不发证，也不替代海上训练。实操考核、海上里程和发证流程，仍然要在认证学校完成。这里做的是登船前的那部分准备。
             </p>
           </div>
           <Link

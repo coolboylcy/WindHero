@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, ListChecks, ShieldCheck } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { Section } from "@/components/section";
 import { Quiz } from "@/components/quiz";
 import { getCourseBySlug, listCourseSlugs } from "@/lib/courses";
@@ -51,14 +52,9 @@ export default async function ExamPage({ params }: { params: Params }) {
   return (
     <>
       <Section className="relative overflow-hidden border-b border-line/60 pt-36">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-[0.13]"
-          style={{
-            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/course-chart-desk-v1.png"
+          className="-z-10 opacity-[0.13]"
         />
         <div aria-hidden className="wh-chart-wash -z-10" />
         <Link
@@ -75,7 +71,7 @@ export default async function ExamPage({ params }: { params: Params }) {
               {course.code} · 期末模拟考
             </p>
             <h1 className="display mt-5 text-balance text-4xl text-ink md:text-5xl">
-              把你学到的判断力，跑一遍。
+              做一遍模拟考。
             </h1>
             <p className="prose-zh mt-7 text-[1.04rem] text-ink-soft">
               {course.exam.brief}

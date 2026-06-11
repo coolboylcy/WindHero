@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Wind } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import { Section } from "@/components/section";
 import { regions, cellInfo } from "@/lib/tools/wind-belts-data";
 import { WindBeltsExplorer } from "./explorer";
@@ -10,7 +11,7 @@ import { jsonLdScript, softwareApplicationLd } from "@/lib/seo/jsonld";
 export const metadata: Metadata = createPageMetadata({
   title: "全球风带查询 · Wind Belts by Region",
   description:
-    "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。基于三圈环流 + 季风模型——出航前的第一份功课。",
+    "按海域查询常年主导风、合适月份、季风与热带气旋风险窗口。",
   keywords: [
     "全球风带",
     "信风",
@@ -47,23 +48,20 @@ export default function WindBeltsPage() {
       />
       {/* ==================== Hero + Tool（首屏） ==================== */}
       <Section className="relative overflow-hidden border-b border-line/60 px-6 pb-10 pt-24 lg:px-10 lg:pb-14 lg:pt-28">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 opacity-[0.16]"
-          style={{
-            backgroundImage: "url('/images/generated/synoptic-chart-texture-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/synoptic-chart-texture-v1.png"
+          className="-z-10 opacity-[0.16]"
+          loading="eager"
+          fetchPriority="high"
         />
         <div aria-hidden className="wh-chart-wash -z-10" />
         <header className="mx-auto mb-7 max-w-3xl lg:mb-9">
           <p className="eyebrow">工具 · 全球风带查询</p>
           <h1 className="display mt-3 text-balance text-3xl text-ink md:text-4xl lg:text-[2.6rem]">
-            你想去的海域，此刻吹的是什么风？
+            这片海，一年里大概吹什么风？
           </h1>
           <p className="mt-3 max-w-2xl text-[0.95rem] leading-[1.75] text-ink-soft">
-            输入海域或拖动地球纬度——看主导风、最佳月份、台风窗口。出航前的第一份功课。
+            选海域，或者拖动纬度。先看常年风向、合适月份和热带气旋窗口，再去查具体预报。
           </p>
           <div className="wh-status-strip mt-5">
             <span>Wind belts</span>
@@ -78,7 +76,7 @@ export default function WindBeltsPage() {
       <Section className="border-b border-line/60 bg-paper-soft/30">
         <p className="eyebrow">原理 · 为什么有风带</p>
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2.2rem]">
-          地球只有一台风的发动机，分了三层。
+          大气环流可以先粗略分三层。
         </h2>
         <div className="mt-10 grid gap-px bg-line/70 md:grid-cols-3">
           {(["hadley-N", "ferrel-N", "polar-N"] as const).map((c) => {
@@ -115,7 +113,7 @@ export default function WindBeltsPage() {
       <Section className="border-b border-line/60">
         <p className="eyebrow">收录海域</p>
         <h2 className="display mt-4 max-w-3xl text-3xl text-ink md:text-[2.2rem]">
-          12 个全球主要航海舞台。
+          先收 12 个常见航海区域。
         </h2>
 
         <div className="mt-12 grid gap-px bg-line/70 md:grid-cols-2 lg:grid-cols-3">
@@ -153,11 +151,11 @@ export default function WindBeltsPage() {
         <div className="mx-auto max-w-3xl text-center">
           <Wind className="mx-auto h-7 w-7 text-sea-deep" />
           <h2 className="display mt-6 text-3xl text-ink md:text-4xl">
-            风带是底图。预报是天气。
+            风带只能帮你排除坏月份。
           </h2>
           <p className="mt-5 text-[1rem] leading-[1.9] text-ink-soft">
-            这个工具告诉你的是「常年画面」——选窗口、选月份。出门前的具体那一周还要看预报。
-            想学怎么看预报、读 GRIB、判断锋面——
+            它告诉你的是常年画面，不是出发当天的天气。出门前还要看官方预报、天气图和 GRIB。
+            想继续学怎么看预报、读 GRIB、判断锋面，可以进
             <Link
               href="/courses/weather-and-routing"
               className="text-sea-deep underline-offset-4 hover:underline"

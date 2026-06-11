@@ -349,3 +349,125 @@
 **给对方的提示**：
 - 没有改课程正文、课程数据模型、quiz/exam 题目或 `/api/subscribe`。
 - `.playwright-cli/` 仍是本地临时目录，不纳入提交。
+
+### [2026-06-10 17:42] · Codex · LOCK
+
+**范围 / Scope**：全站网站分析与优化一轮；计划触达 SEO metadata / JSON-LD、入口页信息架构与可读性、视觉/交互微调，预计文件包括 `src/app/layout.tsx`、`src/lib/seo/*`、主要 `src/app/*/page.tsx`、`src/components/*` 与 `src/app/globals.css`。
+
+**准备做**：
+- 按用户要求完整审视 SEO、内容渐进性、配图、设计质感与用户操作路径，优先修复可落地的站点层问题。
+- 不改课程正文、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+- 若需要改 `types.ts` 或数据 schema 会先停下另行协商；本轮不部署、不 push。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / commit `未提交`
+
+**给对方的提示**：
+- Claude 如需同时处理 SEO 基建，请先看本 LOCK；我会在完工后补 UNLOCK 与验证结果。
+
+### [2026-06-10 17:50] · Codex · UNLOCK
+
+**范围 / Scope**：全站网站分析与优化一轮；SEO metadata / JSON-LD、栏目页标题层级、首页首屏入口、导航可访问性、图片背景优化。
+
+**做了**：
+- 补站点级 OG / Twitter 图片；新增 `WebPage` / `CollectionPage` / `ItemList` JSON-LD helper，并给首页、课程、工具、认证、词典、案例、学校、航线、日志、关于页补结构化数据。
+- 修正主要栏目页首屏标题语义：公共 `SectionHeading` 支持 `level={1}`，栏目页现在输出单一主 `h1`。
+- 首页 hero 增加四个清晰学习入口：WH-101、课程地图、风带工具、航海词典；主 CTA 改为直达 WH-101。
+- 新增跳到正文链接、移动导航 `aria-expanded` / `aria-controls` / Escape 关闭、全站 `focus-visible`；CSS 背景图改为 `ImageBackdrop` + `next/image`，工具页首屏图按 Next 16 建议启用 eager/high。
+
+**验证**：
+- `pnpm typecheck` ✅（并行 build 时遇到一次 `.next/types` 临时竞争，构建完成后单独重跑通过）
+- `pnpm lint` ✅
+- `pnpm build` ✅（206 个静态页面）
+- 浏览器自动化抽查 `/`、`/courses`、`/tools/wind-belts`、`/tools/synoptic`：单 h1、JSON-LD 存在、无横向溢出、console 0 warning/error ✅
+- 移动端 390×844 抽查首页导航：菜单可展开，`aria-expanded=true`，无横向溢出 ✅
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `未提交`
+
+**给对方的提示**：
+- 本轮没有改课程正文、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+- `.playwright-cli/` 仍是本地临时目录，未纳入提交。
+
+### [2026-06-10 18:15] · Codex · LOCK
+
+**范围 / Scope**：将 17:50 这轮全站 SEO / UX 优化发布到生产；预计只运行 Vercel production deploy 与线上抽查，必要时补日志，不改业务代码。
+
+**准备做**：
+- 使用 Vercel CLI 发布当前工作区内容到 `https://windhero.vercel.app`。
+- 发布后抽查首页、课程页、工具页线上状态与 console。
+- 不改课程正文、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+
+**状态**：deploy ⏳ / online check ⏳ / commit `未提交`
+
+**给对方的提示**：
+- 本轮按站长明确要求发布；不做 push，除非另行要求。
+
+### [2026-06-10 18:17] · Codex · UNLOCK
+
+**范围 / Scope**：将 17:50 这轮全站 SEO / UX 优化发布到生产；Vercel production deploy 与线上抽查。
+
+**做了**：
+- 执行 `vercel deploy --prod --yes`，生产部署完成并 alias 到 `https://windhero.vercel.app`。
+- Deployment：`dpl_Hk6dTkZZDdmxjpTPbY6jJ51mEPnX`；deployment URL：`https://windhero-h4i8vctq2-chris-projects-8bd70381.vercel.app`。
+- 远端 Vercel build 成功：Next.js 16.2.6，206 个静态页面生成完成。
+
+**验证**：
+- 线上浏览器抽查 `/`、`/courses`、`/tools/wind-belts`：单 h1、JSON-LD 存在、无横向溢出、console 0 warning/error ✅
+- 线上移动端 390×844 抽查首页导航：菜单可展开，`aria-expanded=true`，无横向溢出 ✅
+
+**状态**：deploy ✅ / online check ✅ / commit `未提交`
+
+**给对方的提示**：
+- 本轮按站长明确要求发布了未提交工作区内容；还没有 git commit / push。
+- 没有改课程正文、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+
+### [2026-06-10 18:23] · Codex · LOCK
+
+**范围 / Scope**：站点层文案去 AI 味与语气重写；预计触达首页、公共视觉组件、课程/工具/认证/词典/案例/学校/航线/日志/关于等入口页的可见文案与必要 metadata。
+
+**准备做**：
+- 把过度概括、排比、宣传感强的句子改成更具体、更像站长本人说话的表达。
+- 不改课程正文 data、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+- 完成后执行 typecheck / lint / build / 浏览器抽查，并按站长此前要求发布到生产。
+
+**状态**：typecheck ⏳ / lint ⏳ / build ⏳ / deploy ⏳ / commit `未提交`
+
+**给对方的提示**：
+- Claude 请暂时不要动站点入口页文案；我会在发布后 UNLOCK。
+
+### [2026-06-10 18:32] · Codex · UNLOCK
+
+**范围 / Scope**：站点层文案去 AI 味与语气重写；首页、公共视觉组件、课程/工具/认证/词典/案例/学校/航线/日志/关于/宣言入口页、部分工具/课程 UI 文案与 metadata。
+
+**做了**：
+- 把首页与 hero 从“品牌宣言式”文案改成更具体的站长口吻：为什么写、从哪开始、每个入口怎么用。
+- 重写课程、工具、认证、词典、案例、学校、航线、日志、关于、宣言等入口页首屏文案，减少“不是 X 而是 Y”、宏大承诺、排比句和万能词。
+- 收尾了工具详情页、课程详情页、考试页、Quiz 结果页和 footer 中较强的宣传味表达。
+- 未改课程正文 data、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+- 按站长要求发布到生产：`https://windhero.vercel.app`，deployment `dpl_6nwyGPdHUeDGQih3CMwYziTZuZXo`。
+
+**验证**：
+- `pnpm typecheck` ✅
+- `pnpm lint` ✅
+- `pnpm build` ✅（206 个静态页面）
+- 本地浏览器抽查 `/`、`/courses`、`/tools`、`/certifications`、`/cases`、`/manifesto`：新文案命中、单 h1、JSON-LD 存在、无横向溢出、console 0 warning/error ✅
+- 线上浏览器复检同样 6 页与移动首页：新文案命中、无横向溢出、console 0 warning/error ✅
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / deploy ✅ / commit `未提交`
+
+**给对方的提示**：
+- 当前生产站点包含两轮未提交工作区内容：17:50 的 SEO/UX 优化 + 18:32 的文案重写；仍未 git commit / push。
+- `.playwright-cli/` 仍是本地临时目录，未纳入提交。
+
+### [2026-06-11 10:24] · Codex · LOCK
+
+**范围 / Scope**：把已发布到生产的 SEO/UX 优化与文案重写收口到 git；预计只做验证状态确认、commit、push 与日志更新，不改业务代码。
+
+**准备做**：
+- Stage 当前站点改动、`src/components/image-backdrop.tsx` 与协作日志，明确排除 `.playwright-cli/`。
+- 创建一个概括 SEO/UX 与文案重写的提交并推送 `origin/main`。
+- 不改课程正文 data、quiz/exam 题目、课程数据模型结构、Supabase schema 或 `/api/subscribe`。
+
+**状态**：commit ⏳ / push ⏳ / commit `未提交`
+
+**给对方的提示**：
+- 这是把已经线上发布的工作区内容落盘到 GitHub，避免生产与仓库继续脱节。

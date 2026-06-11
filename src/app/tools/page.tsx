@@ -4,11 +4,12 @@ import { ArrowRight, Wind, Map } from "lucide-react";
 import { Section, SectionHeading } from "@/components/section";
 import { ToolDeckVisual } from "@/components/content-visuals";
 import { createPageMetadata } from "@/lib/seo/metadata";
+import { itemListLd, jsonLdScript, webPageLd } from "@/lib/seo/jsonld";
 
 export const metadata: Metadata = createPageMetadata({
   title: "工具",
   description:
-    "WindHero 的开源航海工具集：全球风带查询、天气图读图沙盒，以及更多。",
+    "WindHero 的航海小工具：查全球风带、练习天气图读图，用来做出发前的粗判断。",
   path: "/tools",
   keywords: [
     "航海工具",
@@ -23,32 +24,58 @@ const tools = [
   {
     href: "/tools/wind-belts",
     title: "全球风带查询",
-    desc: "查询全球任何海域的主导风向、最佳出航月份、季风与台风窗口。基于三圈环流 + 季风模型——出航前的第一份功课。",
+    desc: "选一片海，先看常年的风向、合适月份和热带气旋季。它不能替代预报，但能帮你避开明显不合适的季节。",
     icon: Map,
   },
   {
     href: "/tools/synoptic",
     title: "天气图读图",
-    desc: "学会读地面气压图：等压线、低压、高压、风向风强。配可拖动的沙盒，让你拿手感。",
+    desc: "用一张简化的地面气压图练习：等压线越密，风为什么越强；半球一变，低压环流为什么会反过来。",
     icon: Wind,
   },
 ];
 
 export default function ToolsIndexPage() {
+  const pageSchema = webPageLd({
+    type: "CollectionPage",
+    name: "WindHero 航海工具",
+    description: "全球风带查询、天气图读图等免费互动航海训练工具。",
+    url: "/tools",
+    primaryImage: "/images/generated/synoptic-chart-texture-v1.png",
+  });
+  const toolListSchema = itemListLd({
+    name: "WindHero 航海工具列表",
+    url: "/tools",
+    items: tools.map((tool) => ({
+      name: tool.title,
+      description: tool.desc,
+      url: tool.href,
+    })),
+  });
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(toolListSchema) }}
+      />
       <Section className="border-b border-line/60 pt-36">
         <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-16">
           <SectionHeading
+            level={1}
             eyebrow="工具"
             title={
               <>
-                把课堂上学的，
+                两个小工具，
                 <br />
-                直接拿来用。
+                先解决两个常见问题。
               </>
             }
-            lead="工具不是附录。它们是 WindHero 的练习台：把风带、天气图、航线窗口这些抽象概念，变成可以拖动、比较、复盘的判断。"
+            lead="一个用来看季节，一个用来看天气图。都只是简化模型，但很适合在查预报之前，先把脑子里的图摆正。"
           />
           <ToolDeckVisual />
         </div>
@@ -59,9 +86,9 @@ export default function ToolsIndexPage() {
           <div>
             <p className="eyebrow">判断流程</p>
             <h2 className="display mt-4 text-3xl text-ink md:text-[2.2rem]">
-              先看季节底图，
+              先问季节，
               <br />
-              再看具体天气。
+              再问这三天。
             </h2>
           </div>
           <ol className="grid gap-px bg-line/70 md:grid-cols-3">
@@ -75,8 +102,8 @@ export default function ToolsIndexPage() {
                   {i === 0
                     ? "确定你要去的是信风带、季风海，还是西风带。"
                     : i === 1
-                      ? "避开热带气旋和冬季风暴，找到基础窗口。"
-                      : "用天气图确认出发前 72 小时的真实局势。"}
+                      ? "避开热带气旋季、强季风和明显的冬季风暴期。"
+                      : "临出发前还要回到真实预报和官方天气图。"}
                 </p>
               </li>
             ))}

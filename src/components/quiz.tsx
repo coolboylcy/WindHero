@@ -9,6 +9,7 @@ import {
   RotateCcw,
   X,
 } from "lucide-react";
+import { ImageBackdrop } from "@/components/image-backdrop";
 import type { Question } from "@/lib/courses/types";
 import { cn } from "@/lib/utils";
 
@@ -162,14 +163,9 @@ export function Quiz({
       drawCount && drawCount < questions.length ? drawCount : questions.length;
     return (
       <section className="relative overflow-hidden border-y border-line/70 bg-paper-soft/40 py-16">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.10]"
-          style={{
-            backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+        <ImageBackdrop
+          src="/images/generated/course-chart-desk-v1.png"
+          className="opacity-[0.10]"
         />
         <div className="wh-instrument-panel relative mx-auto max-w-2xl rounded-sm px-6 py-8 text-center md:px-8">
           <p className="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-sea-deep">
@@ -230,14 +226,9 @@ export function Quiz({
 
   return (
     <section className="relative overflow-hidden border-y border-line/70 bg-paper-soft/40 py-12">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.08]"
-        style={{
-          backgroundImage: "url('/images/generated/course-chart-desk-v1.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <ImageBackdrop
+        src="/images/generated/course-chart-desk-v1.png"
+        className="opacity-[0.08]"
       />
       <div className="wh-instrument-panel relative mx-auto max-w-3xl rounded-sm px-5 py-6 md:px-7">
         <header className="flex items-baseline justify-between gap-4">
@@ -246,7 +237,7 @@ export function Quiz({
               {mode === "exam" ? "期末模拟考试 · 进行中" : "课后小测"}
             </p>
             <h3 className="display mt-3 text-2xl text-ink md:text-3xl">
-              {title ?? (mode === "exam" ? "测验你的判断力" : "小测一下")}
+              {title ?? (mode === "exam" ? "做一组模拟题" : "小测一下")}
             </h3>
           </div>
           <div className="flex items-center gap-4">
@@ -467,8 +458,8 @@ function ExamResult({
         </div>
         <p className="mt-4 text-[0.96rem] leading-[1.85] text-ink-soft">
           {passed
-            ? `通过线是 ${passMark} 分——你过了。但成绩不是终点；回看错题，理解为什么错。下次重做会换一组题——真正吃透知识点的标志，是任何抽样都能稳过。`
-            : `通过线是 ${passMark} 分——这一次没过，不是失败。回到错题对应的章节再读一遍，过 24 小时再考一次。每次重做随机抽新题——船长的判断力是在重复中长出来的。`}
+            ? `通过线是 ${passMark} 分，你过了。别急着关页面，先把错题看完；下次重做会重新抽题。`
+            : `通过线是 ${passMark} 分，这次还没过。先看错题对应的章节，隔一段时间再做一轮。每次重做都会重新抽题。`}
         </p>
         {tabSwitchCount > 0 ? (
           <p className="mt-4 inline-flex items-center gap-2 text-[0.84rem] text-coral">
