@@ -471,3 +471,24 @@
 
 **给对方的提示**：
 - 这是把已经线上发布的工作区内容落盘到 GitHub，避免生产与仓库继续脱节。
+
+### [2026-06-11 10:25] · Codex · UNLOCK
+
+**范围 / Scope**：把已发布到生产的 SEO/UX 优化与文案重写收口到 git；验证、commit、push 与日志更新。
+
+**做了**：
+- 重新顺序执行本地验证：`pnpm typecheck && pnpm lint && pnpm build`。
+- Stage 并提交已发布的站点改动，明确排除 `.playwright-cli/`。
+- 应用提交：`e75cee1 feat: refine site SEO and copy`。
+- 已推送：`origin/main`（`6ca5e8a..e75cee1`）。
+
+**验证**：
+- `pnpm typecheck` ✅
+- `pnpm lint` ✅
+- `pnpm build` ✅（206 个静态页面）
+
+**状态**：typecheck ✅ / lint ✅ / build ✅ / commit `e75cee1` / push ✅
+
+**给对方的提示**：
+- 生产站点此前已部署到 `https://windhero.vercel.app`，deployment `dpl_6nwyGPdHUeDGQih3CMwYziTZuZXo`；本轮是把同一批内容同步到 GitHub。
+- 本条 UNLOCK 日志会作为单独文档提交跟进推送，避免协作日志停留在 LOCK。
